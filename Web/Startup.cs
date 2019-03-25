@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Models.Entities.Identity;
+using Web.Extensions;
 
 namespace Web
 {
@@ -31,12 +32,26 @@ namespace Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDbContext<BudgetTrackerDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("BudgetTrackerConnection"));
+            });
+
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<BudgetTrackerDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.RegisterAppServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app,
+            IHostingEnvironment env,
+            DbInitializer dbInitializer,
+            IServiceProvider serviceProvider
+            )
         {
             if (env.IsDevelopment())
             {
@@ -48,6 +63,10 @@ namespace Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseAuthentication();
+
+            dbInitializer.AddAdmin();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
