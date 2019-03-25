@@ -1,4 +1,5 @@
-﻿using Data.Configurations.Identity;
+﻿using Data.Configurations;
+using Data.Configurations.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,8 @@ namespace Data
             builder.ApplyConfiguration(new UserRoleConfiguration());
 
             //Application configurations
+            builder.ApplyConfiguration(new FinancialItemConfiguration());
+            builder.ApplyConfiguration(new FinancialOperationConfiguration());
         }
     }
 }

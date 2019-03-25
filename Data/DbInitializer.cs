@@ -10,28 +10,33 @@ namespace Data
     {
         private readonly UserManager<User> _userManager;
         private readonly DbInitializerOptions _options;
+        private readonly BudgetTrackerDbContext _dbContext;
 
-        public DbInitializer(IConfiguration configuration, UserManager<User> userManager)
+        public DbInitializer(IConfiguration configuration, UserManager<User> userManager, BudgetTrackerDbContext dbContext)
         {
             _options = configuration.GetSection(nameof(DbInitializerOptions)).Get<DbInitializerOptions>();
             _userManager = userManager;
+            _dbContext = dbContext;
         }
 
         public void AddAdmin()
         {
-            var initialUser = _options.Users.FirstOrDefault();
-            if(initialUser != null)
+            if (!_dbContext.Users.Any())
             {
-                var user = new User()
+                var initialUser = _options.Users.FirstOrDefault();
+                if (initialUser != null)
                 {
-                    Email = initialUser.Email,
-                    FirstName = initialUser.FirstName,
-                    LastName = initialUser.LastName,
-                    IsActive = true,
-                    EmailConfirmed = true
-                };
+                    var user = new User()
+                    {
+                        Email = initialUser.Email,
+                        FirstName = initialUser.FirstName,
+                        LastName = initialUser.LastName,
+                        IsActive = true,
+                        EmailConfirmed = true
+                    };
 
-                _userManager.CreateAsync(user, initialUser.Password);
+                    _userManager.CreateAsync(user, initialUser.Password);
+                }
             }
         }
     }

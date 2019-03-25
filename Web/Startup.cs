@@ -64,9 +64,9 @@ namespace Web
                 app.UseHsts();
             }
 
-            app.UseAuthentication();
-
             dbInitializer.AddAdmin();
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
