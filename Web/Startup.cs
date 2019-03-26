@@ -41,6 +41,13 @@ namespace Web
                 .AddEntityFrameworkStores<BudgetTrackerDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.RegisterAppServices();
@@ -64,7 +71,7 @@ namespace Web
                 app.UseHsts();
             }
 
-            dbInitializer.AddAdmin();
+            dbInitializer.AddAdmin().Wait();
 
             app.UseAuthentication();
 

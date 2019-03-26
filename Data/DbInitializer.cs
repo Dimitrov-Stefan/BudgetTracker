@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Data.Initialization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,7 @@ namespace Data
             _dbContext = dbContext;
         }
 
-        public void AddAdmin()
+        public async Task AddAdmin()
         {
             if (!_dbContext.Users.Any())
             {
@@ -28,6 +29,7 @@ namespace Data
                 {
                     var user = new User()
                     {
+                        UserName = initialUser.Email,
                         Email = initialUser.Email,
                         FirstName = initialUser.FirstName,
                         LastName = initialUser.LastName,
@@ -35,7 +37,8 @@ namespace Data
                         EmailConfirmed = true
                     };
 
-                    _userManager.CreateAsync(user, initialUser.Password);
+                    var result = await _userManager.CreateAsync(user, initialUser.Password);
+                    var r2 = result;
                 }
             }
         }

@@ -1,9 +1,14 @@
-﻿namespace Web.Models.Account
+﻿using System.ComponentModel.DataAnnotations;
+using Core.Resources;
+
+namespace Web.Models.Account
 {
     public class LoginViewModel
     {
+        [Required(ErrorMessageResourceName = nameof(Literals.RquiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         public string Email { get; set; }
 
+        [Required(ErrorMessageResourceName = nameof(Literals.RquiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         public string Password { get; set; }
 
         public string ReturnUrl { get; set; }
