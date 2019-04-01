@@ -1,0 +1,36 @@
+﻿@model Web.Models.FinancialItems.CreateFinancialItemViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="text-center">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+
+        <form method="post" asp-action="@nameof(FinancialItemsController.Create)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <label asp-for="Name">Name</label>
+
+            <div class="form-group">
+                <input asp-for="Name" placeholder="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <label asp-for="Type">Type</label>
+            <div class="form-group">
+                <select asp-for="Type" asp-items="@Model.Types" placeholder="Type" class="form-control">
+                    
+                </select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

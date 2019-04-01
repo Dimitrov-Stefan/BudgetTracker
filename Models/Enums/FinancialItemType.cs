@@ -2,7 +2,7 @@
 {
     public enum FinancialItemType
     {
-        Income = 0,
-        Expense
+        Expense = 0,
+        Income = 1
     }
 }

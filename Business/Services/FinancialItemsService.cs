@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Contracts.Repositories;
 using Core.Contracts.Services;
 using Models.Entities;
@@ -17,6 +18,11 @@ namespace Business.Services
         public async Task CreateAsync(FinancialItem item)
         {
             await _financialItemsRepository.AddAsync(item);
+        }
+
+        public async Task<IEnumerable<FinancialItem>> GetAllActiveAsync()
+        {
+            return await _financialItemsRepository.GetAllActiveAsync();
         }
     }
 }

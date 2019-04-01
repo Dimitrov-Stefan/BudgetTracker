@@ -61,6 +61,15 @@ namespace Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field length should not exceed {1} characters..
+        /// </summary>
+        public static string MaxLengthError {
+            get {
+                return ResourceManager.GetString("MaxLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This field cannot be empty..
         /// </summary>
         public static string RquiredFieldError {

@@ -1,41 +1,53 @@
 ﻿@model Web.Models.FinancialItems.FinancialItemListViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Financial items";
 }
 
-<h1>@ViewData["Title"]</h1>
 
-<div class="row col-6 offset-3">
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Type
-                </th>
-                <th>
-                    Active
-                </th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="row">
+    <div class="col-12">
+        <h1 class="text-center">
+            @ViewData["Title"]
+        </h1>
 
-            @foreach (var item in Model.FinancialItems)
-            {
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-primary btn-sm"
+               asp-action="@nameof(FinancialItemsController.Create)">
+                <span class="fas fa-plus"></span>
+                Add
+            </a>
+        </div>
+
+
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td>@item.Name</td>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        Active
+                    </th>
                 </tr>
-                <tr>
-                    <td>@item.Type</td>
-                </tr>
-                <tr>
-                    <td>@item.IsActive</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model.FinancialItems)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+
+                        <td>@item.Type</td>
+
+                        <td>@item.IsActive</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 

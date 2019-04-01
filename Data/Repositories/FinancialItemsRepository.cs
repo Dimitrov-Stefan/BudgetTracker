@@ -1,4 +1,8 @@
-﻿using Core.Contracts.Repositories;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Core.Contracts.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 
 namespace Data.Repositories
@@ -9,5 +13,9 @@ namespace Data.Repositories
         {
 
         }
+
+        public async Task<IEnumerable<FinancialItem>> GetAllActiveAsync()
+            => await Set.Where(fi => fi.IsActive).ToListAsync();
+       
     }
 }
