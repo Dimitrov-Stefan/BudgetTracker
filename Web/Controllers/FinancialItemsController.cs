@@ -52,6 +52,8 @@ namespace Web.Controllers
                 };
 
                 await _financialItemsService.CreateAsync(financialItem);
+
+                return RedirectToAction(nameof(FinancialItemsController.Index));
             }
 
             model.Types = new SelectList(Enum.GetNames(typeof(FinancialItemType)));
