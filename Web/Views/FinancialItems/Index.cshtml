@@ -1,0 +1,41 @@
+﻿@model Web.Models.FinancialItems.FinancialItemListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row col-6 offset-3">
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Active
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.FinancialItems)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                </tr>
+                <tr>
+                    <td>@item.Type</td>
+                </tr>
+                <tr>
+                    <td>@item.IsActive</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

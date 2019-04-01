@@ -1,4 +1,8 @@
-﻿using Data;
+﻿using Business.Services;
+using Core.Contracts.Repositories;
+using Core.Contracts.Services;
+using Data;
+using Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Web.Services;
 
@@ -10,6 +14,14 @@ namespace Web.Extensions
         {
             services.AddTransient<DbInitializer, DbInitializer>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IFinancialItemsService, FinancialItemsService>();
+
+            return services;
+        }
+
+        public static IServiceCollection RegisterAppRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IFinancialItemsRepository, FinancialItemsRepository>();
 
             return services;
         }

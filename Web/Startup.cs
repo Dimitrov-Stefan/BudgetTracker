@@ -51,6 +51,7 @@ namespace Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.RegisterAppServices();
+            services.RegisterAppRepositories();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
