@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Core.Constants;
 using Data.Initialization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -10,14 +11,38 @@ namespace Data
     public class DbInitializer
     {
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly DbInitializerOptions _options;
         private readonly BudgetTrackerDbContext _dbContext;
 
-        public DbInitializer(IConfiguration configuration, UserManager<User> userManager, BudgetTrackerDbContext dbContext)
+        public DbInitializer(IConfiguration configuration,
+            UserManager<User> userManager,
+            RoleManager<Role> roleManager,
+            BudgetTrackerDbContext dbContext)
         {
             _options = configuration.GetSection(nameof(DbInitializerOptions)).Get<DbInitializerOptions>();
             _userManager = userManager;
+            _roleManager = roleManager;
             _dbContext = dbContext;
+        }
+
+        public async Task AddRoles()
+        {
+            if (!await _roleManager.RoleExistsAsync(Roles.Admin))
+            {
+                await _roleManager.CreateAsync(new Role()
+                {
+                    Name = Roles.Admin
+                });
+            }
+
+            if (!await _roleManager.RoleExistsAsync(Roles.User))
+            {
+                await _roleManager.CreateAsync(new Role()
+                {
+                    Name = Roles.User
+                });
+            }
         }
 
         public async Task AddAdmin()
@@ -38,7 +63,6 @@ namespace Data
                     };
 
                     var result = await _userManager.CreateAsync(user, initialUser.Password);
-                    var r2 = result;
                 }
             }
         }
