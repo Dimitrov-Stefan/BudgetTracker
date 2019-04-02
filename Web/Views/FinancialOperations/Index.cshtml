@@ -1,0 +1,56 @@
+﻿@model Web.Models.FinancialOperations.FinancialOperationListViewModel
+
+@{
+    ViewData["Title"] = "Financial items";
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="text-center">
+            @ViewData["Title"]
+        </h1>
+
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-primary btn-sm"
+               asp-action="@nameof(FinancialItemsController.Create)">
+                <span class="fas fa-plus"></span>
+                Add
+            </a>
+        </div>
+
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        FinancialItem
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model.FinancialOperations)
+                {
+                    <tr>
+                        <td>@item.Description</td>
+
+                        <td>
+                            <a class="btn btn-primary" asp-action="@nameof(FinancialItemsController.Edit)" asp-route-id="@item.Id">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

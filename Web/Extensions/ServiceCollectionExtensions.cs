@@ -15,6 +15,7 @@ namespace Web.Extensions
             services.AddTransient<DbInitializer, DbInitializer>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IFinancialItemsService, FinancialItemsService>();
+            services.AddScoped<IFinancialOperationsService, FinancialOperationService>();
 
             return services;
         }
@@ -22,6 +23,7 @@ namespace Web.Extensions
         public static IServiceCollection RegisterAppRepositories(this IServiceCollection services)
         {
             services.AddScoped<IFinancialItemsRepository, FinancialItemsRepository>();
+            services.AddScoped<IFinancialOperationsRepository, FinancialOperationsRepository>();
 
             return services;
         }

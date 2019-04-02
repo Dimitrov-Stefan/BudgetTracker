@@ -15,6 +15,6 @@ namespace Models.Entities
 
         public string Description { get; set; }
 
-        public DateTime Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
     }
 }
