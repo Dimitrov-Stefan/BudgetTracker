@@ -27,7 +27,7 @@ namespace Web.Controllers
 
             return View(model);
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> Create(CreateFinancialOperationViewModel model)
         {
@@ -35,6 +35,9 @@ namespace Web.Controllers
             {
                 var financialOperation = new FinancialOperation()
                 {
+                    Amount = model.Amount,
+                    Timestamp = model.Timestamp,
+                    FinancialItemId = model.FinancialItemId,
                     Description = model.Description
                 };
 
@@ -58,6 +61,9 @@ namespace Web.Controllers
 
             var model = new EditFinancialOperationViewModel()
             {
+                Amount = financialOperation.Amount,
+                Timestamp = financialOperation.Timestamp,
+                FinancialItemId = financialOperation.FinancialItemId,
                 Description = financialOperation.Description
             };
 

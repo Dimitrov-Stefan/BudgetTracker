@@ -13,10 +13,22 @@
         <form method="post" asp-action="@nameof(FinancialItemsController.Create)">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <label asp-for="Amount">Amount</label>
+            <div>
+                <input asp-for="Amount" type="number" placeholder="Amount" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <label asp-for="FinancialItemId">Amount</label>
+            <div>
+                <select asp-for="FinancialItemId" asp-items="@Model.FinancialItems" placeholder="Amount" />
+                <span asp-validation-for="FinancialItemId" class="text-danger"></span>
+            </div>
+
             <label asp-for="Description">Description</label>
 
             <div class="form-group">
-                <input asp-for="Description" placeholder="Name" class="form-control" />
+                <input asp-for="Description" placeholder="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 

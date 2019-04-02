@@ -1,4 +1,5 @@
 ﻿using Core.Resources;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models.FinancialOperations
@@ -8,6 +9,14 @@ namespace Web.Models.FinancialOperations
         public int Id { get; set; }
 
         [Required(ErrorMessageResourceName = nameof(Literals.RquiredFieldError), ErrorMessageResourceType = typeof(Literals))]
+        public double Amount { get; set; }
+
+        [Required(ErrorMessageResourceName = nameof(Literals.RquiredFieldError), ErrorMessageResourceType = typeof(Literals))]
+        public DateTimeOffset Timestamp { get; set; }
+
+        [Required(ErrorMessageResourceName = nameof(Literals.RquiredFieldError), ErrorMessageResourceType = typeof(Literals))]
+        public int FinancialItemId { get; set; }
+
         [MaxLength(50, ErrorMessageResourceType = typeof(Literals), ErrorMessageResourceName = nameof(Literals.MaxLengthError))]
         public string Description { get; set; }
     }

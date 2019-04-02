@@ -21,7 +21,6 @@ namespace Business.Services
         public async Task<IEnumerable<FinancialOperation>> GetAllAsync()
             => await _financialOperationsRepository.GetAllAsync();
 
-
         public async Task<FinancialOperation> GetByIdAsync(int id)
             => await _financialOperationsRepository.FindAsync(id);
 
