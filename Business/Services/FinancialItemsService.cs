@@ -23,7 +23,10 @@ namespace Business.Services
             await _financialItemsRepository.GetAllActiveAsync();
 
 
-        public async Task<FinancialItem> GetById(int id)
+        public async Task<FinancialItem> GetByIdAsync(int id)
             => await _financialItemsRepository.FindAsync(id);
+
+        public async Task UpdateAsync(FinancialItem item)
+            => await _financialItemsRepository.UpdateAsync(item);
     }
 }

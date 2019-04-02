@@ -44,6 +44,10 @@
                         <td>@item.Type</td>
 
                         <td>@item.IsActive</td>
+
+                        <td>
+                            <a class="btn btn-primary" asp-action="@nameof(FinancialItemsController.Edit)" asp-route-id="@item.Id">Edit</a>
+                        </td>
                     </tr>
                 }
             </tbody>

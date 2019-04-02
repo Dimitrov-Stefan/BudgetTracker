@@ -10,6 +10,8 @@ namespace Core.Contracts.Services
 
         Task CreateAsync(FinancialItem item);
 
-        Task<FinancialItem> GetById(int id);
+        Task<FinancialItem> GetByIdAsync(int id);
+
+        Task UpdateAsync(FinancialItem item);
     }
 }

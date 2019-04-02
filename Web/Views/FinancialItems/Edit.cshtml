@@ -1,7 +1,7 @@
-﻿@model Web.Models.FinancialItems.CreateFinancialItemViewModel
+﻿@model Web.Models.FinancialItems.EditFinancialItemViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
 <div class="row">
@@ -10,7 +10,7 @@
             <h1>@ViewData["Title"]</h1>
         </div>
 
-        <form method="post" asp-action="@nameof(FinancialItemsController.Create)">
+        <form method="post" asp-action="@nameof(FinancialItemsController.Edit)">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <label asp-for="Name">Name</label>
@@ -30,7 +30,6 @@
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
             </div>
         </form>
-
         <div class="form-group text-center">
             <a asp-action="@nameof(FinancialItemsController.Index)">Cancel</a>
         </div>

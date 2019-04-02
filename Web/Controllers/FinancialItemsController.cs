@@ -61,9 +61,10 @@ namespace Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var financialItem = await _financialItemsService.GetById(id);
+            var financialItem = await _financialItemsService.GetByIdAsync(id);
 
             if (financialItem == null)
             {
@@ -80,9 +81,10 @@ namespace Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Edit(EditFinancialItemViewModel model)
         {
-            var financialItem = await _financialItemsService.GetById(model.Id);
+            var financialItem = await _financialItemsService.GetByIdAsync(model.Id);
 
             if (financialItem == null)
             {
@@ -91,15 +93,13 @@ namespace Web.Controllers
 
             if (ModelState.IsValid)
             {
+                financialItem.Name = model.Name;
+                financialItem.Type = model.Type;
 
+                await _financialItemsService.UpdateAsync(financialItem);
+
+                return RedirectToAction(nameof(FinancialItemsController.Index));
             }
-
-            //var model = new EditFinancialItemViewModel()
-            //{
-            //    Name = financialItem.Name,
-            //    Type = financialItem.Type,
-            //    Types = new SelectList(Enum.GetNames(typeof(FinancialItemType)))
-            //};
 
             return View(model);
         }
