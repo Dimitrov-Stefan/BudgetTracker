@@ -14,6 +14,9 @@ namespace Data.Repositories
 
         }
 
+        public async Task<IEnumerable<FinancialItem>> GetAllAsync()
+            => await Set.ToListAsync();
+
         public async Task<IEnumerable<FinancialItem>> GetAllActiveAsync()
             => await Set.Where(fi => fi.IsActive).ToListAsync();
        

@@ -26,5 +26,9 @@ namespace Business.Services
 
         public async Task UpdateAsync(FinancialOperation item)
             => await _financialOperationsRepository.UpdateAsync(item);
+
+        public async Task<IEnumerable<FinancialOperation>> GetByFinancialItemIdAsync(int financialItemId)
+        => await _financialOperationsRepository.GetByFinancialItemIdAsync(financialItemId);
+        
     }
 }

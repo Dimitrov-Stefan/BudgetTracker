@@ -13,7 +13,7 @@
 
         <div class="d-flex justify-content-end">
             <a class="btn btn-primary btn-sm"
-               asp-action="@nameof(FinancialItemsController.Create)">
+               asp-action="@nameof(FinancialOperationsController.Create)">
                 <span class="fas fa-plus"></span>
                 Add
             </a>
@@ -41,13 +41,15 @@
 
                 @foreach (var item in Model.FinancialOperations)
                 {
-                    <tr>
-                        <td>@item.Description</td>
-
-                        <td>
-                            <a class="btn btn-primary" asp-action="@nameof(FinancialItemsController.Edit)" asp-route-id="@item.Id">Edit</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@item.Timestamp</td>
+                    <td>@item.FinancialItem.Name</td>
+                    <td>@item.Amount</td>
+                    <td>@item.Description</td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="@nameof(FinancialOperationsController.Edit)" asp-route-id="@item.Id">Edit</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

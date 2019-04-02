@@ -10,23 +10,28 @@
             <h1>@ViewData["Title"]</h1>
         </div>
 
-        <form method="post" asp-action="@nameof(FinancialItemsController.Create)">
+        <form method="post" asp-action="@nameof(FinancialOperationsController.Create)">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <label asp-for="Amount">Amount</label>
-            <div>
-                <input asp-for="Amount" type="number" placeholder="Amount" />
+            <div class="form-group">
+                <input asp-for="Amount" type="number" placeholder="Amount" class="form-control" />
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
 
-            <label asp-for="FinancialItemId">Amount</label>
-            <div>
-                <select asp-for="FinancialItemId" asp-items="@Model.FinancialItems" placeholder="Amount" />
+            <label asp-for="FinancialItemId">Financial Item</label>
+            <div class="form-group">
+                <select asp-for="FinancialItemId" asp-items="@Model.FinancialItems" placeholder="Financial Item" class="form-control"></select>
                 <span asp-validation-for="FinancialItemId" class="text-danger"></span>
             </div>
 
-            <label asp-for="Description">Description</label>
+            <label asp-for="Timestamp">Date</label>
+            <div class="form-group">
+                <input asp-for="Timestamp" type="datetime" placeholder="Date" class="form-control" />
+                <span asp-validation-for="Timestamp" class="text-danger"></span>
+            </div>
 
+            <label asp-for="Description">Description</label>
             <div class="form-group">
                 <input asp-for="Description" placeholder="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
@@ -38,7 +43,7 @@
         </form>
 
         <div class="form-group text-center">
-            <a asp-action="@nameof(FinancialItemsController.Index)">Cancel</a>
+            <a asp-action="@nameof(FinancialOperationsController.Index)">Cancel</a>
         </div>
     </div>
 </div>

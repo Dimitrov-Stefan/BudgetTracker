@@ -1,5 +1,6 @@
 ﻿using Core.Resources;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

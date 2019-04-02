@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Core.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.Entities;
 using Web.Models.FinancialOperations;
 
@@ -9,25 +12,40 @@ namespace Web.Controllers
     public class FinancialOperationsController : Controller
     {
         private readonly IFinancialOperationsService _financialOperationsService;
+        private readonly IFinancialItemsService _financialItemsService;
 
-        public FinancialOperationsController(IFinancialOperationsService financialOperationsService)
+        public FinancialOperationsController(IFinancialOperationsService financialOperationsService, IFinancialItemsService financialItemsService)
         {
             _financialOperationsService = financialOperationsService;
+            _financialItemsService = financialItemsService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var financialOperations = await _financialOperationsService.GetAllAsync();
+
+            var model = new FinancialOperationListViewModel()
+            {
+                FinancialOperations = financialOperations
+            };
+
+            return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var model = new CreateFinancialOperationViewModel();
+            var model = new CreateFinancialOperationViewModel()
+            {
+                Timestamp = DateTimeOffset.UtcNow
+            };
+
+            var financialItems = await _financialItemsService.GetAllAsync();
+            model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString())).ToList();
 
             return View(model);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateFinancialOperationViewModel model)
         {
@@ -45,6 +63,9 @@ namespace Web.Controllers
 
                 return RedirectToAction(nameof(FinancialOperationsController.Index));
             }
+
+            var financialItems = await _financialItemsService.GetAllAsync();
+            model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);
         }
@@ -67,6 +88,9 @@ namespace Web.Controllers
                 Description = financialOperation.Description
             };
 
+            var financialItems = await _financialItemsService.GetAllAsync();
+            model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
+
             return View(model);
         }
 
@@ -88,6 +112,9 @@ namespace Web.Controllers
 
                 return RedirectToAction(nameof(FinancialOperationsController.Index));
             }
+
+            var financialItems = await _financialItemsService.GetAllAsync();
+            model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);
         }

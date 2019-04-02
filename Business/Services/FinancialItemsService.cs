@@ -19,6 +19,9 @@ namespace Business.Services
             => await _financialItemsRepository.AddAsync(item);
 
 
+        public async Task<IEnumerable<FinancialItem>> GetAllAsync() =>
+            await _financialItemsRepository.GetAllAsync();
+
         public async Task<IEnumerable<FinancialItem>> GetAllActiveAsync() =>
             await _financialItemsRepository.GetAllActiveAsync();
 

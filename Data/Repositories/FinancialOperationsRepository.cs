@@ -15,6 +15,9 @@ namespace Data.Repositories
         }
 
         public async Task<IEnumerable<FinancialOperation>> GetAllAsync()
-            => await Set.ToListAsync();  
+            => await Set.Include(fo => fo.FinancialItem).ToListAsync();
+
+        public async Task<IEnumerable<FinancialOperation>> GetByFinancialItemIdAsync(int financialItemId)
+            => await Set.Where(fo => fo.FinancialItemId == financialItemId).ToListAsync();
     }
 }
