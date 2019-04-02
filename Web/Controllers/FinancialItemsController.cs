@@ -60,5 +60,48 @@ namespace Web.Controllers
 
             return View(model);
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var financialItem = await _financialItemsService.GetById(id);
+
+            if (financialItem == null)
+            {
+                return NotFound(financialItem);
+            }
+
+            var model = new EditFinancialItemViewModel()
+            {
+                Name = financialItem.Name,
+                Type = financialItem.Type,
+                Types = new SelectList(Enum.GetNames(typeof(FinancialItemType)))
+            };
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Edit(EditFinancialItemViewModel model)
+        {
+            var financialItem = await _financialItemsService.GetById(model.Id);
+
+            if (financialItem == null)
+            {
+                return NotFound(financialItem);
+            }
+
+            if (ModelState.IsValid)
+            {
+
+            }
+
+            //var model = new EditFinancialItemViewModel()
+            //{
+            //    Name = financialItem.Name,
+            //    Type = financialItem.Type,
+            //    Types = new SelectList(Enum.GetNames(typeof(FinancialItemType)))
+            //};
+
+            return View(model);
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace Core.Contracts.Services
         Task<IEnumerable<FinancialItem>> GetAllActiveAsync();
 
         Task CreateAsync(FinancialItem item);
+
+        Task<FinancialItem> GetById(int id);
     }
 }

@@ -16,13 +16,14 @@ namespace Business.Services
         }
 
         public async Task CreateAsync(FinancialItem item)
-        {
-            await _financialItemsRepository.AddAsync(item);
-        }
+            => await _financialItemsRepository.AddAsync(item);
 
-        public async Task<IEnumerable<FinancialItem>> GetAllActiveAsync()
-        {
-            return await _financialItemsRepository.GetAllActiveAsync();
-        }
+
+        public async Task<IEnumerable<FinancialItem>> GetAllActiveAsync() =>
+            await _financialItemsRepository.GetAllActiveAsync();
+
+
+        public async Task<FinancialItem> GetById(int id)
+            => await _financialItemsRepository.FindAsync(id);
     }
 }
