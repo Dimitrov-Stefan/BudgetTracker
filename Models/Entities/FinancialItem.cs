@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Models.Entities.Identity;
 using Models.Enums;
 
 namespace Models.Entities
@@ -14,5 +15,9 @@ namespace Models.Entities
         public bool IsActive { get; set; }
 
         public IList<FinancialOperation> FinancialOperations { get; set; }
+
+        public int UserId { get; set; }
+
+        public User User { get; set; }
     }
 }

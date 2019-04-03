@@ -72,8 +72,7 @@ namespace Web
                 app.UseHsts();
             }
 
-            dbInitializer.AddAdmin().Wait();
-            dbInitializer.AddRoles().Wait();
+            dbInitializer.InitializeDatabase().Wait();
 
             app.UseAuthentication();
 

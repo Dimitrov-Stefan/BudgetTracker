@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20190325154644_Initial.cs" />
+    <Compile Remove="Migrations\20190403172156_AddedUserRelationsToFinancialEntities.cs" />
+    <Compile Remove="Migrations\20190403172347_AddedUserRelationsToFinancialEntities.cs" />
   </ItemGroup>
 
   <ItemGroup>

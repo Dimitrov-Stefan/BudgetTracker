@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Core.Constants;
 using Data.Initialization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Models.Entities.Identity;
 
@@ -26,7 +27,14 @@ namespace Data
             _dbContext = dbContext;
         }
 
-        public async Task AddRoles()
+        public async Task InitializeDatabase()
+        {
+            await ApplyMigrationsAsync();
+            await AddRoles();
+            await AddAdmin();
+        }
+
+        private async Task AddRoles()
         {
             if (!await _roleManager.RoleExistsAsync(Roles.Admin))
             {
@@ -45,7 +53,7 @@ namespace Data
             }
         }
 
-        public async Task AddAdmin()
+        private async Task AddAdmin()
         {
             if (!_dbContext.Users.Any())
             {
@@ -65,6 +73,16 @@ namespace Data
                     var result = await _userManager.CreateAsync(user, initialUser.Password);
                 }
             }
+        }
+
+        private Task ApplyMigrationsAsync()
+        {
+            if (_dbContext.Database.GetPendingMigrations().Any())
+            {
+                return _dbContext.Database.MigrateAsync();
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

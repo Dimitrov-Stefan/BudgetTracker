@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Constants;
 using Core.Contracts.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.Entities;
@@ -9,6 +11,7 @@ using Web.Models.FinancialOperations;
 
 namespace Web.Controllers
 {
+    [Authorize(Roles = Roles.User)]
     public class FinancialOperationsController : Controller
     {
         private readonly IFinancialOperationsService _financialOperationsService;

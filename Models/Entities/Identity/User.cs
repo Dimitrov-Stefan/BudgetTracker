@@ -11,6 +11,8 @@ namespace Models.Entities.Identity
 
         public IList<UserRole> UserRoles { get; set; }
 
+        public IList<FinancialItem> FinancialItems { get; set; }
+
         public bool IsActive { get; set; }
     }
 }

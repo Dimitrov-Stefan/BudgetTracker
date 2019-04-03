@@ -10,9 +10,9 @@ namespace Data.Configurations
         {
             builder.ToTable("FinancialItems");
 
-            builder.Property(fi => fi.Name).HasMaxLength(256);
+            builder.Property(fi => fi.Name).HasMaxLength(256).IsRequired();
 
-            builder.HasMany(fi => fi.FinancialOperations).WithOne(fo => fo.FinancialItem);
+            builder.HasOne(fi => fi.User).WithMany(u => u.FinancialItems).HasForeignKey(fi => fi.UserId);
         }
     }
 }

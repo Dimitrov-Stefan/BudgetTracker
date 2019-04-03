@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Core.Constants;
 using Core.Contracts.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.Entities;
@@ -9,6 +11,7 @@ using Web.Models.FinancialItems;
 
 namespace Web.Controllers
 {
+    [Authorize(Roles = Roles.User)]
     public class FinancialItemsController : Controller
     {
         private readonly IFinancialItemsService _financialItemsService;
