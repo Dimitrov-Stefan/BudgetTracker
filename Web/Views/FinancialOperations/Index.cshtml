@@ -4,6 +4,11 @@
     ViewData["Title"] = "Financial items";
 }
 
+@section PageHeader {
+    <div class="container">
+        <partial name="_UserMenuPartial" />
+    </div>
+}
 
 <div class="row">
     <div class="col-12">
@@ -41,15 +46,15 @@
 
                 @foreach (var item in Model.FinancialOperations)
                 {
-                <tr>
-                    <td>@item.Timestamp</td>
-                    <td>@item.FinancialItem.Name</td>
-                    <td>@item.Amount</td>
-                    <td>@item.Description</td>
-                    <td>
-                        <a class="btn btn-primary" asp-action="@nameof(FinancialOperationsController.Edit)" asp-route-id="@item.Id">Edit</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>@item.Timestamp</td>
+                        <td>@item.FinancialItem.Name</td>
+                        <td>@item.Amount</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <a class="btn btn-primary" asp-action="@nameof(FinancialOperationsController.Edit)" asp-route-id="@item.Id">Edit</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

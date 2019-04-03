@@ -106,6 +106,9 @@ namespace Web.Controllers
 
             if (ModelState.IsValid)
             {
+                financialOperation.Amount = model.Amount;
+                financialOperation.Timestamp = model.Timestamp;
+                financialOperation.FinancialItemId = model.FinancialItemId;
                 financialOperation.Description = model.Description;
 
                 await _financialOperationsService.UpdateAsync(financialOperation);
