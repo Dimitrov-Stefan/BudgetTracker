@@ -1,5 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using Core.Constants;
 using Microsoft.AspNetCore.Mvc;
+using Web.Extensions;
 using Web.Models;
 
 namespace Web.Controllers
@@ -8,6 +11,14 @@ namespace Web.Controllers
     {
         public IActionResult Index()
         {
+            //TODO: Remove this when users and roles are all done. Used for testing now.
+            return RedirectToAction(nameof(FinancialOperationsController.Index), Url.ControllerName(typeof(FinancialOperationsController)));
+
+            //if (User.IsInRole(Roles.User))
+            //{
+            //    return RedirectToAction(nameof(FinancialOperationsController.Index), Url.ControllerName(typeof(FinancialOperationsController)));
+            //}
+
             return View();
         }
 
