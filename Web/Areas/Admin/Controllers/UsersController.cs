@@ -4,6 +4,7 @@ using Core.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Areas.Admin.Models.Users;
+using Web.Extensions;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -26,6 +27,25 @@ namespace Web.Areas.Admin.Controllers
             {
                 Users = users
             };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.CreateAsync(model.FirstName, model.LastName, model.Email, model.Password, model.Role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(UsersController.Index));
+                }
+
+                // TODO: Add log error here when logging is implemented
+            }
+
 
             return View(model);
         }
