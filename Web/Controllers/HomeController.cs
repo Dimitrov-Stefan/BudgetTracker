@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Core.Constants;
 using Microsoft.AspNetCore.Mvc;
+using Web.Areas.Admin.Controllers;
 using Web.Extensions;
 using Web.Models;
 
@@ -11,13 +12,14 @@ namespace Web.Controllers
     {
         public IActionResult Index()
         {
-            //TODO: Remove this when users and roles are all done. Used for testing now.
-            return RedirectToAction(nameof(FinancialOperationsController.Index), Url.ControllerName(typeof(FinancialOperationsController)));
-
-            //if (User.IsInRole(Roles.User))
-            //{
-            //    return RedirectToAction(nameof(FinancialOperationsController.Index), Url.ControllerName(typeof(FinancialOperationsController)));
-            //}
+            if (User.IsInRole(Roles.User))
+            {
+                return RedirectToAction(nameof(FinancialOperationsController.Index), Url.ControllerName(typeof(FinancialOperationsController)));
+            }
+            else if (User.IsInRole(Roles.Admin))
+            {
+                return RedirectToAction(nameof(UsersController.Index), Url.ControllerName(typeof(UsersController)), new { area = "admin" });
+            }
 
             return View();
         }

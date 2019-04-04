@@ -16,6 +16,7 @@ namespace Web.Extensions
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IFinancialItemsService, FinancialItemsService>();
             services.AddScoped<IFinancialOperationsService, FinancialOperationService>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }
@@ -24,6 +25,7 @@ namespace Web.Extensions
         {
             services.AddScoped<IFinancialItemsRepository, FinancialItemsRepository>();
             services.AddScoped<IFinancialOperationsRepository, FinancialOperationsRepository>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

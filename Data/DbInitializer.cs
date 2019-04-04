@@ -58,6 +58,7 @@ namespace Data
             if (!_dbContext.Users.Any())
             {
                 var initialUser = _options.Users.FirstOrDefault();
+
                 if (initialUser != null)
                 {
                     var user = new User()
@@ -71,6 +72,11 @@ namespace Data
                     };
 
                     var result = await _userManager.CreateAsync(user, initialUser.Password);
+
+                    if (result.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(user, Roles.Admin);
+                    }
                 }
             }
         }
