@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.Entities;
+using Web.Extensions;
 using Web.Models.FinancialOperations;
 
 namespace Web.Controllers
@@ -43,7 +44,9 @@ namespace Web.Controllers
                 Timestamp = DateTimeOffset.UtcNow
             };
 
-            var financialItems = await _financialItemsService.GetAllAsync();
+            var userId = User.GetCurrentUserId();
+
+            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString())).ToList();
 
             return View(model);
@@ -67,7 +70,8 @@ namespace Web.Controllers
                 return RedirectToAction(nameof(FinancialOperationsController.Index));
             }
 
-            var financialItems = await _financialItemsService.GetAllAsync();
+            var userId = User.GetCurrentUserId();
+            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);
@@ -91,7 +95,8 @@ namespace Web.Controllers
                 Description = financialOperation.Description
             };
 
-            var financialItems = await _financialItemsService.GetAllAsync();
+            var userId = User.GetCurrentUserId();
+            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);
@@ -119,7 +124,8 @@ namespace Web.Controllers
                 return RedirectToAction(nameof(FinancialOperationsController.Index));
             }
 
-            var financialItems = await _financialItemsService.GetAllAsync();
+            var userId = User.GetCurrentUserId();
+            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);

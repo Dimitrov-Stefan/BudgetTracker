@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.Entities;
 using Models.Enums;
+using Web.Extensions;
 using Web.Models.FinancialItems;
 
 namespace Web.Controllers
@@ -23,7 +24,8 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var financialItems = await _financialItemsService.GetAllActiveAsync();
+            var userId = User.GetCurrentUserId();
+            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(userId);
 
             var model = new FinancialItemListViewModel()
             {
@@ -45,12 +47,15 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateFinancialItemViewModel model)
         {
+            var userId = User.GetCurrentUserId();
+
             if (ModelState.IsValid)
             {
                 var financialItem = new FinancialItem()
                 {
                     Name = model.Name,
                     Type = model.Type,
+                    UserId = userId,
                     IsActive = true
                 };
 

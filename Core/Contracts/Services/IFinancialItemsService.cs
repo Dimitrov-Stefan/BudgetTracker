@@ -6,9 +6,9 @@ namespace Core.Contracts.Services
 {
     public interface IFinancialItemsService
     {
-        Task<IEnumerable<FinancialItem>> GetAllAsync();
+        Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId);
 
-        Task<IEnumerable<FinancialItem>> GetAllActiveAsync();
+        Task<IEnumerable<FinancialItem>> GetAllActiveByUserIdAsync(int userId);
 
         Task CreateAsync(FinancialItem item);
 

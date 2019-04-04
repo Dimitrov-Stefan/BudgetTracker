@@ -19,11 +19,11 @@ namespace Business.Services
             => await _financialItemsRepository.AddAsync(item);
 
 
-        public async Task<IEnumerable<FinancialItem>> GetAllAsync() =>
-            await _financialItemsRepository.GetAllAsync();
+        public async Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId) =>
+            await _financialItemsRepository.GetAllByUserIdAsync(userId);
 
-        public async Task<IEnumerable<FinancialItem>> GetAllActiveAsync() =>
-            await _financialItemsRepository.GetAllActiveAsync();
+        public async Task<IEnumerable<FinancialItem>> GetAllActiveByUserIdAsync(int userId) =>
+            await _financialItemsRepository.GetAllActiveByUserIdAsync(userId);
 
 
         public async Task<FinancialItem> GetByIdAsync(int id)

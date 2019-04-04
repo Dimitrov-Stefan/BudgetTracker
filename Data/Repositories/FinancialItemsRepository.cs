@@ -14,11 +14,11 @@ namespace Data.Repositories
 
         }
 
-        public async Task<IEnumerable<FinancialItem>> GetAllAsync()
-            => await Set.ToListAsync();
+        public async Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId)
+            => await Set.Where(fi => fi.UserId == userId).ToListAsync();
 
-        public async Task<IEnumerable<FinancialItem>> GetAllActiveAsync()
-            => await Set.Where(fi => fi.IsActive).ToListAsync();
+        public async Task<IEnumerable<FinancialItem>> GetAllActiveByUserIdAsync(int userId)
+            => await Set.Where(fi => fi.UserId == userId && fi.IsActive).ToListAsync();
        
     }
 }
