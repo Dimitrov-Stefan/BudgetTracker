@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models.Entities.Identity;
-using Steffes.Models.ServiceResults.Users;
+using Models.ServiceResults.Users;
 
 namespace Core.Contracts.Services
 {
@@ -9,7 +9,7 @@ namespace Core.Contracts.Services
     {
         Task<IEnumerable<User>> GetAllAsync();
 
-        Task<CreateUserResult> CreateAsync(string firstName, string lastName, string email, string password, string role);
+        Task<CreateUserResult> CreateAsync(string firstName, string lastName, string email, string password, int roleId);
 
         Task<User> GetByIdAsync(int id);
 

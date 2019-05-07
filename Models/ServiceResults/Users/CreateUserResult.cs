@@ -2,7 +2,7 @@
 using Models.Entities.Identity;
 using System.Collections.Generic;
 
-namespace Steffes.Models.ServiceResults.Users
+namespace Models.ServiceResults.Users
 {
     /// <summary>
     /// A class that represents the result of the create user operations.

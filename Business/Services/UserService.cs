@@ -7,28 +7,31 @@ using Core.Contracts.Repositories;
 using Core.Contracts.Services;
 using Microsoft.AspNetCore.Identity;
 using Models.Entities.Identity;
-using Steffes.Models.ServiceResults.Users;
+using Models.ServiceResults.Users;
 
 namespace Business.Services
 {
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IUserStore<User> _userStore;
         private readonly IUserEmailStore<User> _emailStore;
         private readonly IUserRepository _userRepository;
 
         public UserService(UserManager<User> userManager,
+            RoleManager<Role> roleManager,
             IUserStore<User> userStore,
             IUserRepository userRepository)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _userStore = userStore;
             _emailStore = _userManager.SupportsUserEmail ? (IUserEmailStore<User>)_userStore : throw new NotSupportedException("A user store with email support is required.");
             _userRepository = userRepository;
         }
 
-        public async Task<CreateUserResult> CreateAsync(string firstName, string lastName, string email, string password, string role)
+        public async Task<CreateUserResult> CreateAsync(string firstName, string lastName, string email, string password, int roleId)
         {
             var user = new User()
             {
@@ -43,7 +46,16 @@ namespace Business.Services
 
             if (createUserResult.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, Roles.User);
+                var roleInDb = await _roleManager.FindByIdAsync(roleId.ToString());
+
+                if (roleInDb == null)
+                {
+                    await _userManager.AddToRoleAsync(user, roleInDb.Name);
+                }
+                else
+                {
+                    IdentityResult.Failed(new IdentityError() { Description = $"Failed to add user {user.UserName} to role." });
+                }
             }
 
             return new CreateUserResult

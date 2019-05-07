@@ -41,16 +41,15 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
-            <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-block">Register</button>
-            </div>
-
             <div class="form-group">
-                <select asp-for="Role" asp-items="Model.Roles" class="form-control" />
+                <select asp-for="RoleId" asp-items="Model.Roles" class="form-control"></select>
+                <span asp-validation-for="RoleId" class="text-danger"></span>
             </div>
-            <span asp-validation-for="Role" class="text-danger"></span>
-        </form>
 
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-block">Create</button>
+            </div>
+        </form>
         <div class="form-group text-center">
             <a asp-action="@nameof(UsersController.Index)" class="btn btn-link btn-block">Cancel</a>
         </div>

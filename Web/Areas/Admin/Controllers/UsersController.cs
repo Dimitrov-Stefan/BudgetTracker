@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Core.Constants;
 using Core.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Web.Areas.Admin.Models.Users;
 using Web.Extensions;
 
@@ -13,9 +15,12 @@ namespace Web.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
-        public UsersController(IUserService userService)
+        private readonly IRoleService _roleService;
+
+        public UsersController(IUserService userService, IRoleService roleService)
         {
             _userService = userService;
+            _roleService = roleService;
         }
 
         [HttpGet]
@@ -34,7 +39,12 @@ namespace Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var model = new CreateUserViewModel()
+            {
+                Roles = _roleService.GetAll().Select(r => new SelectListItem(r.Name, r.Id.ToString())).ToList()
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -42,7 +52,7 @@ namespace Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _userService.CreateAsync(model.FirstName, model.LastName, model.Email, model.Password, model.Role);
+                var result = await _userService.CreateAsync(model.FirstName, model.LastName, model.Email, model.Password, model.RoleId);
 
                 if (result.Succeeded)
                 {
@@ -57,6 +67,8 @@ namespace Web.Areas.Admin.Controllers
                 }
                 // TODO: Add log error here when logging is implemented
             }
+
+            model.Roles = _roleService.GetAll().Select(r => new SelectListItem(r.Name, r.Id.ToString())).ToList();
 
             return View(model);
         }
