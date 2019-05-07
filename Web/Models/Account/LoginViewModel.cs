@@ -5,10 +5,10 @@ namespace Web.Models.Account
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessageResourceName = nameof(Literals.RquiredFieldError), ErrorMessageResourceType = typeof(Literals))]
+        [Required(ErrorMessageResourceName = nameof(Literals.RequiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         public string Email { get; set; }
 
-        [Required(ErrorMessageResourceName = nameof(Literals.RquiredFieldError), ErrorMessageResourceType = typeof(Literals))]
+        [Required(ErrorMessageResourceName = nameof(Literals.RequiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         public string Password { get; set; }
 
         public string ReturnUrl { get; set; }

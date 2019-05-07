@@ -1,11 +1,13 @@
 ﻿using Core.Resources;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Web.Areas.Admin.Models.Users
 {
-    public class CreateUserViewModel
+    public class EditUserViewModel
     {
         [Display(Name = "First Name")]
         [Required(ErrorMessageResourceName = nameof(Literals.RequiredFieldError), ErrorMessageResourceType = typeof(Literals))]
@@ -25,7 +27,5 @@ namespace Web.Areas.Admin.Models.Users
         public string Password { get; set; }
 
         public string Role { get; set; }
-
-        public IEnumerable<SelectListItem> Roles { get; set; }
     }
 }

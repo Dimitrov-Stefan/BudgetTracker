@@ -31,6 +31,12 @@ namespace Web.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateUserViewModel model)
         {
@@ -42,10 +48,15 @@ namespace Web.Areas.Admin.Controllers
                 {
                     return RedirectToAction(nameof(UsersController.Index));
                 }
-
+                else
+                {
+                    foreach(var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
                 // TODO: Add log error here when logging is implemented
             }
-
 
             return View(model);
         }

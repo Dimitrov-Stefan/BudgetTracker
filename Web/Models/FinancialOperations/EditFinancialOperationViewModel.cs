@@ -10,13 +10,13 @@ namespace Web.Models.FinancialOperations
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessageResourceName = nameof(Literals.RquiredFieldError), ErrorMessageResourceType = typeof(Literals))]
+        [Required(ErrorMessageResourceName = nameof(Literals.RequiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         public double Amount { get; set; }
 
-        [Required(ErrorMessageResourceName = nameof(Literals.RquiredFieldError), ErrorMessageResourceType = typeof(Literals))]
+        [Required(ErrorMessageResourceName = nameof(Literals.RequiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         public DateTimeOffset Timestamp { get; set; }
 
-        [Required(ErrorMessageResourceName = nameof(Literals.RquiredFieldError), ErrorMessageResourceType = typeof(Literals))]
+        [Required(ErrorMessageResourceName = nameof(Literals.RequiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         public int FinancialItemId { get; set; }
 
         public IEnumerable<SelectListItem> FinancialItems { get; set; }

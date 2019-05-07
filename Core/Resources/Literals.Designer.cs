@@ -72,9 +72,9 @@ namespace Core.Resources {
         /// <summary>
         ///   Looks up a localized string similar to This field cannot be empty..
         /// </summary>
-        public static string RquiredFieldError {
+        public static string RequiredFieldError {
             get {
-                return ResourceManager.GetString("RquiredFieldError", resourceCulture);
+                return ResourceManager.GetString("RequiredFieldError", resourceCulture);
             }
         }
     }
