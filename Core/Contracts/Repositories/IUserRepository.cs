@@ -6,6 +6,8 @@ namespace Core.Contracts.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
+        Task<User> GetByIdAsync(int id);
+
         Task<IEnumerable<User>> GetAllAsync();
     }
 }

@@ -13,6 +13,6 @@ namespace Core.Contracts.Services
 
         Task<User> GetByIdAsync(int id);
 
-        Task UpdateAsync(User item);
+        Task<EditUserResult> EditAsync(User user);
     }
 }

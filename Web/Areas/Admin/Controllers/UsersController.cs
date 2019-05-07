@@ -72,5 +72,49 @@ namespace Web.Areas.Admin.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var user = await _userService.GetByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound(user);
+            }
+
+            var model = new EditUserViewModel()
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                RoleId = user.UserRoles.FirstOrDefault().RoleId, // TODO: Change this when multiple roles are supported
+                Roles = _roleService.GetAll().Select(r => new SelectListItem(r.Name, r.Id.ToString())).ToList()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditUserViewModel model)
+        {
+            var user = await _userService.GetByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                return NotFound(user);
+            }
+
+            var userModel = new EditUserViewModel()
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                RoleId = user.UserRoles.FirstOrDefault().RoleId, // TODO: Change this when multiple roles are supported
+                Roles = _roleService.GetAll().Select(r => new SelectListItem(r.Name, r.Id.ToString())).ToList()
+            };
+
+            return View(model);
+        }
     }
 }

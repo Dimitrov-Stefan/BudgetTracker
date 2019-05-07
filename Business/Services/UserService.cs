@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Constants;
@@ -48,7 +49,7 @@ namespace Business.Services
             {
                 var roleInDb = await _roleManager.FindByIdAsync(roleId.ToString());
 
-                if (roleInDb == null)
+                if (roleInDb != null)
                 {
                     await _userManager.AddToRoleAsync(user, roleInDb.Name);
                 }
@@ -69,14 +70,28 @@ namespace Business.Services
         public Task<IEnumerable<User>> GetAllAsync()
             => _userRepository.GetAllAsync();
 
-        public Task<User> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<User> GetByIdAsync(int id)
+            => await _userRepository.GetByIdAsync(id);
 
-        public Task UpdateAsync(User item)
+        public async Task<EditUserResult> EditAsync(User user)
         {
-            throw new NotImplementedException();
+            var userInDb = await _userManager.FindByIdAsync(user.Id.ToString());
+            var userInDbRoles = await _userManager.GetRolesAsync(userInDb);
+
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            if (updateResult.Succeeded)
+            {
+                await _userManager.RemoveFromRoleAsync(user, user.UserRoles.FirstOrDefault().Role.Name);
+                await _userManager.AddToRoleAsync(user, userInDbRoles.FirstOrDefault());
+            }
+
+            return new EditUserResult
+            {
+                User = updateResult.Succeeded ? user : null,
+                Succeeded = updateResult.Succeeded,
+                Errors = updateResult.Errors
+            };
         }
     }
 }

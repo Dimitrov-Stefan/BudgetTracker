@@ -1,14 +1,14 @@
 ﻿using Core.Resources;
-using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Web.Areas.Admin.Models.Users
 {
     public class EditUserViewModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "First Name")]
         [Required(ErrorMessageResourceName = nameof(Literals.RequiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         [MaxLength(50, ErrorMessageResourceType = typeof(Literals), ErrorMessageResourceName = nameof(Literals.MaxLengthError))]
@@ -26,6 +26,8 @@ namespace Web.Areas.Admin.Models.Users
         [Required(ErrorMessageResourceType = typeof(Literals), ErrorMessageResourceName = nameof(Literals.RequiredFieldError))]
         public string Password { get; set; }
 
-        public string Role { get; set; }
+        public int RoleId { get; set; }
+
+        public IEnumerable<SelectListItem> Roles { get; set; }
     }
 }

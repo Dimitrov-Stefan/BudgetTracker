@@ -10,9 +10,9 @@ namespace Data.Configurations.Identity
         {
             builder.ToTable("UserRoles");
 
-            builder.HasOne(ur => ur.User).WithMany(u => u.UserRoles);
+            builder.HasOne(ur => ur.User).WithMany(u => u.UserRoles).HasForeignKey(ur => ur.UserId);
 
-            builder.HasOne(ur => ur.Role).WithMany(r => r.UserRoles);
+            builder.HasOne(ur => ur.Role).WithMany(r => r.UserRoles).HasForeignKey(ur => ur.RoleId);
         }
     }
 }

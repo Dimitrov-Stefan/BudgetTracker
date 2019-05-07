@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Contracts.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,11 @@ namespace Data.Repositories
         {
 
         }
+
+        public async Task<User> GetByIdAsync(int id)
+            => await Set.Where(u => u.Id == id)
+            .Include(u => u.UserRoles)
+            .SingleOrDefaultAsync();
 
         public async Task<IEnumerable<User>> GetAllAsync()
             => await Set.ToListAsync();
