@@ -1,4 +1,4 @@
-﻿@model Web.Areas.Admin.Models.Users.CreateUserViewModel
+﻿@model Web.Areas.Admin.Models.Users.EditUserViewModel
 @{
     ViewData["Title"] = "Edit user";
 }
@@ -31,23 +31,8 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <div class="password-group">
-                    <input asp-for="Password" placeholder="Create a password" class="form-control" />
-                    <div class="toggle-password">
-                        <span class="fas fa-eye-slash"></span>
-                    </div>
-                </div>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <select asp-for="RoleId" asp-items="Model.Roles" class="form-control"></select>
-                <span asp-validation-for="RoleId" class="text-danger"></span>
-            </div>
-
             <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                <button type="submit" class="btn btn-primary btn-block">Done</button>
             </div>
         </form>
 

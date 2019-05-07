@@ -75,16 +75,7 @@ namespace Business.Services
 
         public async Task<EditUserResult> EditAsync(User user)
         {
-            var userInDb = await _userManager.FindByIdAsync(user.Id.ToString());
-            var userInDbRoles = await _userManager.GetRolesAsync(userInDb);
-
             var updateResult = await _userManager.UpdateAsync(user);
-
-            if (updateResult.Succeeded)
-            {
-                await _userManager.RemoveFromRoleAsync(user, user.UserRoles.FirstOrDefault().Role.Name);
-                await _userManager.AddToRoleAsync(user, userInDbRoles.FirstOrDefault());
-            }
 
             return new EditUserResult
             {

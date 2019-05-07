@@ -25,9 +25,5 @@ namespace Web.Areas.Admin.Models.Users
 
         [Required(ErrorMessageResourceType = typeof(Literals), ErrorMessageResourceName = nameof(Literals.RequiredFieldError))]
         public string Password { get; set; }
-
-        public int RoleId { get; set; }
-
-        public IEnumerable<SelectListItem> Roles { get; set; }
     }
 }

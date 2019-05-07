@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Constants;
 using Core.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Models.Entities.Identity;
 using Web.Areas.Admin.Models.Users;
 using Web.Extensions;
 
@@ -87,9 +89,7 @@ namespace Web.Areas.Admin.Controllers
             {
                 Email = user.Email,
                 FirstName = user.FirstName,
-                LastName = user.LastName,
-                RoleId = user.UserRoles.FirstOrDefault().RoleId, // TODO: Change this when multiple roles are supported
-                Roles = _roleService.GetAll().Select(r => new SelectListItem(r.Name, r.Id.ToString())).ToList()
+                LastName = user.LastName
             };
 
             return View(model);
@@ -105,13 +105,23 @@ namespace Web.Areas.Admin.Controllers
                 return NotFound(user);
             }
 
+            user.Email = model.Email;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+
+
+            var result = await _userService.EditAsync(user);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(UsersController.Index));
+            }
+
             var userModel = new EditUserViewModel()
             {
                 Email = user.Email,
                 FirstName = user.FirstName,
-                LastName = user.LastName,
-                RoleId = user.UserRoles.FirstOrDefault().RoleId, // TODO: Change this when multiple roles are supported
-                Roles = _roleService.GetAll().Select(r => new SelectListItem(r.Name, r.Id.ToString())).ToList()
+                LastName = user.LastName
             };
 
             return View(model);
