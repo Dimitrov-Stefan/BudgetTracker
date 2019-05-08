@@ -72,6 +72,11 @@
       "provider": "cdnjs",
       "library": "font-awesome@5.7.2",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jqueryui@1.12.1",
+      "destination": "wwwroot/lib/jqueryui/"
     }
   ]
 }
