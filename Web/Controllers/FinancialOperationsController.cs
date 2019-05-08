@@ -65,9 +65,17 @@ namespace Web.Controllers
                     Description = model.Description
                 };
 
-                await _financialOperationsService.CreateAsync(financialOperation);
+                if (financialOperation.FinancialItemId != 0)
+                {
+                    await _financialOperationsService.CreateAsync(financialOperation);
 
-                return RedirectToAction(nameof(FinancialOperationsController.Index));
+                    return RedirectToAction(nameof(FinancialOperationsController.Index));
+                }
+                else
+                {
+                    // Hack: Find a way to remve this hack
+                    ModelState.AddModelError(String.Empty, "Please select a financial item.");
+                }
             }
 
             var userId = User.GetCurrentUserId();

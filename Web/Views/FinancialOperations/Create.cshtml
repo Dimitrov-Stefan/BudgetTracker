@@ -21,7 +21,9 @@
 
             <label asp-for="FinancialItemId">Financial Item</label>
             <div class="form-group">
-                <select asp-for="FinancialItemId" asp-items="@Model.FinancialItems" placeholder="Financial Item" class="form-control"></select>
+                <select asp-for="FinancialItemId" asp-items="@Model.FinancialItems" placeholder="Financial Item" class="form-control">
+                    <option disabled selected value="">Select a financial item</option>
+                </select>
                 <span asp-validation-for="FinancialItemId" class="text-danger"></span>
             </div>
 
