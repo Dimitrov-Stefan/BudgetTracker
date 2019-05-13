@@ -1,0 +1,25 @@
+﻿@model Web.Models.Common.DeleteConfirmationDialogViewModel
+
+<div class="modal fade" tabindex="-1" id="@Model.Id">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@Model.Title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body text-left">
+                <p>@Model.Text</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                <form action="@Model.Url" method="post" class="form-inline">
+                    <button type="submit" class="btn btn-danger" id="delete-firmware-confirm-btn">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

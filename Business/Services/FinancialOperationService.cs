@@ -29,6 +29,15 @@ namespace Business.Services
 
         public async Task<IEnumerable<FinancialOperation>> GetByFinancialItemIdAsync(int financialItemId)
         => await _financialOperationsRepository.GetByFinancialItemIdAsync(financialItemId);
-        
+
+        public async Task DeleteAsync(int id)
+        {
+            var financialOperation = await GetByIdAsync(id);
+
+            if (financialOperation != null)
+            {
+                await _financialOperationsRepository.DeleteAsync(financialOperation);
+            }
+        }
     }
 }

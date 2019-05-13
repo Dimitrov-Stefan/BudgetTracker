@@ -97,6 +97,7 @@ namespace Web.Controllers
 
             var model = new EditFinancialOperationViewModel()
             {
+                Id = financialOperation.Id,
                 Amount = financialOperation.Amount,
                 Timestamp = financialOperation.Timestamp,
                 FinancialItemId = financialOperation.FinancialItemId,
@@ -137,6 +138,13 @@ namespace Web.Controllers
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _financialOperationsService.DeleteAsync(id);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

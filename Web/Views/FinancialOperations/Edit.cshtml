@@ -38,11 +38,23 @@
             </div>
 
             <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
             </div>
+
+            <button type="button"
+                    class="btn btn-outline-danger btn-block"
+                    data-toggle="modal"
+                    data-target="#delete-operation-confirmation">
+                Delete Operation
+            </button>
         </form>
         <div class="form-group text-center">
             <a asp-action="@nameof(FinancialItemsController.Index)">Cancel</a>
         </div>
     </div>
 </div>
+
+<vc:delete-confirmation-dialog dialog-id="delete-operation-confirmation"
+                               title="Delete Operation"
+                               text="Are you sure you want to delete the selected operation?"
+                               url="@Url.Action(nameof(FinancialOperationsController.Delete), new { id = Model.Id })" />
