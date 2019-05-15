@@ -1,0 +1,59 @@
+﻿@model Web.Models.FinancialOperations.CreateFinancialOperationViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="text-center">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+
+        <form method="post" asp-action="@nameof(FinancialOperationsController.Create)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <label asp-for="Amount">Amount</label>
+            <div class="form-group">
+                <input asp-for="Amount" type="number" placeholder="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <label asp-for="FinancialItemId">Financial Item</label>
+            <div class="form-group">
+                <select asp-for="FinancialItemId" asp-items="@Model.FinancialItems" placeholder="Financial Item" class="form-control">
+                    <option disabled selected value="">Select a financial item</option>
+                </select>
+                <span asp-validation-for="FinancialItemId" class="text-danger"></span>
+            </div>
+
+            <label asp-for="Timestamp">Date</label>
+            <div class="form-group">
+                <input asp-for="Timestamp" type="text" placeholder="Date" class="form-control datepicker" readonly="readonly" />
+                <span asp-validation-for="Timestamp" class="text-danger"></span>
+            </div>
+
+            <label asp-for="Description">Description</label>
+            <div class="form-group">
+                <input asp-for="Description" placeholder="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </div>
+        </form>
+
+        <div class="form-group text-center">
+            <a asp-action="@nameof(FinancialOperationsController.Index)">Cancel</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".datepicker").datepicker({ format: 'dd/mm/yyyy', autoclose: true, todayBtn: 'linked' })
+        });
+    </script>
+}
