@@ -1,4 +1,4 @@
-﻿@model Web.Models.FinancialItems.FinancialItemListViewModel
+﻿@model Web.Areas.Admin.Models.FinancialItems.FinancialItemListViewModel
 
 @{
     ViewData["Title"] = "Financial items";
@@ -18,7 +18,7 @@
 
         <div class="d-flex justify-content-end">
             <a class="btn btn-primary btn-sm"
-               asp-action="@nameof(FinancialItemsController.Create)">
+               asp-action="@nameof(FinancialItemsController.Create)" asp-route-userId="@Model.UserId">
                 <span class="fas fa-plus"></span>
                 Add
             </a>

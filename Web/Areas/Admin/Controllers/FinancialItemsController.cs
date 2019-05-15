@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.Entities;
 using Models.Enums;
+using Web.Areas.Admin.Models.FinancialItems;
 using Web.Extensions;
-using Web.Models.FinancialItems;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -24,12 +24,13 @@ namespace Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index(int userId)
         {
-            var financialItems = await _financialItemsService.GetAllByUserIdAsync(id);
+            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
 
             var model = new FinancialItemListViewModel()
             {
+                UserId = userId,
                 FinancialItems = financialItems
             };
 
@@ -53,7 +54,7 @@ namespace Web.Areas.Admin.Controllers
             {
                 var financialItem = new FinancialItem()
                 {
-                    
+
                     Name = model.Name,
                     Type = model.Type,
                     UserId = model.UserId,
@@ -62,7 +63,7 @@ namespace Web.Areas.Admin.Controllers
 
                 await _financialItemsService.CreateAsync(financialItem);
 
-                return RedirectToAction(nameof(FinancialItemsController.Index));
+                return RedirectToAction(nameof(FinancialItemsController.Index), new { userId = financialItem.UserId });
             }
 
             model.Types = new SelectList(Enum.GetNames(typeof(FinancialItemType)));
