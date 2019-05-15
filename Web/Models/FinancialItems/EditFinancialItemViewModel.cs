@@ -17,6 +17,8 @@ namespace Web.Models.FinancialItems
         [Required(ErrorMessageResourceName = nameof(Literals.RequiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         public FinancialItemType Type { get; set; }
 
+        public bool IsActive { get; set; }
+
         public IEnumerable<SelectListItem> Types { get; set; }
     }
 }

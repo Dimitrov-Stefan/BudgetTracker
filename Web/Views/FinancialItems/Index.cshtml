@@ -47,7 +47,7 @@
 
                         <td>@item.Type</td>
 
-                        <td>@item.IsActive</td>
+                        <td>@(item.IsActive ? "Yes" : "No")</td>
 
                         <td>
                             <a class="btn btn-primary btn-sm" asp-action="@nameof(FinancialItemsController.Edit)" asp-route-id="@item.Id">Edit</a>

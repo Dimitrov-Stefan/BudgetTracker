@@ -15,5 +15,7 @@ namespace Core.Contracts.Services
         Task<FinancialItem> GetByIdAsync(int id);
 
         Task UpdateAsync(FinancialItem item);
+
+        Task DeleteAsync(int id);
     }
 }

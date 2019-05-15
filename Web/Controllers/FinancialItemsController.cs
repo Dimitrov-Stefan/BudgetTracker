@@ -25,7 +25,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = User.GetCurrentUserId();
-            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(userId);
+            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
 
             var model = new FinancialItemListViewModel()
             {
@@ -81,8 +81,10 @@ namespace Web.Controllers
 
             var model = new EditFinancialItemViewModel()
             {
+                Id = financialItem.Id,
                 Name = financialItem.Name,
                 Type = financialItem.Type,
+                IsActive = financialItem.IsActive,
                 Types = new SelectList(Enum.GetNames(typeof(FinancialItemType)))
             };
 
@@ -103,6 +105,7 @@ namespace Web.Controllers
             {
                 financialItem.Name = model.Name;
                 financialItem.Type = model.Type;
+                financialItem.IsActive = model.IsActive;
 
                 await _financialItemsService.UpdateAsync(financialItem);
 
@@ -110,6 +113,13 @@ namespace Web.Controllers
             }
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _financialItemsService.DeleteAsync(id);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

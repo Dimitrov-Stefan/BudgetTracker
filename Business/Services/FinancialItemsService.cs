@@ -18,7 +18,6 @@ namespace Business.Services
         public async Task CreateAsync(FinancialItem item)
             => await _financialItemsRepository.AddAsync(item);
 
-
         public async Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId) =>
             await _financialItemsRepository.GetAllByUserIdAsync(userId);
 
@@ -31,5 +30,15 @@ namespace Business.Services
 
         public async Task UpdateAsync(FinancialItem item)
             => await _financialItemsRepository.UpdateAsync(item);
+
+        public async Task DeleteAsync(int id)
+        {
+            var financialItem = await GetByIdAsync(id);
+
+            if (financialItem != null)
+            {
+                await _financialItemsRepository.DeleteAsync(financialItem);
+            }
+        }
     }
 }

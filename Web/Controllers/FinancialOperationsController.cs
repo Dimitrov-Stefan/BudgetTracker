@@ -46,7 +46,7 @@ namespace Web.Controllers
 
             var userId = User.GetCurrentUserId();
 
-            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
+            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(userId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString())).ToList();
 
             return View(model);
@@ -73,13 +73,13 @@ namespace Web.Controllers
                 }
                 else
                 {
-                    // Hack: Find a way to remve this hack
+                    // Hack: Find a way to remove this hack
                     ModelState.AddModelError(String.Empty, "Please select a financial item.");
                 }
             }
 
             var userId = User.GetCurrentUserId();
-            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
+            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(userId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);
@@ -105,7 +105,7 @@ namespace Web.Controllers
             };
 
             var userId = User.GetCurrentUserId();
-            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
+            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(userId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);
@@ -134,7 +134,7 @@ namespace Web.Controllers
             }
 
             var userId = User.GetCurrentUserId();
-            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
+            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(userId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);
