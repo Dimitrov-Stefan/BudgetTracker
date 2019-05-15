@@ -126,5 +126,14 @@ namespace Web.Areas.Admin.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int userId)
+        {
+            var model = new UserDetailsViewModel();
+            model.UserId = userId;
+
+            return View(model);
+        }
     }
 }

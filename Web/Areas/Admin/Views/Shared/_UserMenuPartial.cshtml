@@ -1,0 +1,8 @@
+﻿<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Admin" asp-controller="@Url.ControllerName(typeof(FinancialOperationsController))" asp-action="@nameof(FinancialOperationsController.Index)">Operations</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Admin" asp-controller="@Url.ControllerName(typeof(FinancialItemsController))" asp-action="@nameof(FinancialItemsController.Index)">Items</a>
+    </li>
+</ul>

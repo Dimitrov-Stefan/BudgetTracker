@@ -8,6 +8,8 @@ namespace Web.Models.FinancialItems
 {
     public class CreateFinancialItemViewModel
     {
+        public int UserId { get; set; }
+
         [Required(ErrorMessageResourceName = nameof(Literals.RequiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         [MaxLength(50, ErrorMessageResourceType = typeof(Literals), ErrorMessageResourceName = nameof(Literals.MaxLengthError))]
         public string Name { get; set; }

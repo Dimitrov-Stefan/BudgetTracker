@@ -12,6 +12,7 @@ using Web.Models.FinancialItems;
 
 namespace Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = Roles.Admin)]
     public class FinancialItemsController : Controller
     {
@@ -22,10 +23,10 @@ namespace Web.Areas.Admin.Controllers
             _financialItemsService = financialItemsService;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(int id)
         {
-            var userId = User.GetCurrentUserId();
-            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
+            var financialItems = await _financialItemsService.GetAllByUserIdAsync(id);
 
             var model = new FinancialItemListViewModel()
             {
@@ -36,9 +37,10 @@ namespace Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int userId)
         {
             var model = new CreateFinancialItemViewModel();
+            model.UserId = userId;
             model.Types = new SelectList(Enum.GetNames(typeof(FinancialItemType)));
 
             return View(model);
@@ -47,15 +49,14 @@ namespace Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateFinancialItemViewModel model)
         {
-            var userId = User.GetCurrentUserId();
-
             if (ModelState.IsValid)
             {
                 var financialItem = new FinancialItem()
                 {
+                    
                     Name = model.Name,
                     Type = model.Type,
-                    UserId = userId,
+                    UserId = model.UserId,
                     IsActive = true
                 };
 

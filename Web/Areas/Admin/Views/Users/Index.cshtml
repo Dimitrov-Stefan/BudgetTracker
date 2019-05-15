@@ -36,17 +36,21 @@
 
                 @foreach (var item in Model.Users)
                 {
-                    <tr>
-                        <td>@item.FirstName</td>
+                <tr>
+                    <td>@item.FirstName</td>
 
-                        <td>@item.LastName</td>
+                    <td>@item.LastName</td>
 
-                        <td>@item.Email</td>
+                    <td>@item.Email</td>
 
-                        <td>
-                           <a class="btn btn-primary btn-sm" asp-area="Admin" asp-action="Edit" asp-controller="@Url.ControllerName(typeof(UsersController))" asp-route-id ="@item.Id">Edit</a>
-                        </td>
-                    </tr>
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-area="Admin" asp-action="Edit" asp-controller="@Url.ControllerName(typeof(UsersController))" asp-route-id="@item.Id">Edit</a>
+                    </td>
+
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-area="Admin" asp-action="Index" asp-controller="@Url.ControllerName(typeof(FinancialItemsController))" asp-route-id="@item.Id">Details</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
