@@ -16,6 +16,8 @@ namespace Core.Contracts.Services
 
         Task<IEnumerable<FinancialOperation>> GetByFinancialItemIdAsync(int financialItemId);
 
+        Task<IEnumerable<FinancialOperation>> GetAllByUserIdAsync(int userId);
+
         Task DeleteAsync(int financialOperation);
     }
 }

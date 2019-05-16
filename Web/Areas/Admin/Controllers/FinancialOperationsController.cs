@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.Entities;
+using Web.Areas.Admin.Models.FinancialOperations;
 using Web.Extensions;
-using Web.Models.FinancialOperations;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -18,19 +18,31 @@ namespace Web.Areas.Admin.Controllers
     {
         private readonly IFinancialOperationsService _financialOperationsService;
         private readonly IFinancialItemsService _financialItemsService;
+        private readonly IUserService _userService;
 
-        public FinancialOperationsController(IFinancialOperationsService financialOperationsService, IFinancialItemsService financialItemsService)
+        public FinancialOperationsController(IFinancialOperationsService financialOperationsService,
+            IFinancialItemsService financialItemsService,
+            IUserService userService)
         {
             _financialOperationsService = financialOperationsService;
             _financialItemsService = financialItemsService;
+            _userService = userService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int userId)
         {
-            var financialOperations = await _financialOperationsService.GetAllAsync();
+            var financialOperations = await _financialOperationsService.GetAllByUserIdAsync(userId);
+            var user = await _userService.GetByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound(user);
+            }
 
             var model = new FinancialOperationListViewModel()
             {
+                UserId = userId,
+                UserName = user.UserName,
                 FinancialOperations = financialOperations
             };
 
@@ -38,17 +50,24 @@ namespace Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int userId)
         {
             var model = new CreateFinancialOperationViewModel()
             {
                 Timestamp = DateTimeOffset.UtcNow
             };
 
-            var userId = User.GetCurrentUserId();
+            var user = await _userService.GetByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound(user);
+            }
 
             var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(userId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString())).ToList();
+            model.UserId = userId;
+            model.UserName = user.UserName;
 
             return View(model);
         }
@@ -79,8 +98,7 @@ namespace Web.Areas.Admin.Controllers
                 }
             }
 
-            var userId = User.GetCurrentUserId();
-            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(userId);
+            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(model.UserId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);
@@ -96,9 +114,24 @@ namespace Web.Areas.Admin.Controllers
                 return NotFound(financialOperation);
             }
 
+            var financialItem = await _financialItemsService.GetByIdAsync(financialOperation.FinancialItemId);
+
+            if (financialItem == null)
+            {
+                return NotFound(financialItem);
+            }
+
+            var user = await _userService.GetByIdAsync(financialItem.UserId);
+
+            if (user == null)
+            {
+                return NotFound(user);
+            }
+
             var model = new EditFinancialOperationViewModel()
             {
                 Id = financialOperation.Id,
+                UserName = user.UserName,
                 Amount = financialOperation.Amount,
                 Timestamp = financialOperation.Timestamp,
                 FinancialItemId = financialOperation.FinancialItemId,
@@ -131,7 +164,7 @@ namespace Web.Areas.Admin.Controllers
 
                 await _financialOperationsService.UpdateAsync(financialOperation);
 
-                return RedirectToAction(nameof(FinancialOperationsController.Index));
+                return RedirectToAction(nameof(FinancialOperationsController.Index), new { userId = model.UserId });
             }
 
             var userId = User.GetCurrentUserId();

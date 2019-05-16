@@ -10,6 +10,10 @@ namespace Web.Areas.Admin.Models.FinancialOperations
     {
         public int Id { get; set; }
 
+        public int UserId { get; set; }
+
+        public string UserName { get; set; }
+
         [Required(ErrorMessageResourceName = nameof(Literals.RequiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         public double Amount { get; set; }
 

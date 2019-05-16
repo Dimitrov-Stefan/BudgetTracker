@@ -1,12 +1,12 @@
 ﻿@model Web.Areas.Admin.Models.FinancialOperations.FinancialOperationListViewModel
 
 @{
-    ViewData["Title"] = "Financial operations";
+    ViewData["Title"] = $"Manage Financial operations of user {Model.UserName}";
 }
 
 @section PageHeader {
     <div class="container">
-        <partial name="_UserMenuPartial" />
+        <partial name="_UserMenuPartial" model="Model.UserId" />
     </div>
 }
 
@@ -18,7 +18,7 @@
 
         <div class="d-flex justify-content-end">
             <a class="btn btn-primary btn-sm"
-               asp-action="@nameof(FinancialOperationsController.Create)">
+               asp-action="@nameof(FinancialOperationsController.Create)" asp-route-userId="@Model.UserId">
                 <span class="fas fa-plus"></span>
                 Add
             </a>
