@@ -10,6 +10,10 @@ namespace Web.Areas.Admin.Models.FinancialItems
     {
         public int Id { get; set; }
 
+        public int UserId { get; set; }
+
+        public string UserName { get; set; }
+
         [Required(ErrorMessageResourceName = nameof(Literals.RequiredFieldError), ErrorMessageResourceType = typeof(Literals))]
         [MaxLength(50, ErrorMessageResourceType = typeof(Literals), ErrorMessageResourceName = nameof(Literals.MaxLengthError))]
         public string Name { get; set; }

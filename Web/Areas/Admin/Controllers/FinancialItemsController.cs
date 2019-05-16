@@ -17,20 +17,29 @@ namespace Web.Areas.Admin.Controllers
     public class FinancialItemsController : Controller
     {
         private readonly IFinancialItemsService _financialItemsService;
+        private readonly IUserService _userService;
 
-        public FinancialItemsController(IFinancialItemsService financialItemsService)
+        public FinancialItemsController(IFinancialItemsService financialItemsService, IUserService userService)
         {
             _financialItemsService = financialItemsService;
+            _userService = userService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(int userId)
         {
             var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
+            var user = await _userService.GetByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound(user);
+            }
 
             var model = new FinancialItemListViewModel()
             {
                 UserId = userId,
+                UserName = user.UserName,
                 FinancialItems = financialItems
             };
 
@@ -40,8 +49,16 @@ namespace Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Create(int userId)
         {
+            var user = await _userService.GetByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound(user);
+            }
+
             var model = new CreateFinancialItemViewModel();
             model.UserId = userId;
+            model.UserName = user.UserName;
             model.Types = new SelectList(Enum.GetNames(typeof(FinancialItemType)));
 
             return View(model);
@@ -81,9 +98,18 @@ namespace Web.Areas.Admin.Controllers
                 return NotFound(financialItem);
             }
 
+            var user = await _userService.GetByIdAsync(financialItem.UserId);
+
+            if (user == null)
+            {
+                return NotFound(user);
+            }
+
             var model = new EditFinancialItemViewModel()
             {
                 Id = financialItem.Id,
+                UserId = financialItem.UserId,
+                UserName = user.UserName,
                 Name = financialItem.Name,
                 Type = financialItem.Type,
                 IsActive = financialItem.IsActive,
@@ -111,7 +137,7 @@ namespace Web.Areas.Admin.Controllers
 
                 await _financialItemsService.UpdateAsync(financialItem);
 
-                return RedirectToAction(nameof(FinancialItemsController.Index));
+                return RedirectToAction(nameof(FinancialItemsController.Index), new { userId = financialItem.UserId });
             }
 
             return View(model);

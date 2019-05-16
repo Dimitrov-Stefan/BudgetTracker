@@ -1,13 +1,14 @@
 ﻿@model Web.Areas.Admin.Models.FinancialItems.CreateFinancialItemViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create a Financial item";
 }
 
 <div class="row">
     <div class="col-6 offset-3">
         <div class="text-center">
-            <h1>@ViewData["Title"]</h1>
+            <h3>@ViewData["Title"]</h3>
+            <h5 class="text-warning font-italic">@($"on behalf of {Model.UserName}")</h5>
         </div>
 
         <form method="post" asp-action="@nameof(FinancialItemsController.Create)" asp-route-userId="@Model.UserId">
@@ -34,7 +35,7 @@
         </form>
 
         <div class="form-group text-center">
-            <a asp-action="@nameof(FinancialItemsController.Index)">Cancel</a>
+            <a asp-action="@nameof(FinancialItemsController.Index)" asp-route-userId="@Model.UserId">Cancel</a>
         </div>
     </div>
 </div>

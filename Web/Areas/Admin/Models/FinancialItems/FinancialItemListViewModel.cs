@@ -7,6 +7,8 @@ namespace Web.Areas.Admin.Models.FinancialItems
     {
         public int UserId { get; set; }
 
+        public string UserName { get; set; }
+
         public IEnumerable<FinancialItem> FinancialItems { get; set; }
     }
 }
