@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Core.Constants;
 using Core.Contracts.Repositories;
 using Core.Contracts.Services;
+using Core.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Models.Entities.Identity;
 using Models.ServiceResults.Users;
+using Principal = System.Security.Claims.ClaimsPrincipal;
 
 namespace Business.Services
 {
@@ -83,6 +85,34 @@ namespace Business.Services
                 Succeeded = updateResult.Succeeded,
                 Errors = updateResult.Errors
             };
+        }
+
+        public async Task<DeleteUserResult> DeleteAsync(int userId, int currentUserId)
+        {
+            DeleteUserResult deleteResult = new DeleteUserResult();
+
+            if (currentUserId == userId)
+            {
+                deleteResult.Errors = new List<IdentityError>()
+                {
+                    new IdentityError()
+                    {
+                        Code = "DeleteSelf",
+                        Description = "Cannot delete yourself!"
+                    }
+                };
+
+                return deleteResult;
+            }
+
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var deleteServiceResult = await _userManager.DeleteAsync(user);
+
+            deleteResult.User = deleteServiceResult.Succeeded ? user : null;
+            deleteResult.Succeeded = deleteServiceResult.Succeeded;
+            deleteResult.Errors = deleteServiceResult.Errors;
+
+            return deleteResult;
         }
     }
 }

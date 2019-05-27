@@ -49,7 +49,7 @@
             </button>
         </form>
         <div class="form-group text-center">
-            <a asp-action="@nameof(FinancialItemsController.Index)">Cancel</a>
+            <a asp-action="@nameof(FinancialItemsController.Index)" asp-route-userId="@Model.UserId">Cancel</a>
         </div>
     </div>
 </div>

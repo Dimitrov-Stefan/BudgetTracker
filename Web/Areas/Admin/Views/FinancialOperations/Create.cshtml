@@ -10,7 +10,7 @@
             <h1>@ViewData["Title"]</h1>
         </div>
 
-        <form method="post" asp-action="@nameof(FinancialOperationsController.Create)">
+        <form method="post" asp-action="@nameof(FinancialOperationsController.Create)" asp-route-userId="@Model.UserId">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <label asp-for="Amount">Amount</label>

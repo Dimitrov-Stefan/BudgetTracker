@@ -5,9 +5,9 @@ using System.Collections.Generic;
 namespace Models.ServiceResults.Users
 {
     /// <summary>
-    /// A class that represents the result of the delete user operations.
+    /// A class that represents the result of the edit user operations.
     /// </summary>
-    public class DeleteUserResult
+    public class EditUserResult
     {
         #region Fields
 

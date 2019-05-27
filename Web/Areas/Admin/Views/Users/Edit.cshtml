@@ -32,8 +32,15 @@
             </div>
 
             <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-block">Done</button>
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
             </div>
+
+            <button type="button"
+                    class="btn btn-outline-danger btn-block"
+                    data-toggle="modal"
+                    data-target="#delete-user-confirmation">
+                Delete User
+            </button>
         </form>
 
         <div class="form-group text-center">
@@ -41,3 +48,8 @@
         </div>
     </div>
 </div>
+
+<vc:delete-confirmation-dialog dialog-id="delete-user-confirmation"
+                               title="Delete User"
+                               text="Are you sure you want to delete the selected user? This will delete all data of the user!"
+                               url="@Url.Action(nameof(UsersController.Delete), new { userId = Model.Id })" />

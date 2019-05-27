@@ -14,5 +14,7 @@ namespace Core.Contracts.Services
         Task<User> GetByIdAsync(int id);
 
         Task<EditUserResult> EditAsync(User user);
+
+        Task<DeleteUserResult> DeleteAsync(int userId, int currentUserId);
     }
 }

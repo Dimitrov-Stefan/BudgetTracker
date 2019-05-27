@@ -89,7 +89,7 @@ namespace Web.Areas.Admin.Controllers
                 {
                     await _financialOperationsService.CreateAsync(financialOperation);
 
-                    return RedirectToAction(nameof(FinancialOperationsController.Index));
+                    return RedirectToAction(nameof(FinancialOperationsController.Index), new { userId = model.UserId });
                 }
                 else
                 {
@@ -131,6 +131,7 @@ namespace Web.Areas.Admin.Controllers
             var model = new EditFinancialOperationViewModel()
             {
                 Id = financialOperation.Id,
+                UserId = user.Id,
                 UserName = user.UserName,
                 Amount = financialOperation.Amount,
                 Timestamp = financialOperation.Timestamp,
@@ -154,6 +155,8 @@ namespace Web.Areas.Admin.Controllers
                 return NotFound(financialOperation);
             }
 
+            var userId = financialOperation.FinancialItem.UserId;
+
             if (ModelState.IsValid)
             {
                 financialOperation.Amount = model.Amount;
@@ -168,6 +171,7 @@ namespace Web.Areas.Admin.Controllers
 
             var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(model.UserId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
+            model.UserId = userId;
 
             return View(model);
         }

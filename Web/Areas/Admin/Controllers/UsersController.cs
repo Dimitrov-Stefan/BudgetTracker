@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Core.Constants;
 using Core.Contracts.Services;
+using Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Models.Entities.Identity;
 using Web.Areas.Admin.Models.Users;
-using Web.Extensions;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -62,7 +60,7 @@ namespace Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    foreach(var error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
@@ -87,6 +85,7 @@ namespace Web.Areas.Admin.Controllers
 
             var model = new EditUserViewModel()
             {
+                Id = user.Id,
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName
@@ -134,6 +133,16 @@ namespace Web.Areas.Admin.Controllers
             model.UserId = userId;
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int userId)
+        {
+            await _userService.DeleteAsync(userId, User.GetCurrentUserId());
+
+            // TODO: Show user-friendly errors if delete fails.
+
+            return RedirectToAction(nameof(UsersController.Index));
         }
     }
 }
