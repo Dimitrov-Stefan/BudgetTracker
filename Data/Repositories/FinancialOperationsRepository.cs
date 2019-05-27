@@ -14,6 +14,9 @@ namespace Data.Repositories
 
         }
 
+        public async Task<FinancialOperation> GetByIdAsync(int id)
+            => await Set.Include(fo => fo.FinancialItem).SingleOrDefaultAsync();
+
         public async Task<IEnumerable<FinancialOperation>> GetAllAsync()
             => await Set.Include(fo => fo.FinancialItem).ToListAsync();
 

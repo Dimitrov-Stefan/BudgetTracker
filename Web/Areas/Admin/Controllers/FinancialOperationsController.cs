@@ -138,8 +138,7 @@ namespace Web.Areas.Admin.Controllers
                 Description = financialOperation.Description
             };
 
-            var userId = User.GetCurrentUserId();
-            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(userId);
+            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(model.UserId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);
@@ -167,8 +166,7 @@ namespace Web.Areas.Admin.Controllers
                 return RedirectToAction(nameof(FinancialOperationsController.Index), new { userId = model.UserId });
             }
 
-            var userId = User.GetCurrentUserId();
-            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(userId);
+            var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(model.UserId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
 
             return View(model);
@@ -176,9 +174,19 @@ namespace Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
+            var operation = await _financialOperationsService.GetByIdAsync(id);
+
+            if (operation == null)
+            {
+                return NotFound(operation);
+            }
+
+            var userId = operation.FinancialItem.UserId;
+
             await _financialOperationsService.DeleteAsync(id);
 
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction(nameof(Index), new { userId });
         }
     }
 }

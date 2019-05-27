@@ -145,9 +145,16 @@ namespace Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
+            var financialItem = await _financialItemsService.GetByIdAsync(id);
+
+            if (financialItem == null)
+            {
+                return NotFound(financialItem);
+            }
+
             await _financialItemsService.DeleteAsync(id);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(FinancialItemsController.Index), new { userId = financialItem.UserId });
         }
     }
 }

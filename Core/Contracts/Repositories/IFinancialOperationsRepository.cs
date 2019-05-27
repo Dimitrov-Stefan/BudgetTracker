@@ -6,6 +6,8 @@ namespace Core.Contracts.Repositories
 {
     public interface IFinancialOperationsRepository : IRepository<FinancialOperation>
     {
+        Task<FinancialOperation> GetByIdAsync(int id);
+
         Task<IEnumerable<FinancialOperation>> GetAllAsync();
 
         Task<IEnumerable<FinancialOperation>> GetByFinancialItemIdAsync(int financialItemId);
