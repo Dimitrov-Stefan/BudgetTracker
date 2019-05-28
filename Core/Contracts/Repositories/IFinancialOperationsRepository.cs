@@ -13,5 +13,7 @@ namespace Core.Contracts.Repositories
         Task<IEnumerable<FinancialOperation>> GetByFinancialItemIdAsync(int financialItemId);
 
         Task<IEnumerable<FinancialOperation>> GetAllByUserIdAsync(int userId);
+
+        Task<IEnumerable<FinancialOperation>> GetByMultuipleFinancialItemIdsAsync(List<int> financialItemIds);
     }
 }

@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Reports";
+}
+
+@section PageHeader {
+    <div class="container">
+        <partial name="_UserMenuPartial" />
+    </div>
+}
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="text-center">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+
+        <div class="form-group text-center">
+            <a asp-action="@nameof(ReportsController.Index)">Balance</a>
+        </div>
+        <div class="form-group text-center">
+            <a asp-action="@nameof(ReportsController.Index)">Expenses</a>
+        </div>
+        <div class="form-group text-center">
+            <a asp-action="@nameof(ReportsController.Index)">Income</a>
+        </div>
+    </div>
+</div>

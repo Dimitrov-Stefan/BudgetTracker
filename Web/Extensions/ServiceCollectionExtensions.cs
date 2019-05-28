@@ -18,6 +18,7 @@ namespace Web.Extensions
             services.AddScoped<IFinancialOperationsService, FinancialOperationService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IReportsService, ReportsService>();
 
             return services;
         }

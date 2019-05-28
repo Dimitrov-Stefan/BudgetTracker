@@ -25,5 +25,8 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<FinancialOperation>> GetAllByUserIdAsync(int userId)
             => await Set.Include(fo => fo.FinancialItem).Where(fo => fo.FinancialItem.UserId == userId).ToListAsync();
+
+        public async Task<IEnumerable<FinancialOperation>> GetByMultuipleFinancialItemIdsAsync(List<int> financialItemIds)
+            => await Set.Where(fo => financialItemIds.Contains(fo.FinancialItem.Id)).ToListAsync();
     }
 }
