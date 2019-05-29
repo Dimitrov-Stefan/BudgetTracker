@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models.Entities;
 
@@ -14,6 +15,6 @@ namespace Core.Contracts.Repositories
 
         Task<IEnumerable<FinancialOperation>> GetAllByUserIdAsync(int userId);
 
-        Task<IEnumerable<FinancialOperation>> GetByMultuipleFinancialItemIdsAsync(List<int> financialItemIds);
+        Task<IEnumerable<FinancialOperation>> GetByMultuipleFinancialItemIdsAndDateRangeAsync(List<int> financialItemIds, DateTimeOffset? from, DateTimeOffset? to);
     }
 }

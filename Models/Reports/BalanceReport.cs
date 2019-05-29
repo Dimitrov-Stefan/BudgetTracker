@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Models.Reports
 {
     public class BalanceReport
     {
-        public IEnumerable<FinancialItemReportRow> FinancialItemReportRow { get; set; }
+        public IEnumerable<FinancialItemReportRow> FinancialItemReportRows { get; set; }
+
+        public decimal Total { get; set; }
     }
 }

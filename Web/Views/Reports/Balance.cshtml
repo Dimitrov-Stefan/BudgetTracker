@@ -1,0 +1,66 @@
+﻿@model Web.Models.Reports.BalanceReportViewModel
+
+@{
+    ViewData["Title"] = "Balance";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="text-center">
+            @ViewData["Title"]
+        </h1>
+
+        <label asp-for="From">From Date</label>
+        <div class="form-group">
+            <input asp-for="From" type="text" placeholder="Date" class="form-control datepicker" readonly="readonly" />
+            <span asp-validation-for="From" class="text-danger"></span>
+        </div>
+
+        <label asp-for="To">To Date</label>
+        <div class="form-group">
+            <input asp-for="To" type="text" placeholder="Date" class="form-control datepicker" readonly="readonly" />
+            <span asp-validation-for="To" class="text-danger"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <a asp-action="@nameof(ReportsController.Balance)" asp-route-from="@Model.From" asp-route-to="@Model.To">Filter</a>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Financial Item
+                    </th>
+                    <th>
+                        Balance
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.BalanceReport.FinancialItemReportRows)
+                {
+                    <tr>
+                        <td>@item.FinancialItem.Name</td>
+
+                        <td>@item.Balance</td>
+                    </tr>
+                }
+
+                <tr>
+                    <td><strong>Total:</strong></td>
+
+                    <td><strong>@Model.BalanceReport.Total</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".datepicker").datepicker({ format: 'dd/mm/yyyy', autoclose: true, todayBtn: 'linked' })
+        });
+    </script>
+}

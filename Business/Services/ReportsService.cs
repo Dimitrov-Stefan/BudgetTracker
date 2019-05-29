@@ -4,6 +4,7 @@ using Models.Entities;
 using Models.Reports;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,12 +21,24 @@ namespace Business.Services
             _financialOperationsRepository = financialOperationsRepository;
         }
 
-        public Task<BalanceReport> GetBalanceAsync(IEnumerable<FinancialItem> financialItems = null)
+        public async Task<BalanceReport> GetBalanceAsync(IEnumerable<FinancialItem> financialItems = null, DateTimeOffset? from = null, DateTimeOffset? to = null)
         {
-            var balanceReport = new BalanceReport();
-            
+            var financialOperations = await _financialOperationsRepository
+                .GetByMultuipleFinancialItemIdsAndDateRangeAsync(financialItems?
+                .Select(fi => fi.Id)
+                .ToList(), from, to);
 
-            throw new NotImplementedException();
+            var rows = financialOperations.GroupBy(fo => fo.FinancialItemId).Select(fo => new FinancialItemReportRow()
+            {
+                Balance = Convert.ToDecimal(fo.Sum(fo2 => (fo2.FinancialItem.Type == Models.Enums.FinancialItemType.Expense) ? -fo2.Amount : fo2.Amount)),
+                FinancialItem = fo.First().FinancialItem
+            });
+
+            var balanceReport = new BalanceReport();
+            balanceReport.FinancialItemReportRows = rows;
+            balanceReport.Total = rows.Sum(r => r.Balance);
+
+            return balanceReport;
         }
     }
 }
