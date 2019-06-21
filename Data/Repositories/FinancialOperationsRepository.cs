@@ -40,11 +40,11 @@ namespace Data.Repositories
                 }
                 else if (from.HasValue)
                 {
-                    financialOperations = await Set.Where(fo => financialItemIds.Contains(fo.FinancialItem.Id) && fo.Timestamp >= from).ToListAsync();
+                    financialOperations = await Set.Where(fo => financialItemIds.Contains(fo.FinancialItem.Id) && fo.Timestamp.Date >= from).ToListAsync();
                 }
                 else if (to.HasValue)
                 {
-                    financialOperations = await Set.Where(fo => financialItemIds.Contains(fo.FinancialItem.Id) && fo.Timestamp <= to).ToListAsync();
+                    financialOperations = await Set.Where(fo => financialItemIds.Contains(fo.FinancialItem.Id) && fo.Timestamp.Date <= to).ToListAsync();
                 }
                 else
                 {
