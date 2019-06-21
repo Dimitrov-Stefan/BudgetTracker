@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Core.Contracts.Repositories;
 using Core.Contracts.Services;
 using Models.Entities;
+using Models.Enums;
 
 namespace Business.Services
 {
@@ -18,12 +19,14 @@ namespace Business.Services
         public async Task CreateAsync(FinancialItem item)
             => await _financialItemsRepository.AddAsync(item);
 
-        public async Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId) =>
-            await _financialItemsRepository.GetAllByUserIdAsync(userId);
+        public async Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId)
+            => await _financialItemsRepository.GetAllByUserIdAsync(userId);
 
-        public async Task<IEnumerable<FinancialItem>> GetAllActiveByUserIdAsync(int userId) =>
-            await _financialItemsRepository.GetAllActiveByUserIdAsync(userId);
+        public async Task<IEnumerable<FinancialItem>> GetByUserIdAndTypeAsync(int userId, FinancialItemType type)
+            => await _financialItemsRepository.GetByUserIdAndTypeAsync(userId, type);
 
+        public async Task<IEnumerable<FinancialItem>> GetAllActiveByUserIdAsync(int userId)
+            => await _financialItemsRepository.GetAllActiveByUserIdAsync(userId);
 
         public async Task<FinancialItem> GetByIdAsync(int id)
             => await _financialItemsRepository.FindAsync(id);

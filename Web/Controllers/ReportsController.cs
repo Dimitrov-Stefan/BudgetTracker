@@ -7,6 +7,7 @@ using Business.Services;
 using Core.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
 using Models.Entities;
+using Models.Enums;
 using Web.Extensions;
 using Web.Models.Reports;
 
@@ -34,16 +35,7 @@ namespace Web.Controllers
             var financialItems = await _financialItemsService.GetAllByUserIdAsync(User.GetCurrentUserId());
 
             var format = "MM/dd/yyyy";
-            //if (from != null)
-            //{
-            //    DateTimeOffset.ParseExact(from, format, null as IFormatProvider);
-            //}
-
-            //if (from != null)
-            //{
-            //    var from2 = Convert.ToDateTime(from, CultureInfo.CurrentCulture);
-            //}
-
+        
             if (!DateTimeOffset.TryParseExact(from, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset fromDate))
             {
                 fromDate = DateTimeOffset.MinValue;
@@ -66,21 +58,33 @@ namespace Web.Controllers
             return View(model);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Balance(string from, string to)
-        //{
-        //    var financialItems = await _financialItemsService.GetAllByUserIdAsync(User.GetCurrentUserId());
+        [HttpGet]
+        public async Task<IActionResult> Expenses(IEnumerable<int> financialItemsIds, string from, string to)
+        {
+            var financialItems = await _financialItemsService.GetByUserIdAndTypeAsync(User.GetCurrentUserId(), FinancialItemType.Expense);
 
-        //    var report = await _reportsService.GetBalanceAsync(financialItems);
+            var format = "MM/dd/yyyy";
 
-        //    var model = new BalanceReportViewModel()
-        //    {
-        //        From = null,
-        //        To = null,
-        //        BalanceReport = report
-        //    };
+            if (!DateTimeOffset.TryParseExact(from, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset fromDate))
+            {
+                fromDate = DateTimeOffset.MinValue;
+            }
 
-        //    return View(model);
-        //}
+            if (!DateTimeOffset.TryParseExact(to, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset toDate))
+            {
+                toDate = DateTimeOffset.MaxValue;
+            }
+
+            var report = await _reportsService.GetExpensesAsync(financialItems, fromDate, toDate);
+
+            var model = new ExpensesReportViewModel()
+            {
+                From = null,
+                To = null,
+                ExpensesReport = report
+            };
+
+            return View(model);
+        }
     }
 }

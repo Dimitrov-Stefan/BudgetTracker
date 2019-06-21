@@ -30,15 +30,35 @@ namespace Business.Services
 
             var rows = financialOperations.GroupBy(fo => fo.FinancialItemId).Select(fo => new FinancialItemReportRow()
             {
-                Balance = Convert.ToDecimal(fo.Sum(fo2 => (fo2.FinancialItem.Type == Models.Enums.FinancialItemType.Expense) ? -fo2.Amount : fo2.Amount)),
+                Sum = Convert.ToDecimal(fo.Sum(fo2 => (fo2.FinancialItem.Type == Models.Enums.FinancialItemType.Expense) ? -fo2.Amount : fo2.Amount)),
                 FinancialItem = fo.First().FinancialItem
             });
 
             var balanceReport = new BalanceReport();
             balanceReport.FinancialItemReportRows = rows;
-            balanceReport.Total = rows.Sum(r => r.Balance);
+            balanceReport.Total = rows.Sum(r => r.Sum);
 
             return balanceReport;
+        }
+
+        public async Task<ExpensesReport> GetExpensesAsync(IEnumerable<FinancialItem> financialItems = null, DateTimeOffset? from = null, DateTimeOffset? to = null)
+        {
+            var financialOperations = await _financialOperationsRepository
+                .GetByMultuipleFinancialItemIdsAndDateRangeAsync(financialItems?
+                .Select(fi => fi.Id)
+                .ToList(), from, to);
+
+            var rows = financialOperations.GroupBy(fo => fo.FinancialItemId).Select(fo => new FinancialItemReportRow()
+            {
+                Sum = Convert.ToDecimal(fo.Sum(fo2 => -fo2.Amount)),
+                FinancialItem = fo.First().FinancialItem
+            });
+
+            var expensesReport = new ExpensesReport();
+            expensesReport.FinancialItemReportRows = rows;
+            expensesReport.Total = rows.Sum(r => r.Sum);
+
+            return expensesReport;
         }
     }
 }

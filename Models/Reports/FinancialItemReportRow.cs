@@ -6,6 +6,6 @@ namespace Models.Reports
     {
         public FinancialItem FinancialItem { get; set; }
 
-        public decimal Balance { get; set; }
+        public decimal Sum { get; set; }
     }
 }

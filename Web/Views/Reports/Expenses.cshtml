@@ -1,8 +1,9 @@
-﻿@model Web.Models.Reports.BalanceReportViewModel
+﻿@model Web.Models.Reports.ExpensesReportViewModel
 
 @{
-    ViewData["Title"] = "Balance";
+    ViewData["Title"] = "Expenses";
 }
+
 
 <div class="row">
     <div class="col-12">
@@ -10,7 +11,7 @@
             @ViewData["Title"]
         </h1>
 
-        <form method="get" asp-action="@nameof(ReportsController.Balance)" asp-route-from="@Model.From" asp-route-to="@Model.To">
+        <form method="get" asp-action="@nameof(ReportsController.Expenses)" asp-route-from="@Model.From" asp-route-to="@Model.To">
 
             <label asp-for="From">From Date</label>
             <div class="form-group">
@@ -39,7 +40,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.BalanceReport.FinancialItemReportRows)
+                @foreach (var item in Model.ExpensesReport.FinancialItemReportRows)
                 {
                     <tr>
                         <td>@item.FinancialItem.Name</td>
@@ -51,7 +52,7 @@
                 <tr>
                     <td><strong>Total:</strong></td>
 
-                    <td><strong>@Model.BalanceReport.Total</strong></td>
+                    <td><strong>@Model.ExpensesReport.Total</strong></td>
                 </tr>
             </tbody>
         </table>
