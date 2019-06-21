@@ -35,7 +35,8 @@ namespace Data.Repositories
             {
                 if (from.HasValue && to.HasValue)
                 {
-                    financialOperations = await Set.Where(fo => financialItemIds.Contains(fo.FinancialItem.Id) && fo.Timestamp >= from && fo.Timestamp <= to).ToListAsync();
+                    // TODO: Probably need to move the truncations of dates in the service
+                    financialOperations = await Set.Where(fo => financialItemIds.Contains(fo.FinancialItem.Id) && fo.Timestamp.Date >= from.Value.Date && fo.Timestamp.Date <= to.Value.Date).ToListAsync();
                 }
                 else if (from.HasValue)
                 {

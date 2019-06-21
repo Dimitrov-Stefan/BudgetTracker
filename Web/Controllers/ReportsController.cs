@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Services;
@@ -28,11 +29,32 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Balance()
+        public async Task<IActionResult> Balance(string from, string to)
         {
             var financialItems = await _financialItemsService.GetAllByUserIdAsync(User.GetCurrentUserId());
 
-            var report = await _reportsService.GetBalanceAsync(financialItems);
+            var format = "MM/dd/yyyy";
+            //if (from != null)
+            //{
+            //    DateTimeOffset.ParseExact(from, format, null as IFormatProvider);
+            //}
+
+            //if (from != null)
+            //{
+            //    var from2 = Convert.ToDateTime(from, CultureInfo.CurrentCulture);
+            //}
+
+            if (!DateTimeOffset.TryParseExact(from, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset fromDate))
+            {
+                fromDate = DateTimeOffset.MinValue;
+            }
+
+            if (!DateTimeOffset.TryParseExact(to, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset toDate))
+            {
+                toDate = DateTimeOffset.MaxValue;
+            }
+
+            var report = await _reportsService.GetBalanceAsync(financialItems, fromDate, toDate);
 
             var model = new BalanceReportViewModel()
             {
@@ -43,5 +65,22 @@ namespace Web.Controllers
 
             return View(model);
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> Balance(string from, string to)
+        //{
+        //    var financialItems = await _financialItemsService.GetAllByUserIdAsync(User.GetCurrentUserId());
+
+        //    var report = await _reportsService.GetBalanceAsync(financialItems);
+
+        //    var model = new BalanceReportViewModel()
+        //    {
+        //        From = null,
+        //        To = null,
+        //        BalanceReport = report
+        //    };
+
+        //    return View(model);
+        //}
     }
 }

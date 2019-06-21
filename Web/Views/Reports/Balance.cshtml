@@ -10,21 +10,22 @@
             @ViewData["Title"]
         </h1>
 
-        <label asp-for="From">From Date</label>
-        <div class="form-group">
-            <input asp-for="From" type="text" placeholder="Date" class="form-control datepicker" readonly="readonly" />
-            <span asp-validation-for="From" class="text-danger"></span>
-        </div>
+        <form method="get" asp-action="@nameof(ReportsController.Balance)" asp-route-from="@Model.From" asp-route-to="@Model.To">
 
-        <label asp-for="To">To Date</label>
-        <div class="form-group">
-            <input asp-for="To" type="text" placeholder="Date" class="form-control datepicker" readonly="readonly" />
-            <span asp-validation-for="To" class="text-danger"></span>
-        </div>
+            <label asp-for="From">From Date</label>
+            <div class="form-group">
+                <input asp-for="From" type="text" placeholder="Date" class="form-control datepicker" readonly />
+                <span asp-validation-for="From" class="text-danger"></span>
+            </div>
 
-        <div class="form-group text-center">
-            <a asp-action="@nameof(ReportsController.Balance)" asp-route-from="@Model.From" asp-route-to="@Model.To">Filter</a>
-        </div>
+            <label asp-for="To">To Date</label>
+            <div class="form-group">
+                <input asp-for="To" type="text" placeholder="Date" class="form-control datepicker" readonly />
+                <span asp-validation-for="To" class="text-danger"></span>
+            </div>
+
+            <input type="submit" value="Filter" class="btn btn-default" />
+        </form>
 
         <table class="table table-hover">
             <thead>
@@ -60,7 +61,7 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".datepicker").datepicker({ format: 'dd/mm/yyyy', autoclose: true, todayBtn: 'linked' })
+            $(".datepicker").datepicker({ format: 'mm/dd/yyyy', autoclose: true, todayBtn: 'linked' })
         });
     </script>
 }
