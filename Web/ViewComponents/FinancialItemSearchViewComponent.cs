@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web.Extensions;
 using System.Security.Claims;
+using Web.Models.Common;
 
 namespace Web.ViewComponents
 {
@@ -18,14 +19,19 @@ namespace Web.ViewComponents
             _financialItemsService = financialItemsService;
         }
 
-        public async IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             var id = HttpContext.User.GetCurrentUserId();
 
             var items = await _financialItemsService.GetAllByUserIdAsync(id);
-            //var itemsDict = items.Select(fi => new { Id = fi.Id, Name = fi.Name }).ToDictionary(x => { key});
+            var itemsSimplified = items.Select(fi => new FinancialItemSimplifiedModel() { Id = fi.Id, Name = fi.Name });
 
-            return View();
+            var model = new FinancialItemSearchViewModel()
+            {
+                FinancialItems = itemsSimplified
+            };
+
+            return View(model);
         }
     }
 }
