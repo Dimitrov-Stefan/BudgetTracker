@@ -9,6 +9,10 @@ namespace Core.Contracts.Repositories
     {
         Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId);
 
+        Task<IEnumerable<FinancialItem>> GetExpensesByUserIdAsync(int userId);
+
+        Task<IEnumerable<FinancialItem>> GetIncomeByUserIdAsync(int userId);
+
         Task<IEnumerable<FinancialItem>> GetByUserIdAndTypeAsync(int userId, FinancialItemType type);
 
         Task<IEnumerable<FinancialItem>> GetAllActiveByUserIdAsync(int userId);

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Web.Extensions;
 using System.Security.Claims;
 using Web.Models.Common;
+using Models.Enums;
 
 namespace Web.ViewComponents
 {
@@ -19,7 +20,7 @@ namespace Web.ViewComponents
             _financialItemsService = financialItemsService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(FinancialItemType financialItemType)
         {
             var id = HttpContext.User.GetCurrentUserId();
 
@@ -28,7 +29,7 @@ namespace Web.ViewComponents
 
             var model = new FinancialItemSearchViewModel()
             {
-                FinancialItems = itemsSimplified
+                FinancialItemType = (int)financialItemType
             };
 
             return View(model);

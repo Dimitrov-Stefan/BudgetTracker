@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Models.Enums;
+using System.Collections.Generic;
 
 namespace Web.Models.Common
 {
     public class FinancialItemSearchViewModel
     {
-        public IEnumerable<FinancialItemSimplifiedModel> FinancialItems { get; set; }
+        public int FinancialItemType { get; set; }
     }
 }

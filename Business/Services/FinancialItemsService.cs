@@ -22,6 +22,12 @@ namespace Business.Services
         public async Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId)
             => await _financialItemsRepository.GetAllByUserIdAsync(userId);
 
+        public async Task<IEnumerable<FinancialItem>> GetExpensesByUserIdAsync(int userId)
+            => await _financialItemsRepository.GetExpensesByUserIdAsync(userId);
+
+        public async Task<IEnumerable<FinancialItem>> GetIncomeByUserIdAsync(int userId)
+            => await _financialItemsRepository.GetIncomeByUserIdAsync(userId);
+
         public async Task<IEnumerable<FinancialItem>> GetByUserIdAndTypeAsync(int userId, FinancialItemType type)
             => await _financialItemsRepository.GetByUserIdAndTypeAsync(userId, type);
 

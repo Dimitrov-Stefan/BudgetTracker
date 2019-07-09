@@ -1,53 +1,43 @@
 ﻿@model Web.Models.Common.FinancialItemSearchViewModel
 
 <form>
-    <input id="financial-item-search" class="form-control typeahead m-2" type="text" placeholder="Search financial items" />
+    <div id="multiple-datasets">
+        <input id="financial-item-search" class="typeahead m-2 form-control" type="text" placeholder="Search financial items" />
+    </div>
 </form>
 <div id="itemList">
 </div>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/typeahead.js/typeahead.bundle.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         idList = [];
-            var substringMatcher = function (strs) {
-                return function findMatches(q, cb) {
-                    var matches, substringRegex;
+        var type = @Model.FinancialItemType;
 
-                    // an array that will be populated with substring matches
-                    matches = [];
+        var expenses = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: '/FinancialItems/GetSimplifiedItems/' + type
+        });
 
-                    // regex used to determine if a string contains the substring `q`
-                    substrRegex = new RegExp(q, 'i');
-
-                    // iterate through the pool of strings and for any string that
-                    // contains the substring `q`, add it to the `matches` array
-                    $.each(strs, function (i, str) {
-                        if (substrRegex.test(str.name)) {
-                            matches.push(str.name);
-                        }
-                    });
-
-                    cb(matches);
-                };
-            };
-
-            var financialItems = @Html.Raw(Json.Serialize(Model.FinancialItems));
-            $('.typeahead').typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1
-            },
+        $('#multiple-datasets .typeahead').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
             {
+                limit: 10,
+                display: 'name',
                 name: 'financial-items',
-                source: substringMatcher(financialItems)
+                source: expenses
             });
 
             suggestions = [];
-            $('.typeahead').bind('typeahead:select', function (ev, suggestion) {
+        $('#multiple-datasets .typeahead').bind('typeahead:select', function (ev, suggestion) {
 
-                $("#itemList").append("<div class=\"badge badge-secondary m-2\">" + suggestion+"</div>");
-                console.log('Selection: ' + suggestion);
-                $('.typeahead').typeahead('val', '');
+            $("#itemList").append("<div class=\"badge badge-secondary m-2\">" + suggestion.name + "</div>");
+                console.log('Selection: ' + suggestion.id);
+            $('#multiple-datasets .typeahead').typeahead('val', '');
             });
         });
 </script>
