@@ -61,3 +61,11 @@ body {
     max-height: 150px;
     overflow-y: auto;
 }
+
+/* Lists
+-------------------------------------------------- */
+.list-no-bullet {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

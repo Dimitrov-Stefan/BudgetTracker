@@ -11,7 +11,7 @@
             @ViewData["Title"]
         </h1>
 
-        <form method="get" asp-action="@nameof(ReportsController.Expenses)" asp-route-from="@Model.From" asp-route-to="@Model.To">
+        <form method="get" asp-action="@nameof(ReportsController.Expenses)">
 
             <label asp-for="From">From Date</label>
             <div class="form-group">
@@ -25,11 +25,22 @@
                 <span asp-validation-for="To" class="text-danger"></span>
             </div>
 
+            <div>
+                <ul class="list-no-bullet">
+                    @for (int i = 0; i < Model.SelectedItems.Count; i++)
+                    {
+                    <li>
+                        <input type="checkbox" asp-for="SelectedItems[i].IsSelected" />
+                        <label asp-for="SelectedItems[i].IsSelected">@Model.SelectedItems[i].FinancialItem.Name</label>
+                        <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Id" />
+                        <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Name" />
+                    </li>
+                    }
+                </ul>
+            </div>
+
             <input type="submit" value="Filter" class="btn btn-default" />
         </form>
-
-        <vc:financial-item-search financial-item-type="Expense">
-        </vc:financial-item-search>
 
         <table class="table table-hover">
             <thead>

@@ -24,4 +24,11 @@
     <Folder Include="Areas\Admin\Data\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Content Update="wwwroot\css\site.css">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
