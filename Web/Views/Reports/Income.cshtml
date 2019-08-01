@@ -1,0 +1,82 @@
+﻿@model Web.Models.Reports.ExpensesReportViewModel
+
+@{
+    ViewData["Title"] = "Income";
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="text-center">
+            @ViewData["Title"]
+        </h1>
+
+        <form method="get" asp-action="@nameof(ReportsController.Income)">
+
+            <label asp-for="From">From Date</label>
+            <div class="form-group">
+                <input asp-for="From" type="text" placeholder="Date" class="form-control datepicker" readonly />
+                <span asp-validation-for="From" class="text-danger"></span>
+            </div>
+
+            <label asp-for="To">To Date</label>
+            <div class="form-group">
+                <input asp-for="To" type="text" placeholder="Date" class="form-control datepicker" readonly />
+                <span asp-validation-for="To" class="text-danger"></span>
+            </div>
+
+            <div>
+                <ul class="list-no-bullet">
+                    @for (int i = 0; i < Model.SelectedItems.Count; i++)
+                    {
+                    <li>
+                        <input type="checkbox" asp-for="SelectedItems[i].IsSelected" />
+                        <label asp-for="SelectedItems[i].IsSelected">@Model.SelectedItems[i].FinancialItem.Name</label>
+                        <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Id" />
+                        <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Name" />
+                    </li>
+                    }
+                </ul>
+            </div>
+
+            <input type="submit" value="Filter" class="btn btn-default" />
+        </form>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Financial Item
+                    </th>
+                    <th>
+                        Balance
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ExpensesReport.FinancialItemReportRows)
+                {
+                    <tr>
+                        <td>@item.FinancialItem.Name</td>
+
+                        <td>@item.Sum</td>
+                    </tr>
+                }
+
+                <tr>
+                    <td><strong>Total:</strong></td>
+
+                    <td><strong>@Model.ExpensesReport.Total</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".datepicker").datepicker({ format: 'mm/dd/yyyy', autoclose: true, todayBtn: 'linked' })
+        });
+    </script>
+}

@@ -101,5 +101,49 @@ namespace Web.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Income(IList<FinancialItemSelectViewModel> selectedItems, string from, string to)
+        {
+            var financialItems = await _financialItemsService.GetByUserIdAndTypeAsync(User.GetCurrentUserId(), FinancialItemType.Income);
+
+            var format = "MM/dd/yyyy";
+
+            if (!DateTimeOffset.TryParseExact(from, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset fromDate))
+            {
+                fromDate = DateTimeOffset.MinValue;
+            }
+
+            if (!DateTimeOffset.TryParseExact(to, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset toDate))
+            {
+                toDate = DateTimeOffset.MaxValue;
+            }
+
+            var itemsToFilter = financialItems;
+
+            if (selectedItems.Count > 0)
+            {
+                itemsToFilter = financialItems.Where(fi => selectedItems.Any(si => si.FinancialItem.Id == fi.Id && si.IsSelected == true));
+            }
+
+            var report = await _reportsService.GetIncomeAsync(itemsToFilter, fromDate, toDate);
+
+            var financialItemsSelectList = financialItems
+                .Select(fi => new FinancialItemSelectViewModel()
+                {
+                    FinancialItem = fi,
+                    IsSelected = selectedItems.SingleOrDefault(si => si.FinancialItem.Id == fi.Id && si.IsSelected == true) != null ? true : false
+                }).ToList();
+
+            var model = new ExpensesReportViewModel()
+            {
+                From = null,
+                To = null,
+                SelectedItems = financialItemsSelectList,
+                ExpensesReport = report
+            };
+
+            return View(model);
+        }
     }
 }
