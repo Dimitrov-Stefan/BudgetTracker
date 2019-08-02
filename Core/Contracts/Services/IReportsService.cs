@@ -12,6 +12,6 @@ namespace Core.Contracts.Services
 
         Task<ExpensesReport> GetExpensesAsync(IEnumerable<FinancialItem> financialItems, DateTimeOffset? from = null, DateTimeOffset? to = null);
 
-        Task<ExpensesReport> GetIncomeAsync(IEnumerable<FinancialItem> financialItems, DateTimeOffset? from = null, DateTimeOffset? to = null);
+        Task<IncomeReport> GetIncomeAsync(IEnumerable<FinancialItem> financialItems, DateTimeOffset? from = null, DateTimeOffset? to = null);
     }
 }

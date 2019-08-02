@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Web.Models.Reports
 {
-    public class ExpensesReportViewModel
+    public class IncomeReportViewModel
     {
         public DateTimeOffset? From { get; set; }
     
@@ -12,6 +12,6 @@ namespace Web.Models.Reports
 
         public IList<FinancialItemSelectViewModel> SelectedItems { get; set; }
 
-        public ExpensesReport ExpensesReport { get; set; }
+        public IncomeReport IncomeReport { get; set; }
     }
 }

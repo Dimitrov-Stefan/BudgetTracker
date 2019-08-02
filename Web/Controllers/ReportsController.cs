@@ -135,12 +135,12 @@ namespace Web.Controllers
                     IsSelected = selectedItems.SingleOrDefault(si => si.FinancialItem.Id == fi.Id && si.IsSelected == true) != null ? true : false
                 }).ToList();
 
-            var model = new ExpensesReportViewModel()
+            var model = new IncomeReportViewModel()
             {
                 From = null,
                 To = null,
                 SelectedItems = financialItemsSelectList,
-                ExpensesReport = report
+                IncomeReport = report
             };
 
             return View(model);

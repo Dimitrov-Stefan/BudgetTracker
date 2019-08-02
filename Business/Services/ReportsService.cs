@@ -61,7 +61,7 @@ namespace Business.Services
             return expensesReport;
         }
 
-        public async Task<ExpensesReport> GetIncomeAsync(IEnumerable<FinancialItem> financialItems = null, DateTimeOffset? from = null, DateTimeOffset? to = null)
+        public async Task<IncomeReport> GetIncomeAsync(IEnumerable<FinancialItem> financialItems = null, DateTimeOffset? from = null, DateTimeOffset? to = null)
         {
             var financialOperations = await _financialOperationsRepository
                 .GetByMultuipleFinancialItemIdsAndDateRangeAsync(financialItems?
@@ -74,11 +74,11 @@ namespace Business.Services
                 FinancialItem = fo.First().FinancialItem
             });
 
-            var expensesReport = new ExpensesReport();
-            expensesReport.FinancialItemReportRows = rows;
-            expensesReport.Total = rows.Sum(r => r.Sum);
+            var incomeReport = new IncomeReport();
+            incomeReport.FinancialItemReportRows = rows;
+            incomeReport.Total = rows.Sum(r => r.Sum);
 
-            return expensesReport;
+            return incomeReport;
         }
     }
 }

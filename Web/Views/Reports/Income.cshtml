@@ -1,4 +1,4 @@
-﻿@model Web.Models.Reports.ExpensesReportViewModel
+﻿@model Web.Models.Reports.IncomeReportViewModel
 
 @{
     ViewData["Title"] = "Income";
@@ -29,12 +29,12 @@
                 <ul class="list-no-bullet">
                     @for (int i = 0; i < Model.SelectedItems.Count; i++)
                     {
-                    <li>
-                        <input type="checkbox" asp-for="SelectedItems[i].IsSelected" />
-                        <label asp-for="SelectedItems[i].IsSelected">@Model.SelectedItems[i].FinancialItem.Name</label>
-                        <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Id" />
-                        <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Name" />
-                    </li>
+                        <li>
+                            <input type="checkbox" asp-for="SelectedItems[i].IsSelected" />
+                            <label asp-for="SelectedItems[i].IsSelected">@Model.SelectedItems[i].FinancialItem.Name</label>
+                            <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Id" />
+                            <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Name" />
+                        </li>
                     }
                 </ul>
             </div>
@@ -54,7 +54,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.ExpensesReport.FinancialItemReportRows)
+                @foreach (var item in Model.IncomeReport.FinancialItemReportRows)
                 {
                     <tr>
                         <td>@item.FinancialItem.Name</td>
@@ -66,10 +66,13 @@
                 <tr>
                     <td><strong>Total:</strong></td>
 
-                    <td><strong>@Model.ExpensesReport.Total</strong></td>
+                    <td><strong>@Model.IncomeReport.Total</strong></td>
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="col-6">
+        <canvas id="myChart" width="400" height="400"></canvas>
     </div>
 </div>
 
@@ -79,4 +82,50 @@
             $(".datepicker").datepicker({ format: 'mm/dd/yyyy', autoclose: true, todayBtn: 'linked' })
         });
     </script>
+
+    <script>
+        $(document).ready(function () {
+            var labelss = [@Html.Raw(string.Join(',', @Model.IncomeReport.FinancialItemReportRows.Select(firr => "'" + firr.FinancialItem.Name + "'")))];
+            var values = [@Html.Raw(string.Join(',', @Model.IncomeReport.FinancialItemReportRows.Select(firr => firr.Sum)))];
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labelss,
+                    datasets: [{
+                label: '# of Votes',
+                        data: values,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                            }
+                    }]
+                    }
+            }
+        });
+        });
+    </script>
+
 }
