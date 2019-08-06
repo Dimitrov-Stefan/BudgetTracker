@@ -4,7 +4,9 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Services;
+using Core.Constants;
 using Core.Contracts.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Entities;
 using Models.Enums;
@@ -13,6 +15,7 @@ using Web.Models.Reports;
 
 namespace Web.Controllers
 {
+    [Authorize(Roles = Roles.User)]
     public class ReportsController : Controller
     {
         private readonly IReportsService _reportsService;

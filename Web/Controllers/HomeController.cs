@@ -20,6 +20,10 @@ namespace Web.Controllers
             {
                 return RedirectToAction(nameof(UsersController.Index), Url.ControllerName(typeof(UsersController)), new { area = "admin" });
             }
+            else if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction(nameof(AccountController.Login), Url.ControllerName(typeof(AccountController)));
+            }
 
             return View();
         }
