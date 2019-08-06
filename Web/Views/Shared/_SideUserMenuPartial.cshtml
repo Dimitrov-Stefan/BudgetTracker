@@ -1,0 +1,43 @@
+﻿@using Core.Constants;
+
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <li class="nav-item active">
+        <a class="nav-link" asp-controller="Home" asp-action="Index">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Home</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Privacy</span>
+        </a>
+    </li>
+    @if (User.IsInRole(Roles.User))
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="@Url.ControllerName(typeof(FinancialOperationsController))" asp-action="@nameof(FinancialOperationsController.Index)">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Operations</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="@Url.ControllerName(typeof(FinancialItemsController))" asp-action="@nameof(FinancialItemsController.Index)">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Items</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="@Url.ControllerName(typeof(ReportsController))" asp-action="@nameof(ReportsController.Index)">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+    }
+</ul>
