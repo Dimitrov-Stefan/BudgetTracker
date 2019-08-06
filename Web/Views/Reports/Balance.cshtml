@@ -48,11 +48,22 @@
                     </tr>
                 }
 
-                <tr>
-                    <td><strong>Total:</strong></td>
+                @if (Model.BalanceReport.Total > 0)
+                {
+                    <tr class="text-success">
+                        <td><strong>Total:</strong></td>
 
-                    <td><strong>@Model.BalanceReport.Total</strong></td>
-                </tr>
+                        <td><strong>@Model.BalanceReport.Total</strong></td>
+                    </tr>
+                }
+                @if (Model.BalanceReport.Total < 0)
+                {
+                    <tr class="text-danger">
+                        <td><strong>Total:</strong></td>
+
+                        <td><strong>@Model.BalanceReport.Total</strong></td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
