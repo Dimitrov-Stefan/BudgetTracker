@@ -3,59 +3,66 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <div class="text-center">
-            <h1>@ViewData["Title"]</h1>
-        </div>
+<div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+            <div class="col-lg-7">
+                <div class="p-5">
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                    </div>
+                    <form class="user" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input asp-for="FirstName" placeholder="First Name" class="form-control form-control-user" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
 
-            <label asp-for="FirstName">Your Name</label>
+                            <div class="col-sm-6">
+                                <input asp-for="LastName" placeholder="Last Name" class="form-control form-control-user" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Email" placeholder="Email Address" class="form-control form-control-user" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input asp-for="Password" class="form-control form-control-user" placeholder="Password" type="password" />
+                            </div>
 
-            <div class="form-group">
-                <input asp-for="FirstName" placeholder="First Name" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
+                            <div class="col-sm-6">
+                                <input asp-for="ConfirmPassword" class="form-control form-control-user" placeholder="Repeat Password" type="password" />
+                            </div>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
 
-            <div class="form-group">
-                <input asp-for="LastName" placeholder="Last Name" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary btn-block">Register Account</button>
+                        </div>
 
-            <label asp-for="Email">Email / Login ID</label>
-
-            <div class="form-group">
-                <input asp-for="Email" placeholder="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <div class="password-group">
-                    <input asp-for="Password" placeholder="Create a password" class="form-control" />
-                    <div class="toggle-password">
-                        <span class="fas fa-eye-slash"></span>
+                        <hr>
+                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                            <i class="fab fa-google fa-fw"></i> Register with Google
+                        </a>
+                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                            <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                        </a>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small" href="login.html">Already have an account? Login!</a>
                     </div>
                 </div>
-                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-
-
-
-            <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary btn-block">Register</button>
-            </div>
-
-
-        </form>
-
-        <div class="text-center">
-            <span>OR</span>
-        </div>
-
-        <div class="form-group text-center">
-            <a asp-action="@nameof(AccountController.Login)" class="btn btn-link btn-block">Sign in here.</a>
         </div>
     </div>
 </div>

@@ -120,6 +120,9 @@
   <data name="MaxLengthError" xml:space="preserve">
     <value>Field length should not exceed {1} characters.</value>
   </data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>Passwords do not match!</value>
+  </data>
   <data name="RequiredFieldError" xml:space="preserve">
     <value>This field cannot be empty.</value>
   </data>
