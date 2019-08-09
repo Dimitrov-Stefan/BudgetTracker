@@ -18,8 +18,15 @@ namespace Data.Repositories
         public async Task<FinancialOperation> GetByIdAsync(int id)
             => await Set.Include(fo => fo.FinancialItem).SingleOrDefaultAsync(fo => fo.Id == id);
 
-        public async Task<IEnumerable<FinancialOperation>> GetAllAsync()
-            => await Set.Include(fo => fo.FinancialItem).ToListAsync();
+        public async Task<IEnumerable<FinancialOperation>> GetAllAsync(int userId, int skip, int take)
+        {
+            return await Set.Include(fo => fo.FinancialItem)
+                .Where(fo => fo.FinancialItem.UserId == userId)
+                .OrderBy(fo => fo.Timestamp)
+                .Skip(skip)
+                .Take(take)
+                .ToListAsync();
+        }
 
         public async Task<IEnumerable<FinancialOperation>> GetByFinancialItemIdAsync(int financialItemId)
             => await Set.Where(fo => fo.FinancialItemId == financialItemId).ToListAsync();
@@ -50,10 +57,13 @@ namespace Data.Repositories
                 {
                     financialOperations = await Set.Where(fo => financialItemIds.Contains(fo.FinancialItem.Id)).ToListAsync();
                 }
-                
+
             }
 
             return financialOperations;
         }
+
+        public Task<int> GetAllCountAsync()
+            => Set.CountAsync();
     }
 }

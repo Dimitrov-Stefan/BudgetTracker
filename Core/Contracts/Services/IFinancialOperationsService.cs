@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Models;
 using Models.Entities;
 
 namespace Core.Contracts.Services
 {
     public interface IFinancialOperationsService
     {
-        Task<IEnumerable<FinancialOperation>> GetAllAsync();
+        Task<PagedList<FinancialOperation>> GetAllAsync(int userId, PagedListRequest request);
 
         Task CreateAsync(FinancialOperation operation);
 

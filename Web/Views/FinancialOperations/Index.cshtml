@@ -42,7 +42,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.FinancialOperations)
+                @foreach (var item in Model.FinancialOperations.Items)
                 {
                     <tr>
                         <td>@item.Timestamp</td>
@@ -56,6 +56,11 @@
                 }
             </tbody>
         </table>
+
+        <vc:pagination page="Model.FinancialOperations.Page"
+                       page-count="Model.FinancialOperations.PageCount"
+                       page-url-func='p => Url.Action(nameof(FinancialOperationsController.Index), new { page = p })'>
+        </vc:pagination>
     </div>
 </div>
 

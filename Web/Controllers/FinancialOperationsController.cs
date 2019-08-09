@@ -6,6 +6,7 @@ using Core.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Models;
 using Models.Entities;
 using Web.Extensions;
 using Web.Models.FinancialOperations;
@@ -24,9 +25,10 @@ namespace Web.Controllers
             _financialItemsService = financialItemsService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(PagedListRequest request)
         {
-            var financialOperations = await _financialOperationsService.GetAllAsync();
+            var userId = User.GetCurrentUserId();
+            var financialOperations = await _financialOperationsService.GetAllAsync(userId, request);
 
             var model = new FinancialOperationListViewModel()
             {

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Core.Contracts.Repositories;
 using Core.Contracts.Services;
+using Models;
 using Models.Entities;
 
 namespace Business.Services
@@ -18,8 +19,13 @@ namespace Business.Services
         public async Task CreateAsync(FinancialOperation item)
             => await _financialOperationsRepository.AddAsync(item);
 
-        public async Task<IEnumerable<FinancialOperation>> GetAllAsync()
-            => await _financialOperationsRepository.GetAllAsync();
+        public async Task<PagedList<FinancialOperation>> GetAllAsync(int userId, PagedListRequest request)
+        {
+            var financialOperations = await _financialOperationsRepository.GetAllAsync(userId, request.Skip, request.PageSize);
+            var financialOperationsCount = await _financialOperationsRepository.GetAllCountAsync();
+
+            return new PagedList<FinancialOperation>(financialOperations, request.Page, request.PageSize, financialOperationsCount);
+        }
 
         public async Task<FinancialOperation> GetByIdAsync(int id)
             => await _financialOperationsRepository.GetByIdAsync(id);

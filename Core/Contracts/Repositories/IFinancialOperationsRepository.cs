@@ -9,12 +9,13 @@ namespace Core.Contracts.Repositories
     {
         Task<FinancialOperation> GetByIdAsync(int id);
 
-        Task<IEnumerable<FinancialOperation>> GetAllAsync();
+        Task<IEnumerable<FinancialOperation>> GetAllAsync(int userId, int skip, int take);
 
         Task<IEnumerable<FinancialOperation>> GetByFinancialItemIdAsync(int financialItemId);
 
         Task<IEnumerable<FinancialOperation>> GetAllByUserIdAsync(int userId);
 
         Task<IEnumerable<FinancialOperation>> GetByMultuipleFinancialItemIdsAndDateRangeAsync(List<int> financialItemIds, DateTimeOffset? from, DateTimeOffset? to);
+        Task<int> GetAllCountAsync();
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Models;
 using Models.Entities;
 
 namespace Web.Models.FinancialOperations
 {
     public class FinancialOperationListViewModel
     {
-        public IEnumerable<FinancialOperation> FinancialOperations { get; set; }
+        public PagedList<FinancialOperation> FinancialOperations { get; set; }
     }
 }
