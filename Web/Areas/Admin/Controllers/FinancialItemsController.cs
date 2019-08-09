@@ -81,7 +81,7 @@ namespace Web.Areas.Admin.Controllers
 
                 await _financialItemsService.CreateAsync(financialItem);
 
-                return RedirectToAction(nameof(FinancialItemsController.Index), new { userId = financialItem.UserId });
+                return RedirectToAction(nameof(FinancialItemsController.Index), new { id = financialItem.UserId });
             }
 
             model.Types = new SelectList(Enum.GetNames(typeof(FinancialItemType)));
@@ -138,7 +138,7 @@ namespace Web.Areas.Admin.Controllers
 
                 await _financialItemsService.UpdateAsync(financialItem);
 
-                return RedirectToAction(nameof(FinancialItemsController.Index), new { userId = financialItem.UserId });
+                return RedirectToAction(nameof(FinancialItemsController.Index), new { id = financialItem.UserId });
             }
 
             return View(model);
@@ -155,7 +155,7 @@ namespace Web.Areas.Admin.Controllers
 
             await _financialItemsService.DeleteAsync(id);
 
-            return RedirectToAction(nameof(FinancialItemsController.Index), new { userId = financialItem.UserId });
+            return RedirectToAction(nameof(FinancialItemsController.Index), new { id = financialItem.UserId });
         }
     }
 }
