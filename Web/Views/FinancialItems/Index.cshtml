@@ -39,7 +39,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.FinancialItems)
+                @foreach (var item in Model.FinancialItems.Items)
                 {
                     <tr>
                         <td>@item.Name</td>
@@ -55,6 +55,11 @@
                 }
             </tbody>
         </table>
+
+        <vc:pagination page="Model.FinancialItems.Page"
+                       page-count="Model.FinancialItems.PageCount"
+                       page-url-func='p => Url.Action(nameof(FinancialItemsController.Index), new { page = p })'>
+        </vc:pagination>
     </div>
 </div>
 

@@ -16,6 +16,6 @@ namespace Core.Contracts.Repositories
         Task<IEnumerable<FinancialOperation>> GetAllByUserIdAsync(int userId);
 
         Task<IEnumerable<FinancialOperation>> GetByMultuipleFinancialItemIdsAndDateRangeAsync(List<int> financialItemIds, DateTimeOffset? from, DateTimeOffset? to);
-        Task<int> GetAllCountAsync();
+        Task<int> GetAllCountAsync(int userId);
     }
 }

@@ -63,7 +63,9 @@ namespace Data.Repositories
             return financialOperations;
         }
 
-        public Task<int> GetAllCountAsync()
-            => Set.CountAsync();
+        public Task<int> GetAllCountAsync(int userId)
+            => Set.Include(fo => fo.FinancialItem)
+            .Where(fo => fo.FinancialItem.UserId == userId)
+            .CountAsync();
     }
 }

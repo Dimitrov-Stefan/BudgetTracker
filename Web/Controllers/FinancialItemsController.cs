@@ -8,6 +8,7 @@ using Core.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Models;
 using Models.Entities;
 using Models.Enums;
 using Web.Extensions;
@@ -26,10 +27,10 @@ namespace Web.Controllers
             _financialItemsService = financialItemsService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(PagedListRequest request)
         {
             var userId = User.GetCurrentUserId();
-            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
+            var financialItems = await _financialItemsService.GetPagedByUserIdAsync(userId, request);
 
             var model = new FinancialItemListViewModel()
             {

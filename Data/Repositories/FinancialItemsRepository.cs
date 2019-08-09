@@ -18,6 +18,13 @@ namespace Data.Repositories
         public async Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId)
             => await Set.Where(fi => fi.UserId == userId).ToListAsync();
 
+        public async Task<IEnumerable<FinancialItem>> GetPagedByUserIdAsync(int userId, int skip, int take)
+            => await Set.Where(fi => fi.UserId == userId)
+            .OrderBy(fi => fi.Name)
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+
         public async Task<IEnumerable<FinancialItem>> GetExpensesByUserIdAsync(int userId)
             => await Set.Where(fi => fi.UserId == userId && fi.Type == FinancialItemType.Expense).ToListAsync();
 
@@ -29,6 +36,9 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<FinancialItem>> GetAllActiveByUserIdAsync(int userId)
             => await Set.Where(fi => fi.UserId == userId && fi.IsActive).ToListAsync();
-       
+
+        public Task<int> GetAllCountByUserIdAsync(int userId)
+            => Set.Where(fi => fi.UserId == userId)
+            .CountAsync();
     }
 }

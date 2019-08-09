@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Core.Contracts.Repositories;
 using Core.Contracts.Services;
+using Models;
 using Models.Entities;
 using Models.Enums;
 
@@ -21,6 +22,14 @@ namespace Business.Services
 
         public async Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId)
             => await _financialItemsRepository.GetAllByUserIdAsync(userId);
+
+        public async Task<PagedList<FinancialItem>> GetPagedByUserIdAsync(int userId, PagedListRequest request)
+        {
+            var financialItems = await _financialItemsRepository.GetPagedByUserIdAsync(userId, request.Skip, request.PageSize);
+            var financialItemsCount = await _financialItemsRepository.GetAllCountByUserIdAsync(userId);
+
+            return new PagedList<FinancialItem>(financialItems, request.Page, request.PageSize, financialItemsCount);
+        }
 
         public async Task<IEnumerable<FinancialItem>> GetExpensesByUserIdAsync(int userId)
             => await _financialItemsRepository.GetExpensesByUserIdAsync(userId);

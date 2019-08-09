@@ -22,7 +22,7 @@ namespace Business.Services
         public async Task<PagedList<FinancialOperation>> GetAllAsync(int userId, PagedListRequest request)
         {
             var financialOperations = await _financialOperationsRepository.GetAllAsync(userId, request.Skip, request.PageSize);
-            var financialOperationsCount = await _financialOperationsRepository.GetAllCountAsync();
+            var financialOperationsCount = await _financialOperationsRepository.GetAllCountAsync(userId);
 
             return new PagedList<FinancialOperation>(financialOperations, request.Page, request.PageSize, financialOperationsCount);
         }

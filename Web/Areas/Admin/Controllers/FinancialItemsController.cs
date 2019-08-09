@@ -5,6 +5,7 @@ using Core.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Models;
 using Models.Entities;
 using Models.Enums;
 using Web.Areas.Admin.Models.FinancialItems;
@@ -26,10 +27,10 @@ namespace Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int userId)
+        public async Task<IActionResult> Index([FromRoute]int id, PagedListRequest request)
         {
-            var financialItems = await _financialItemsService.GetAllByUserIdAsync(userId);
-            var user = await _userService.GetByIdAsync(userId);
+            var financialItems = await _financialItemsService.GetPagedByUserIdAsync(id, request);
+            var user = await _userService.GetByIdAsync(id);
 
             if (user == null)
             {
@@ -38,7 +39,7 @@ namespace Web.Areas.Admin.Controllers
 
             var model = new FinancialItemListViewModel()
             {
-                UserId = userId,
+                UserId = id,
                 UserName = user.UserName,
                 FinancialItems = financialItems
             };

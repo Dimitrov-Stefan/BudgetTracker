@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Models;
 using Models.Entities;
 using Models.Enums;
 
@@ -8,6 +9,8 @@ namespace Core.Contracts.Services
     public interface IFinancialItemsService
     {
         Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId);
+
+        Task<PagedList<FinancialItem>> GetPagedByUserIdAsync(int userId, PagedListRequest request);
 
         Task<IEnumerable<FinancialItem>> GetExpensesByUserIdAsync(int userId);
 
