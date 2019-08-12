@@ -96,10 +96,10 @@
                 </nav>
                 <!-- End of Topbar -->
                 @*<main role="main" class="pb-3">
-                        <div class="row">
-                            @RenderBody()
-                        </div>
-                    </main>*@
+                <div class="row">
+                    @RenderBody()
+                </div>
+            </main>*@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -109,43 +109,52 @@
                 </div>
             </div>
             <!-- End of Content Wrapper -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Budget Tracker 2019</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
             @*<header>
-                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                        <div class="container">
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web</a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                                <partial name="_LoginPartial" />
-                                <ul class="navbar-nav flex-grow-1">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
-                </header>*@
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial" />
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>*@
 
             @RenderSection("PageHeader", required: false)
 
             @*<div class="container">
-                    <partial name="_CookieConsentPartial" />
-                    <main role="main" class="pb-3">
-                        @RenderBody()
-                    </main>
-                </div>
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
 
-                <footer class="border-top footer text-muted">
-                    <div class="container">
-                        &copy; 2019 - Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </div>
-                </footer>*@
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2019 - Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
         </div>
     </div>
 
