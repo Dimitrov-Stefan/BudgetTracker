@@ -17,7 +17,7 @@
         </h1>
 
         <div class="d-flex justify-content-end">
-            <a class="btn btn-primary btn-sm"
+            <a class="btn btn-dark btn-sm"
                asp-action="@nameof(FinancialOperationsController.Create)">
                 <span class="fas fa-plus"></span>
                 Add
@@ -50,7 +50,7 @@
                         <td>@item.Amount</td>
                         <td>@item.Description</td>
                         <td>
-                            <a class="btn btn-primary btn-sm" asp-action="@nameof(FinancialOperationsController.Edit)" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-outline-dark btn-sm" asp-action="@nameof(FinancialOperationsController.Edit)" asp-route-id="@item.Id">Edit</a>
                         </td>
                     </tr>
                 }
