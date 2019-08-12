@@ -13,7 +13,7 @@
         <form method="get" asp-action="@nameof(ReportsController.Balance)" asp-route-from="@Model.From" asp-route-to="@Model.To">
 
             <label asp-for="From">From Date</label>
-            <div class="input-group col-4">
+            <div class="input-group col-md-6 col-sm-12">
                 <div class="input-group-prepend">
                     <span class="input-group-text">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -23,7 +23,7 @@
             </div>
 
             <label asp-for="To">To Date</label>
-            <div class="input-group col-4">
+            <div class="input-group col-md-6 col-sm-12">
                 <div class="input-group-prepend">
                     <span class="input-group-text">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
