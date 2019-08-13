@@ -14,27 +14,24 @@
             <h3>@ViewData["Title"]</h3>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
+
+    <div class="col-6">
         <div class="card mb-4 py-3 border-bottom-info">
             <div class="card-body">
                 <a class="text-info" asp-action="@nameof(ReportsController.Balance)">Balance</a>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
+
+    <div class="col-6">
         <div class="card mb-4 py-3 border-bottom-danger">
             <div class="card-body">
                 <a class="text-danger" asp-action="@nameof(ReportsController.Expenses)">Expenses</a>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
+
+    <div class="col-6">
         <div class="card mb-4 py-3 border-bottom-success">
             <div class="card-body">
                 <a class="text-success" asp-action="@nameof(ReportsController.Income)">Income</a>
