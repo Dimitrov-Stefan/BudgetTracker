@@ -13,6 +13,8 @@
         <form method="post" asp-action="@nameof(FinancialItemsController.Edit)">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <input asp-for="UserId" hidden="hidden" />
+
             <label asp-for="Amount">Amount</label>
             <div class="form-group">
                 <input asp-for="Amount" type="number" placeholder="Amount" class="form-control" />
