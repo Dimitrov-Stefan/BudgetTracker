@@ -134,7 +134,7 @@ namespace Web.Areas.Admin.Controllers
                 UserId = user.Id,
                 UserName = user.UserName,
                 Amount = financialOperation.Amount,
-                Timestamp = financialOperation.Timestamp,
+                Timestamp = financialOperation.Timestamp.UtcDateTime.Date,
                 FinancialItemId = financialOperation.FinancialItemId,
                 Description = financialOperation.Description
             };
@@ -172,6 +172,7 @@ namespace Web.Areas.Admin.Controllers
             var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(model.UserId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
             model.UserId = userId;
+            financialOperation.FinancialItemId = model.FinancialItemId;
 
             return View(model);
         }

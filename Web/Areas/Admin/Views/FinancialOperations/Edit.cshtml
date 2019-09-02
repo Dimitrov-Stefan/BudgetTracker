@@ -26,8 +26,13 @@
             </div>
 
             <label asp-for="Timestamp">Date</label>
-            <div class="form-group">
-                <input asp-for="Timestamp" type="datetime" placeholder="Date" class="form-control" />
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <input asp-for="Timestamp" type="text" placeholder="Date" class="form-control datepicker" autocomplete="off" />
                 <span asp-validation-for="Timestamp" class="text-danger"></span>
             </div>
 
@@ -58,3 +63,11 @@
                                title="Delete Operation"
                                text="Are you sure you want to delete the selected operation?"
                                url="@Url.Action(nameof(FinancialOperationsController.Delete), new { id = Model.Id })" />
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".datepicker").datepicker({ format: 'mm/dd/yyyy', autoclose: true, todayBtn: 'linked' })
+        });
+    </script>
+}

@@ -101,7 +101,7 @@ namespace Web.Controllers
             {
                 Id = financialOperation.Id,
                 Amount = financialOperation.Amount,
-                Timestamp = financialOperation.Timestamp,
+                Timestamp = financialOperation.Timestamp.UtcDateTime.Date,
                 FinancialItemId = financialOperation.FinancialItemId,
                 Description = financialOperation.Description
             };
@@ -138,6 +138,7 @@ namespace Web.Controllers
             var userId = User.GetCurrentUserId();
             var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(userId);
             model.FinancialItems = financialItems.Select(fi => new SelectListItem(fi.Name, fi.Id.ToString()));
+            financialOperation.FinancialItemId = model.FinancialItemId;
 
             return View(model);
         }
