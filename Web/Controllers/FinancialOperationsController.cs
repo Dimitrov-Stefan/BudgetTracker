@@ -43,7 +43,7 @@ namespace Web.Controllers
         {
             var model = new CreateFinancialOperationViewModel()
             {
-                Timestamp = DateTimeOffset.UtcNow
+                Timestamp = DateTimeOffset.UtcNow.Date
             };
 
             var userId = User.GetCurrentUserId();
