@@ -2,9 +2,9 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" asp-area="Admin" asp-controller="@Url.ControllerName(typeof(FinancialOperationsController))" asp-action="@nameof(FinancialOperationsController.Index)" asp-route-userId="@Model">Operations</a>
+        <a class="nav-link" asp-area="Admin" asp-controller="@Url.ControllerName(typeof(FinancialOperationsController))" asp-action="@nameof(FinancialOperationsController.Index)" asp-route-id="@Model">Operations</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" asp-area="Admin" asp-controller="@Url.ControllerName(typeof(FinancialItemsController))" asp-action="@nameof(FinancialItemsController.Index)" asp-route-userId="@Model">Items</a>
+        <a class="nav-link" asp-area="Admin" asp-controller="@Url.ControllerName(typeof(FinancialItemsController))" asp-action="@nameof(FinancialItemsController.Index)" asp-route-id="@Model">Items</a>
     </li>
 </ul>

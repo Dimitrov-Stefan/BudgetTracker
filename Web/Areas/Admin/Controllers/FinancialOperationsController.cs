@@ -29,10 +29,10 @@ namespace Web.Areas.Admin.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> Index(int userId)
+        public async Task<IActionResult> Index(int id)
         {
-            var financialOperations = await _financialOperationsService.GetAllByUserIdAsync(userId);
-            var user = await _userService.GetByIdAsync(userId);
+            var financialOperations = await _financialOperationsService.GetAllByUserIdAsync(id);
+            var user = await _userService.GetByIdAsync(id);
 
             if (user == null)
             {
@@ -41,7 +41,7 @@ namespace Web.Areas.Admin.Controllers
 
             var model = new FinancialOperationListViewModel()
             {
-                UserId = userId,
+                UserId = id,
                 UserName = user.UserName,
                 FinancialOperations = financialOperations
             };
@@ -89,7 +89,7 @@ namespace Web.Areas.Admin.Controllers
                 {
                     await _financialOperationsService.CreateAsync(financialOperation);
 
-                    return RedirectToAction(nameof(FinancialOperationsController.Index), new { userId = model.UserId });
+                    return RedirectToAction(nameof(FinancialOperationsController.Index), new { id = model.UserId });
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace Web.Areas.Admin.Controllers
 
                 await _financialOperationsService.UpdateAsync(financialOperation);
 
-                return RedirectToAction(nameof(FinancialOperationsController.Index), new { userId = model.UserId });
+                return RedirectToAction(nameof(FinancialOperationsController.Index), new { id = model.UserId });
             }
 
             var financialItems = await _financialItemsService.GetAllActiveByUserIdAsync(model.UserId);
@@ -191,7 +191,7 @@ namespace Web.Areas.Admin.Controllers
             await _financialOperationsService.DeleteAsync(id);
 
 
-            return RedirectToAction(nameof(Index), new { userId });
+            return RedirectToAction(nameof(Index), new { id = userId });
         }
     }
 }
