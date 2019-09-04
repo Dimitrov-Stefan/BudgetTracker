@@ -43,7 +43,7 @@ namespace Web.Controllers
         {
             var model = new CreateFinancialOperationViewModel()
             {
-                Timestamp = DateTimeOffset.UtcNow.Date
+                Timestamp = DateTimeOffset.UtcNow
             };
 
             var userId = User.GetCurrentUserId();
@@ -62,7 +62,7 @@ namespace Web.Controllers
                 var financialOperation = new FinancialOperation()
                 {
                     Amount = model.Amount,
-                    Timestamp = model.Timestamp,
+                    Timestamp = model.Timestamp.ToUniversalTime(),
                     FinancialItemId = model.FinancialItemId,
                     Description = model.Description
                 };
@@ -101,7 +101,7 @@ namespace Web.Controllers
             {
                 Id = financialOperation.Id,
                 Amount = financialOperation.Amount,
-                Timestamp = financialOperation.Timestamp.UtcDateTime.Date,
+                Timestamp = financialOperation.Timestamp.ToUniversalTime(),
                 FinancialItemId = financialOperation.FinancialItemId,
                 Description = financialOperation.Description
             };
@@ -126,7 +126,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 financialOperation.Amount = model.Amount;
-                financialOperation.Timestamp = model.Timestamp;
+                financialOperation.Timestamp = model.Timestamp.ToUniversalTime();
                 financialOperation.FinancialItemId = model.FinancialItemId;
                 financialOperation.Description = model.Description;
 
