@@ -88,5 +88,10 @@
       "library": "Chart.js@2.8.0",
       "destination": "wwwroot/lib/Chart.js/"
     }
-  ]
+  ,
+{
+  "library": "jquery-datetimepicker@2.5.20",
+  "destination": "wwwroot/lib/jquery-datetimepicker/"
+}
+]
 }
