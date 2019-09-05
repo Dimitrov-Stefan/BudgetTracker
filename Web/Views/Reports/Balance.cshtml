@@ -19,7 +19,7 @@
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                     </span>
                 </div>
-                <input asp-for="From" type="text" placeholder="Date" class="form-control datepicker" autocomplete="off" />
+                <input asp-for="From" type="text" placeholder="Date" class="form-control datetimepicker" autocomplete="off" />
             </div>
 
             <label asp-for="To">To Date</label>
@@ -29,7 +29,7 @@
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                     </span>
                 </div>
-                <input asp-for="To" type="text" placeholder="Date" class="form-control datepicker" autocomplete="off" />
+                <input asp-for="To" type="text" placeholder="Date" class="form-control datetimepicker" autocomplete="off" />
             </div>
 
             <input type="submit" value="Filter" class="btn btn-default" />
@@ -80,7 +80,9 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".datepicker").datepicker({ format: 'mm/dd/yyyy', autoclose: true, todayBtn: 'linked' })
+            $('.datetimepicker').datetimepicker({
+                inline: false,
+            });
         });
     </script>
 }

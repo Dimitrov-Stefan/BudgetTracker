@@ -29,7 +29,7 @@
 
             <label asp-for="Timestamp">Date</label>
             <div class="form-group">
-                <input asp-for="Timestamp" type="text" placeholder="Date" class="form-control datepicker" autocomplete="off" />
+                <input asp-for="Timestamp" type="text" placeholder="Date" class="form-control datetimepicker" autocomplete="off" />
                 <span asp-validation-for="Timestamp" class="text-danger"></span>
             </div>
 
@@ -53,7 +53,9 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".datepicker").datepicker({ format: 'dd/mm/yyyy', autoclose: true, todayBtn: 'linked' })
+            $('.datetimepicker').datetimepicker({
+                inline: false,
+            });
         });
     </script>
 }
