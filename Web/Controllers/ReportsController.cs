@@ -33,23 +33,10 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Balance(string from, string to)
+        public async Task<IActionResult> Balance(DateTimeOffset from, DateTimeOffset to)
         {
             var financialItems = await _financialItemsService.GetAllByUserIdAsync(User.GetCurrentUserId());
-
-            var format = "MM/dd/yyyy";
-
-            if (!DateTimeOffset.TryParseExact(from, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset fromDate))
-            {
-                fromDate = DateTimeOffset.MinValue;
-            }
-
-            if (!DateTimeOffset.TryParseExact(to, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset toDate))
-            {
-                toDate = DateTimeOffset.MaxValue;
-            }
-
-            var report = await _reportsService.GetBalanceAsync(financialItems, fromDate, toDate);
+            var report = await _reportsService.GetBalanceAsync(financialItems, from, to);
 
             var model = new BalanceReportViewModel()
             {
@@ -62,21 +49,9 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Expenses(IList<FinancialItemSelectViewModel> selectedItems, string from, string to)
+        public async Task<IActionResult> Expenses(IList<FinancialItemSelectViewModel> selectedItems, DateTimeOffset from, DateTimeOffset to)
         {
             var financialItems = await _financialItemsService.GetByUserIdAndTypeAsync(User.GetCurrentUserId(), FinancialItemType.Expense);
-
-            var format = "MM/dd/yyyy";
-
-            if (!DateTimeOffset.TryParseExact(from, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset fromDate))
-            {
-                fromDate = DateTimeOffset.MinValue;
-            }
-
-            if (!DateTimeOffset.TryParseExact(to, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset toDate))
-            {
-                toDate = DateTimeOffset.MaxValue;
-            }
 
             var itemsToFilter = financialItems;
 
@@ -85,7 +60,7 @@ namespace Web.Controllers
                 itemsToFilter = financialItems.Where(fi => selectedItems.Any(si => si.FinancialItem.Id == fi.Id && si.IsSelected == true));
             }
 
-            var report = await _reportsService.GetExpensesAsync(itemsToFilter, fromDate, toDate);
+            var report = await _reportsService.GetExpensesAsync(itemsToFilter, from, to);
 
             var financialItemsSelectList = financialItems
                 .Select(fi => new FinancialItemSelectViewModel()
@@ -106,21 +81,9 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Income(IList<FinancialItemSelectViewModel> selectedItems, string from, string to)
+        public async Task<IActionResult> Income(IList<FinancialItemSelectViewModel> selectedItems, DateTimeOffset from, DateTimeOffset to)
         {
             var financialItems = await _financialItemsService.GetByUserIdAndTypeAsync(User.GetCurrentUserId(), FinancialItemType.Income);
-
-            var format = "MM/dd/yyyy";
-
-            if (!DateTimeOffset.TryParseExact(from, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset fromDate))
-            {
-                fromDate = DateTimeOffset.MinValue;
-            }
-
-            if (!DateTimeOffset.TryParseExact(to, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset toDate))
-            {
-                toDate = DateTimeOffset.MaxValue;
-            }
 
             var itemsToFilter = financialItems;
 
@@ -129,7 +92,7 @@ namespace Web.Controllers
                 itemsToFilter = financialItems.Where(fi => selectedItems.Any(si => si.FinancialItem.Id == fi.Id && si.IsSelected == true));
             }
 
-            var report = await _reportsService.GetIncomeAsync(itemsToFilter, fromDate, toDate);
+            var report = await _reportsService.GetIncomeAsync(itemsToFilter, from, to);
 
             var financialItemsSelectList = financialItems
                 .Select(fi => new FinancialItemSelectViewModel()
