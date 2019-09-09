@@ -45,7 +45,7 @@
                 @foreach (var item in Model.FinancialOperations)
                 {
                     <tr>
-                        <td>@item.Timestamp.UtcDateTime.ToShortDateString()</td>
+                        <td>@item.Timestamp</td>
                         <td>@item.FinancialItem.Name</td>
                         <td>@item.Amount</td>
                         <td>@item.Description</td>

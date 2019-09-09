@@ -54,7 +54,7 @@ namespace Web.Areas.Admin.Controllers
         {
             var model = new CreateFinancialOperationViewModel()
             {
-                Timestamp = DateTimeOffset.UtcNow
+                Timestamp = DateTimeOffset.Now
             };
 
             var user = await _userService.GetByIdAsync(userId);
@@ -134,7 +134,7 @@ namespace Web.Areas.Admin.Controllers
                 UserId = user.Id,
                 UserName = user.UserName,
                 Amount = financialOperation.Amount,
-                Timestamp = financialOperation.Timestamp.UtcDateTime.Date,
+                Timestamp = financialOperation.Timestamp,
                 FinancialItemId = financialOperation.FinancialItemId,
                 Description = financialOperation.Description
             };
