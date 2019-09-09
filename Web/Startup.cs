@@ -62,9 +62,6 @@ namespace Web
             IServiceProvider serviceProvider
             )
         {
-            var cultureInfo = new CultureInfo("en-US");
-            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             if (env.IsDevelopment())
             {
