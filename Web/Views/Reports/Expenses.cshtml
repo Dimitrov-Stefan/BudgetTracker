@@ -5,79 +5,71 @@
 }
 
 <div class="row">
-    <div class="col-12">
-        <h1 class="text-center">
-            @ViewData["Title"]
-        </h1>
+    <h1 class="col-12 text-center">
+        @ViewData["Title"]
+    </h1>
 
-        <form method="get" asp-action="@nameof(ReportsController.Expenses)">
+    <form method="get" asp-action="@nameof(ReportsController.Expenses)">
 
-            <label asp-for="From">From Date</label>
-            <div class="input-group col-md-6 col-sm-12">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                    </span>
-                </div>
+        <div class="row col-12">
+            <p>Date range:</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
                 <input asp-for="From" type="text" placeholder="Date" class="form-control datetimepicker" autocomplete="off" />
             </div>
-
-            <label asp-for="To">To Date</label>
-            <div class="input-group col-md-6 col-sm-12">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                    </span>
-                </div>
+            <div class="col-6">
                 <input asp-for="To" type="text" placeholder="Date" class="form-control datetimepicker" autocomplete="off" />
             </div>
+        </div>
 
-            <div>
-                <ul class="list-no-bullet">
-                    @for (int i = 0; i < Model.SelectedItems.Count; i++)
-                    {
-                        <li>
-                            <input type="checkbox" asp-for="SelectedItems[i].IsSelected" />
-                            <label asp-for="SelectedItems[i].IsSelected">@Model.SelectedItems[i].FinancialItem.Name</label>
-                            <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Id" />
-                            <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Name" />
-                        </li>
-                    }
-                </ul>
-            </div>
-
-            <input type="submit" value="Filter" class="btn btn-default" />
-        </form>
-
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>
-                        Financial Item
-                    </th>
-                    <th>
-                        Balance
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.ExpensesReport.FinancialItemReportRows)
+        <div class="row col-12">
+            <ul class="list-no-bullet">
+                @for (int i = 0; i < Model.SelectedItems.Count; i++)
                 {
-                    <tr>
-                        <td>@item.FinancialItem.Name</td>
-
-                        <td>@item.Sum</td>
-                    </tr>
+                    <li>
+                        <input type="checkbox" asp-for="SelectedItems[i].IsSelected" />
+                        <label asp-for="SelectedItems[i].IsSelected">@Model.SelectedItems[i].FinancialItem.Name</label>
+                        <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Id" />
+                        <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Name" />
+                    </li>
                 }
+            </ul>
+        </div>
 
+        <div class="row col-12 justify-content-start">
+            <input type="submit" value="Filter" class="btn btn-dark" />
+        </div>
+    </form>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Financial Item
+                </th>
+                <th>
+                    Balance
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ExpensesReport.FinancialItemReportRows)
+            {
                 <tr>
-                    <td><strong>Total:</strong></td>
+                    <td>@item.FinancialItem.Name</td>
 
-                    <td><strong>@Model.ExpensesReport.Total</strong></td>
+                    <td>@item.Sum</td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
+            }
+
+            <tr>
+                <td><strong>Total:</strong></td>
+
+                <td><strong>@Model.ExpensesReport.Total</strong></td>
+            </tr>
+        </tbody>
+    </table>
     <div class="col-4">
         <canvas id="myChart" width="400" height="400"></canvas>
     </div>
@@ -87,7 +79,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('.datetimepicker').datetimepicker({
-                inline: false,
+                inline: true,
+                timepicker: false
             });
         });
     </script>
