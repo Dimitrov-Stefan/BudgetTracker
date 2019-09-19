@@ -26,8 +26,11 @@
                 @for (int i = 0; i < Model.SelectedItems.Count; i++)
                 {
                     <li>
-                        <input type="checkbox" asp-for="SelectedItems[i].IsSelected" />
-                        <label asp-for="SelectedItems[i].IsSelected">@Model.SelectedItems[i].FinancialItem.Name</label>
+                        <div class="custom-control custom-checkbox small">
+                            <input class="custom-control-input" type="checkbox" asp-for="SelectedItems[i].IsSelected" />
+                            <label class="custom-control-label" asp-for="SelectedItems[i].IsSelected">@Model.SelectedItems[i].FinancialItem.Name</label>
+                        </div>
+
                         <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Id" />
                         <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Name" />
                     </li>

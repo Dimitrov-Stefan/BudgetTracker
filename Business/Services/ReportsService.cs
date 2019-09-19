@@ -26,7 +26,7 @@ namespace Business.Services
             var financialOperations = await _financialOperationsRepository
                 .GetByMultuipleFinancialItemIdsAndDateRangeAsync(financialItems?
                 .Select(fi => fi.Id)
-                .ToList(), from.Value.ToUniversalTime(), to.Value.ToUniversalTime());
+                .ToList(), from.Value, to.Value);
 
             var rows = financialOperations.GroupBy(fo => fo.FinancialItemId).Select(fo => new FinancialItemReportRow()
             {
@@ -46,7 +46,7 @@ namespace Business.Services
             var financialOperations = await _financialOperationsRepository
                 .GetByMultuipleFinancialItemIdsAndDateRangeAsync(financialItems?
                 .Select(fi => fi.Id)
-                .ToList(), from.Value.ToUniversalTime(), to.Value.ToUniversalTime());
+                .ToList(), from.Value, to.Value);
 
             var rows = financialOperations.GroupBy(fo => fo.FinancialItemId).Select(fo => new FinancialItemReportRow()
             {
@@ -66,7 +66,7 @@ namespace Business.Services
             var financialOperations = await _financialOperationsRepository
                 .GetByMultuipleFinancialItemIdsAndDateRangeAsync(financialItems?
                 .Select(fi => fi.Id)
-                .ToList(), from.Value.ToUniversalTime(), to.Value.ToUniversalTime());
+                .ToList(), from.Value, to.Value);
 
             var rows = financialOperations.GroupBy(fo => fo.FinancialItemId).Select(fo => new FinancialItemReportRow()
             {
