@@ -18,7 +18,7 @@
     <div class="col-6">
         <div class="card mb-4 py-3 border-bottom-info">
             <div class="card-body">
-                <a class="text-info" asp-action="@nameof(ReportsController.Balance)">Balance</a>
+                <a class="text-info" asp-action="@nameof(ReportsController.Balance)" asp-route-from="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)" asp-route-to="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)">Balance</a>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
     <div class="col-6">
         <div class="card mb-4 py-3 border-bottom-danger">
             <div class="card-body">
-                <a class="text-danger" asp-action="@nameof(ReportsController.Expenses)">Expenses</a>
+                <a class="text-danger" asp-action="@nameof(ReportsController.Expenses)" asp-route-from="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)" asp-route-to="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)">Expenses</a>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
     <div class="col-6">
         <div class="card mb-4 py-3 border-bottom-success">
             <div class="card-body">
-                <a class="text-success" asp-action="@nameof(ReportsController.Income)">Income</a>
+                <a class="text-success" asp-action="@nameof(ReportsController.Income)" asp-route-from="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)" asp-route-to="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)">Income</a>
             </div>
         </div>
     </div>

@@ -40,8 +40,6 @@ namespace Web.Controllers
 
             var model = new BalanceReportViewModel()
             {
-                From = null,
-                To = null,
                 BalanceReport = report
             };
 
@@ -71,8 +69,6 @@ namespace Web.Controllers
 
             var model = new ExpensesReportViewModel()
             {
-                From = null,
-                To = null,
                 SelectedItems = financialItemsSelectList,
                 ExpensesReport = report
             };
@@ -103,8 +99,6 @@ namespace Web.Controllers
 
             var model = new IncomeReportViewModel()
             {
-                From = null,
-                To = null,
                 SelectedItems = financialItemsSelectList,
                 IncomeReport = report
             };

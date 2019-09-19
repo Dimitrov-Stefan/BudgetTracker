@@ -5,65 +5,66 @@
 }
 
 <div class="row">
-    <div class="col-12">
-        <h1 class="text-center">
-            @ViewData["Title"]
-        </h1>
+    <h1 class="col-12 text-center">
+        @ViewData["Title"]
+    </h1>
 
         <form method="get" asp-action="@nameof(ReportsController.Balance)" asp-route-from="@Model.From" asp-route-to="@Model.To">
+            <div class="row col-12">
+                <p>Date range:</p>
+            </div>
             <div class="row">
-                <div class="col-md-4 col-sm-12">
-                    <label asp-for="From">From Date</label>
+                <div class="col-lg-6 col-sm-12">
                     <input asp-for="From" type="text" placeholder="Date" class="form-control datetimepicker" autocomplete="off" />
                 </div>
-                <div class="col-md-4 col-sm-12">
-                    <label asp-for="To">To Date</label>
+                <div class="col-6">
                     <input asp-for="To" type="text" placeholder="Date" class="form-control datetimepicker" autocomplete="off" />
                 </div>
             </div>
-            <input type="submit" value="Filter" class="btn btn-default" />
+            <div class="row col-12 justify-content-start">
+                <input type="submit" value="Filter" class="btn btn-dark" />
+            </div>
         </form>
 
-        <table class="table table-hover">
-            <thead>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Financial Item
+                </th>
+                <th>
+                    Balance
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BalanceReport.FinancialItemReportRows)
+            {
                 <tr>
-                    <th>
-                        Financial Item
-                    </th>
-                    <th>
-                        Balance
-                    </th>
+                    <td>@item.FinancialItem.Name</td>
+
+                    <td>@item.Sum</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.BalanceReport.FinancialItemReportRows)
-                {
-                    <tr>
-                        <td>@item.FinancialItem.Name</td>
+            }
 
-                        <td>@item.Sum</td>
-                    </tr>
-                }
+            @if (Model.BalanceReport.Total > 0)
+            {
+                <tr class="text-success">
+                    <td><strong>Total:</strong></td>
 
-                @if (Model.BalanceReport.Total > 0)
-                {
-                    <tr class="text-success">
-                        <td><strong>Total:</strong></td>
+                    <td><strong>@Model.BalanceReport.Total</strong></td>
+                </tr>
+            }
+            @if (Model.BalanceReport.Total < 0)
+            {
+                <tr class="text-danger">
+                    <td><strong>Total:</strong></td>
 
-                        <td><strong>@Model.BalanceReport.Total</strong></td>
-                    </tr>
-                }
-                @if (Model.BalanceReport.Total < 0)
-                {
-                    <tr class="text-danger">
-                        <td><strong>Total:</strong></td>
-
-                        <td><strong>@Model.BalanceReport.Total</strong></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                    <td><strong>@Model.BalanceReport.Total</strong></td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 @section Scripts{
@@ -71,6 +72,8 @@
         $(document).ready(function () {
             $('.datetimepicker').datetimepicker({
                 inline: true,
+                timepicker: false,
+                defaultDate:false
             });
         });
     </script>
