@@ -50,7 +50,7 @@ namespace Business.Services
 
             var rows = financialOperations.GroupBy(fo => fo.FinancialItemId).Select(fo => new FinancialItemReportRow()
             {
-                Sum = Convert.ToDecimal(fo.Sum(fo2 => -fo2.Amount)),
+                Sum = Convert.ToDecimal(fo.Sum(fo2 => fo2.Amount)),
                 FinancialItem = fo.First().FinancialItem
             });
 

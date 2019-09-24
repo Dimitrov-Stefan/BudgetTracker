@@ -93,5 +93,11 @@
   "library": "jquery-datetimepicker@2.5.20",
   "destination": "wwwroot/lib/jquery-datetimepicker/"
 }
+,
+{
+  "provider": "filesystem",
+  "library": "wwwroot/lib/chartjs-plugins/",
+  "destination": "wwwroot/lib/chartjs-plugins/"
+}
 ]
 }
