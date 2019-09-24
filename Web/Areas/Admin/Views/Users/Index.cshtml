@@ -12,7 +12,7 @@
 
         <div class="d-flex justify-content-end">
             <a class="btn btn-primary btn-sm"
-              asp-area="Admin" asp-action="Create" asp-controller="@Url.ControllerName(typeof(UsersController))">
+               asp-area="Admin" asp-action="Create" asp-controller="@Url.ControllerName(typeof(UsersController))">
                 <span class="fas fa-plus"></span>
                 Add
             </a>
@@ -36,21 +36,24 @@
 
                 @foreach (var item in Model.Users)
                 {
-                <tr>
-                    <td>@item.FirstName</td>
+                    <tr>
+                        <td>@item.FirstName</td>
 
-                    <td>@item.LastName</td>
+                        <td>@item.LastName</td>
 
-                    <td>@item.Email</td>
+                        <td>@item.Email</td>
 
-                    <td>
-                        <a class="btn btn-primary btn-sm" asp-area="Admin" asp-action="Edit" asp-controller="@Url.ControllerName(typeof(UsersController))" asp-route-id="@item.Id">Edit</a>
-                    </td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" asp-area="Admin" asp-action="Edit" asp-controller="@Url.ControllerName(typeof(UsersController))" asp-route-id="@item.Id">Edit</a>
+                        </td>
 
-                    <td>
-                        <a class="btn btn-primary btn-sm" asp-area="Admin" asp-action="Index" asp-controller="@Url.ControllerName(typeof(FinancialItemsController))" asp-route-id="@item.Id">Details</a>
-                    </td>
-                </tr>
+                        <td>
+                            <a class="btn btn-primary btn-sm" asp-area="Admin" asp-action="Index" asp-controller="@Url.ControllerName(typeof(FinancialItemsController))" asp-route-id="@item.Id">Items</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" asp-area="Admin" asp-action="Index" asp-controller="@Url.ControllerName(typeof(FinancialOperationsController))" asp-route-id="@item.Id">Operations</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
