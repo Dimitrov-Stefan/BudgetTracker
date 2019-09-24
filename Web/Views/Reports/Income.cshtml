@@ -21,22 +21,22 @@
             </div>
         </div>
 
-        <div>
-            <ul class="list-no-bullet">
-                @for (int i = 0; i < Model.SelectedItems.Count; i++)
-                {
-                    <li>
-                        <div class="custom-control custom-checkbox small">
-                            <input class="custom-control-input" type="checkbox" asp-for="SelectedItems[i].IsSelected" />
-                            <label class="custom-control-label" asp-for="SelectedItems[i].IsSelected">@Model.SelectedItems[i].FinancialItem.Name</label>
-                        </div>
 
-                        <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Id" />
-                        <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Name" />
-                    </li>
-                }
-            </ul>
-        </div>
+        <ul class="list-no-bullet col-12 row">
+            @for (int i = 0; i < Model.SelectedItems.Count; i++)
+            {
+                <li class="list-item">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" asp-for="SelectedItems[i].IsSelected" />
+                        <label class="custom-control-label mt-1 mb-1 ml-2 mr-2" asp-for="SelectedItems[i].IsSelected">@Model.SelectedItems[i].FinancialItem.Name</label>
+                    </div>
+
+                    <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Id" />
+                    <input type="hidden" asp-for="SelectedItems[i].FinancialItem.Name" />
+                </li>
+            }
+        </ul>
+
 
         <div class="row col-12 justify-content-start">
             <input type="submit" value="Filter" class="btn btn-dark" />
@@ -144,4 +144,4 @@
         });
     </script>
 
-    }
+}
