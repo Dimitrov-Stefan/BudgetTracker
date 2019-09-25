@@ -113,5 +113,48 @@ namespace Web.Controllers
 
             return View(viewModel);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Manage()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            var manageViewModel = new ManageViewModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
+
+            return View(manageViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Manage(ManageViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+
+                if (user != null)
+                {
+                    var result = await _userManager.UpdateAsync(user);
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+
+                var manageViewModel = new ManageViewModel()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                };
+
+                return View(manageViewModel);
+            }
+
+            return View(model);
+        }
     }
 }
