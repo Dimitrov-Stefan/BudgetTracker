@@ -17,6 +17,29 @@
             <input class="form-control form-control-user" asp-for="LastName" />
             <span class="text-danger" asp-validation-for="LastName"></span>
         </div>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input class="form-control form-control-user" asp-for="Email" />
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CurrentPassword"></label>
+            <input class="form-control form-control-user" asp-for="CurrentPassword" />
+            <span class="text-danger" asp-validation-for="CurrentPassword"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NewPassword"></label>
+            <input class="form-control form-control-user" asp-for="NewPassword" />
+            <span class="text-danger" asp-validation-for="NewPassword"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ConfirmNewPassword"></label>
+            <input class="form-control form-control-user" asp-for="ConfirmNewPassword" />
+            <span class="text-danger" asp-validation-for="ConfirmNewPassword"></span>
+        </div>
 
         <button type="submit" class="btn btn-primary btn-user btn-block">
             Save

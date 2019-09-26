@@ -122,7 +122,8 @@ namespace Web.Controllers
             var manageViewModel = new ManageViewModel()
             {
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Email = user.Email
             };
 
             return View(manageViewModel);
@@ -137,6 +138,12 @@ namespace Web.Controllers
 
                 if (user != null)
                 {
+                    //var changePasswordResult = _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.Email = model.Email;
+                    user.UserName = model.Email;
+
                     var result = await _userManager.UpdateAsync(user);
 
                     foreach (var error in result.Errors)
@@ -148,7 +155,8 @@ namespace Web.Controllers
                 var manageViewModel = new ManageViewModel()
                 {
                     FirstName = user.FirstName,
-                    LastName = user.LastName
+                    LastName = user.LastName,
+                    Email = user.Email
                 };
 
                 return View(manageViewModel);
