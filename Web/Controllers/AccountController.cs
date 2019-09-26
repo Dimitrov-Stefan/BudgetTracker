@@ -138,7 +138,29 @@ namespace Web.Controllers
 
                 if (user != null)
                 {
-                    //var changePasswordResult = _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+                    if (!string.IsNullOrWhiteSpace(model.NewPassword))
+                    {
+                        if(model.CurrentPassword == null)
+                        {
+                            model.CurrentPassword = string.Empty;
+                        }
+
+                        var currentPasswordCorrect = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
+
+                        if(currentPasswordCorrect)
+                        {
+                            var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+                            foreach (var error in changePasswordResult.Errors)
+                            {
+                                ModelState.AddModelError(string.Empty, error.Description);
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Your current password is incorrect.");
+                        }
+                    }
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
                     user.Email = model.Email;
