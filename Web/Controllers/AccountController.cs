@@ -187,6 +187,8 @@ namespace Web.Controllers
             if (result.Succeeded)
             {
                 _toastNotification.AddSuccessToastMessage("Save successful!", new NotyOptions() { Timeout = 5000, Layout = "bottomRight" });
+
+                return RedirectToAction(nameof(Manage));
             }
             else
             {
@@ -194,9 +196,9 @@ namespace Web.Controllers
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-            }
 
-            return View(model);
+                return View(model);
+            }
         }
     }
 }
