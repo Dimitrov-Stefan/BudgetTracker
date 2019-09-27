@@ -19,6 +19,7 @@ namespace Web.Areas.Admin.Models.Users
 
         [Required(ErrorMessageResourceType = typeof(Literals), ErrorMessageResourceName = nameof(Literals.RequiredFieldError))]
         [MaxLength(256, ErrorMessageResourceType = typeof(Literals), ErrorMessageResourceName = nameof(Literals.MaxLengthError))]
+        [EmailAddress(ErrorMessageResourceName = nameof(Literals.MailNotValid), ErrorMessageResourceType = typeof(Literals))]
         public string Email { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Literals), ErrorMessageResourceName = nameof(Literals.RequiredFieldError))]
