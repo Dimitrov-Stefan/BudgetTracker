@@ -135,58 +135,65 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Manage(ManageViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = await _userManager.GetUserAsync(User);
+                return View(model);
+            }
 
-                if (user != null)
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return NotFound("User not found. Please try again.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.NewPassword))
+            {
+                if (model.CurrentPassword == null)
                 {
-                    if (!string.IsNullOrWhiteSpace(model.NewPassword))
-                    {
-                        if(model.CurrentPassword == null)
-                        {
-                            model.CurrentPassword = string.Empty;
-                        }
-
-                        var currentPasswordCorrect = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
-
-                        if(currentPasswordCorrect)
-                        {
-                            var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-
-                            foreach (var error in changePasswordResult.Errors)
-                            {
-                                ModelState.AddModelError(string.Empty, error.Description);
-                            }
-                        }
-                        else
-                        {
-                            ModelState.AddModelError(string.Empty, "Your current password is incorrect.");
-                        }
-                    }
-                    user.FirstName = model.FirstName;
-                    user.LastName = model.LastName;
-                    user.Email = model.Email;
-                    user.UserName = model.Email;
-
-                    var result = await _userManager.UpdateAsync(user);
-
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                    model.CurrentPassword = string.Empty;
                 }
 
-                var manageViewModel = new ManageViewModel()
+                var currentPasswordCorrect = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
+
+                if (currentPasswordCorrect)
                 {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email
-                };
+                    var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
 
-                _toastNotification.AddSuccessToastMessage("Save successfull!", new NotyOptions() { Timeout = 5000, Layout = "bottomRight" });
+                    if (!changePasswordResult.Succeeded)
+                    {
+                        foreach (var error in changePasswordResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
 
-                return View(manageViewModel);
+                        return View(model);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Your current password is incorrect.");
+
+                    return View(model);
+                }
+            }
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.UserName = model.Email;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                _toastNotification.AddSuccessToastMessage("Save successful!", new NotyOptions() { Timeout = 5000, Layout = "bottomRight" });
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
 
             return View(model);
