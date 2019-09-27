@@ -49,7 +49,7 @@ namespace Web
                 options.AccessDeniedPath = "/Account/AccessDenied";
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().AddNToastNotifyNoty().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.RegisterAppServices();
             services.RegisterAppRepositories();
@@ -81,6 +81,9 @@ namespace Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            //NOTE this line must be above .UseMvc() line.
+            app.UseNToastNotify();
 
             app.UseMvc(routes =>
             {

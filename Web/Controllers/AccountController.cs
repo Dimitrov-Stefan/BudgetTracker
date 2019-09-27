@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models.Entities.Identity;
+using NToastNotify;
 using Web.Extensions;
 using Web.Models.Account;
 using Web.Services;
@@ -16,12 +17,14 @@ namespace Web.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly IAccountService _accountService;
+        private readonly IToastNotification _toastNotification;
 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IAccountService accountService)
+        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IAccountService accountService, IToastNotification toastNotification)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _accountService = accountService;
+            _toastNotification = toastNotification;
         }
 
         public IActionResult Index()
@@ -180,6 +183,8 @@ namespace Web.Controllers
                     LastName = user.LastName,
                     Email = user.Email
                 };
+
+                _toastNotification.AddSuccessToastMessage("Save successfull!", new NotyOptions() { Timeout = 5000, Layout = "bottomRight" });
 
                 return View(manageViewModel);
             }
