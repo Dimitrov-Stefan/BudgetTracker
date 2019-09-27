@@ -12,35 +12,32 @@
 
         <div class="form-group">
             <label asp-for="FirstName"></label>
-            <input class="form-control form-control-user" asp-for="FirstName" />
+            <input class="form-control" asp-for="FirstName" />
             <span class="text-danger" asp-validation-for="FirstName"></span>
         </div>
         <div class="form-group">
             <label asp-for="LastName"></label>
-            <input class="form-control form-control-user" asp-for="LastName" />
+            <input class="form-control" asp-for="LastName" />
             <span class="text-danger" asp-validation-for="LastName"></span>
         </div>
         <div class="form-group">
             <label asp-for="Email"></label>
-            <input class="form-control form-control-user" asp-for="Email" />
+            <input class="form-control" asp-for="Email" />
             <span class="text-danger" asp-validation-for="Email"></span>
         </div>
-
         <div class="form-group">
             <label asp-for="CurrentPassword"></label>
-            <input class="form-control form-control-user" asp-for="CurrentPassword" />
+            <input id="curPass" class="form-control" asp-for="CurrentPassword" type="password" autocomplete="off" autocorrect="off" />
             <span class="text-danger" asp-validation-for="CurrentPassword"></span>
         </div>
-
         <div class="form-group">
             <label asp-for="NewPassword"></label>
-            <input class="form-control form-control-user" asp-for="NewPassword" />
+            <input class="form-control" asp-for="NewPassword" type="password" autocomplete="off" autocorrect="off" />
             <span class="text-danger" asp-validation-for="NewPassword"></span>
         </div>
-
         <div class="form-group">
             <label asp-for="ConfirmNewPassword"></label>
-            <input class="form-control form-control-user" asp-for="ConfirmNewPassword" />
+            <input class="form-control" asp-for="ConfirmNewPassword" type="password" autocomplete="off" autocorrect="off" />
             <span class="text-danger" asp-validation-for="ConfirmNewPassword"></span>
         </div>
 
