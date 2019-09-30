@@ -37,6 +37,9 @@ namespace Data.Repositories
         public async Task<IEnumerable<FinancialItem>> GetAllActiveByUserIdAsync(int userId)
             => await Set.Where(fi => fi.UserId == userId && fi.IsActive).ToListAsync();
 
+        public async Task<FinancialItem> GetByIdAndUserIdAsync(int id, int userId)
+        => await Set.SingleOrDefaultAsync(fi => fi.Id == id && fi.UserId == userId);
+
         public Task<int> GetAllCountByUserIdAsync(int userId)
             => Set.Where(fi => fi.UserId == userId)
             .CountAsync();

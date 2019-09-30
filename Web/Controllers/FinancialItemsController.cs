@@ -77,7 +77,8 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var financialItem = await _financialItemsService.GetByIdAsync(id);
+            var userId = User.GetCurrentUserId();
+            var financialItem = await _financialItemsService.GetByIdAndUserIdAsync(id, userId);
 
             if (financialItem == null)
             {
@@ -99,7 +100,8 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditFinancialItemViewModel model)
         {
-            var financialItem = await _financialItemsService.GetByIdAsync(model.Id);
+            var userId = User.GetCurrentUserId();
+            var financialItem = await _financialItemsService.GetByIdAndUserIdAsync(model.Id, userId);
 
             if (financialItem == null)
             {
@@ -122,7 +124,8 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            await _financialItemsService.DeleteAsync(id);
+            var userId = User.GetCurrentUserId();
+            await _financialItemsService.DeleteAsync(id, userId);
 
             return RedirectToAction(nameof(Index));
         }

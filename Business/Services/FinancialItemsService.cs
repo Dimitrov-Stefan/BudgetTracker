@@ -46,12 +46,25 @@ namespace Business.Services
         public async Task<FinancialItem> GetByIdAsync(int id)
             => await _financialItemsRepository.FindAsync(id);
 
+        public async Task<FinancialItem> GetByIdAndUserIdAsync(int id, int userId)
+            => await _financialItemsRepository.GetByIdAndUserIdAsync(id, userId);
+
         public async Task UpdateAsync(FinancialItem item)
             => await _financialItemsRepository.UpdateAsync(item);
 
         public async Task DeleteAsync(int id)
         {
             var financialItem = await GetByIdAsync(id);
+
+            if (financialItem != null)
+            {
+                await _financialItemsRepository.DeleteAsync(financialItem);
+            }
+        }
+
+        public async Task DeleteAsync(int id, int userId)
+        {
+            var financialItem = await GetByIdAndUserIdAsync(id, userId);
 
             if (financialItem != null)
             {

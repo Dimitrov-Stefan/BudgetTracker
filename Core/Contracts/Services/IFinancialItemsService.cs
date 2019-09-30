@@ -24,8 +24,12 @@ namespace Core.Contracts.Services
 
         Task<FinancialItem> GetByIdAsync(int id);
 
+        Task<FinancialItem> GetByIdAndUserIdAsync(int id, int userId);
+
         Task UpdateAsync(FinancialItem item);
 
         Task DeleteAsync(int id);
+
+        Task DeleteAsync(int id, int userId);
     }
 }
