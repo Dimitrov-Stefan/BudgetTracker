@@ -73,3 +73,9 @@ body {
     margin-left: 4px;
     border-radius: 7px;
 }
+
+/* Tables
+-------------------------------------------------- */
+.table-header {
+    background-color: azure;
+}

@@ -5,21 +5,21 @@
 }
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-12 overflow-auto">
         <h1 class="text-center">
             @ViewData["Title"]
         </h1>
 
-        <div class="d-flex justify-content-end">
-            <a class="btn btn-dark btn-sm"
+        <div class="d-flex justify-content-end col-md-8 offset-md-2 mb-2 p-0">
+            <a class="btn btn-primary btn-sm"
                asp-action="@nameof(FinancialItemsController.Create)">
                 <span class="fas fa-plus"></span>
                 Add
             </a>
         </div>
 
-        <table class="table table-hover">
-            <thead>
+        <table class="table table-hover table-bordered col-md-8 offset-md-2">
+            <thead class="table-header">
                 <tr>
                     <th>
                         Name
@@ -29,6 +29,8 @@
                     </th>
                     <th>
                         Active
+                    </th>
+                    <th>
                     </th>
                 </tr>
             </thead>
@@ -42,8 +44,8 @@
 
                         <td>@(item.IsActive ? "Yes" : "No")</td>
 
-                        <td>
-                            <a class="btn btn-outline-dark btn-sm" asp-action="@nameof(FinancialItemsController.Edit)" asp-route-id="@item.Id">Edit</a>
+                        <td class="text-center">
+                            <a class="btn btn-outline-primary btn-sm" asp-action="@nameof(FinancialItemsController.Edit)" asp-route-id="@item.Id">Edit</a>
                         </td>
                     </tr>
                 }
