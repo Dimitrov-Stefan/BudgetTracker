@@ -2,34 +2,45 @@
     ViewData["Title"] = "Reports";
 }
 
-<div class="row">
+<div class="row col-md-8 offset-md-2">
     <div class="col-6 offset-3">
         <div class="text-center">
             <h3>@ViewData["Title"]</h3>
         </div>
     </div>
 
-    <div class="col-6">
-        <div class="card mb-4 py-3 border-bottom-info">
-            <div class="card-body">
-                <a class="text-info" asp-action="@nameof(ReportsController.Balance)" asp-route-from="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)" asp-route-to="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)">Balance</a>
+    <div class="col-md-6">
+        <a class="text-info" asp-action="@nameof(ReportsController.Balance)" asp-route-from="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)" asp-route-to="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)">
+            <div class="card mb-4 py-3 border-bottom-info">
+                <div class="card-body">
+                    Balance
+                    <i class="fas fa-balance-scale fa-pull-right"></i>
+                </div>
             </div>
-        </div>
+
+        </a>
     </div>
 
-    <div class="col-6">
-        <div class="card mb-4 py-3 border-bottom-danger">
-            <div class="card-body">
-                <a class="text-danger" asp-action="@nameof(ReportsController.Expenses)" asp-route-from="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)" asp-route-to="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)">Expenses</a>
+    <div class="col-md-6">
+        <a class="text-danger" asp-action="@nameof(ReportsController.Expenses)" asp-route-from="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)" asp-route-to="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)">
+            <div class="card mb-4 py-3 border-bottom-danger">
+                <div class="card-body">
+                    Expenses
+                    <i class="fas fa-file-invoice-dollar fa-pull-right"></i>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 
-    <div class="col-6">
-        <div class="card mb-4 py-3 border-bottom-success">
-            <div class="card-body">
-                <a class="text-success" asp-action="@nameof(ReportsController.Income)" asp-route-from="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)" asp-route-to="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)">Income</a>
+    <div class="col-md-6">
+        <a class="text-success" asp-action="@nameof(ReportsController.Income)" asp-route-from="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)" asp-route-to="@DateTimeOffset.Now.Date.ToString(CultureInfo.InvariantCulture)">
+            <div class="card mb-4 py-3 border-bottom-success">
+                <div class="card-body">
+                    Income
+
+                    <i class="fas fa-piggy-bank fa-pull-right"></i>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 </div>
