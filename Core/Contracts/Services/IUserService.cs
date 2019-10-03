@@ -16,5 +16,7 @@ namespace Core.Contracts.Services
         Task<EditUserResult> EditAsync(User user);
 
         Task<DeleteUserResult> DeleteAsync(int userId, int currentUserId);
+
+        Task<IEnumerable<User>> SearchUsersAsync(string searchText);
     }
 }

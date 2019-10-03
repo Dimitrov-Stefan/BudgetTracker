@@ -9,5 +9,7 @@ namespace Core.Contracts.Repositories
         Task<User> GetByIdAsync(int id);
 
         Task<IEnumerable<User>> GetAllAsync();
+
+        Task<IEnumerable<User>> SearchUsersAsync(string searchText);
     }
 }

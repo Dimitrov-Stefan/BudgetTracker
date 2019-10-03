@@ -21,5 +21,8 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<User>> GetAllAsync()
             => await Set.ToListAsync();
+
+        public async Task<IEnumerable<User>> SearchUsersAsync(string searchText)
+             => await Set.Where(u => u.FirstName.Contains(searchText) || u.LastName.Contains(searchText) || u.Email.Contains(searchText)).ToListAsync();
     }
 }

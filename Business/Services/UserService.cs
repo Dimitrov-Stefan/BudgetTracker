@@ -114,5 +114,8 @@ namespace Business.Services
 
             return deleteResult;
         }
+
+        public async Task<IEnumerable<User>> SearchUsersAsync(string searchText)
+            => await _userRepository.SearchUsersAsync(searchText);
     }
 }
