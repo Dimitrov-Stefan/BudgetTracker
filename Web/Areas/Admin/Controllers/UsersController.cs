@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Constants;
 using Core.Contracts.Services;
@@ -6,6 +8,7 @@ using Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Models.Entities.Identity;
 using Web.Areas.Admin.Models.Users;
 
 namespace Web.Areas.Admin.Controllers
@@ -34,6 +37,28 @@ namespace Web.Areas.Admin.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchUsers(string searchText)
+        {
+            IEnumerable<User> users;
+
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                users = await _userService.SearchUsersAsync(searchText);
+            }
+            else
+            {
+                users = await _userService.GetAllAsync();
+            }
+
+            var model = new UserListViewModel()
+            {
+                Users = users
+            };
+
+            return View("Index", model);
         }
 
         [HttpGet]
