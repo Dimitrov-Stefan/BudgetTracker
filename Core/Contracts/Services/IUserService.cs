@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Models;
 using Models.Entities.Identity;
 using Models.ServiceResults.Users;
 
@@ -9,6 +10,8 @@ namespace Core.Contracts.Services
     {
         Task<IEnumerable<User>> GetAllAsync();
 
+        Task<PagedList<User>> GetPagedAsync(PagedListRequest request);
+
         Task<CreateUserResult> CreateAsync(string firstName, string lastName, string email, string password, int roleId);
 
         Task<User> GetByIdAsync(int id);
@@ -17,6 +20,6 @@ namespace Core.Contracts.Services
 
         Task<DeleteUserResult> DeleteAsync(int userId, int currentUserId);
 
-        Task<IEnumerable<User>> SearchUsersAsync(string searchText);
+        Task<PagedList<User>> SearchUsersAsync(PagedListRequest request, string searchText);
     }
 }

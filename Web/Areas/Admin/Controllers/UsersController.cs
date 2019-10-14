@@ -8,6 +8,7 @@ using Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Models;
 using Models.Entities.Identity;
 using Web.Areas.Admin.Models.Users;
 
@@ -27,39 +28,49 @@ namespace Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(PagedListRequest request, string searchText)
         {
-            var users = await _userService.GetAllAsync();
+            PagedList<User> users;
+
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                users = await _userService.SearchUsersAsync(request, searchText);
+            }
+            else
+            {
+                users = await _userService.GetPagedAsync(request);
+            }
 
             var model = new UserListViewModel()
             {
-                Users = users
+                Users = users,
+                SearchText = searchText
             };
 
             return View(model);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> SearchUsers(string searchText)
-        {
-            IEnumerable<User> users;
+        //[HttpGet]
+        //public async Task<IActionResult> SearchUsers(PagedListRequest request, string searchText)
+        //{
+        //    PagedList<User> users;
 
-            if (!string.IsNullOrWhiteSpace(searchText))
-            {
-                users = await _userService.SearchUsersAsync(searchText);
-            }
-            else
-            {
-                users = await _userService.GetAllAsync();
-            }
+        //    if (!string.IsNullOrWhiteSpace(searchText))
+        //    {
+        //        users = await _userService.SearchUsersAsync(request, searchText);
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction(nameof(Index), request);
+        //    }
 
-            var model = new UserListViewModel()
-            {
-                Users = users
-            };
+        //    var model = new UserListViewModel()
+        //    {
+        //        Users = users
+        //    };
 
-            return View("Index", model);
-        }
+        //    return View("Index", model);
+        //}
 
         [HttpGet]
         public IActionResult Create()

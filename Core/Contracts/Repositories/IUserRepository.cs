@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Models.Entities.Identity;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Models.Entities.Identity;
 
 namespace Core.Contracts.Repositories
 {
@@ -10,6 +10,10 @@ namespace Core.Contracts.Repositories
 
         Task<IEnumerable<User>> GetAllAsync();
 
+        Task<IEnumerable<User>> GetPagedAsync(int skip, int take);
+
         Task<IEnumerable<User>> SearchUsersAsync(string searchText);
+
+        Task<int> GetAllCountAsync();
     }
 }

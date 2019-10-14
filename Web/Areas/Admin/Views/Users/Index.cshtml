@@ -11,7 +11,9 @@
         </h1>
 
         <form method="get" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
-              asp-action="@nameof(UsersController.SearchUsers)" asp-controller="@Url.ControllerName(typeof(UsersController))">
+              asp-action="@nameof(UsersController.Index)" asp-controller="@Url.ControllerName(typeof(UsersController))">
+            @*<input asp-for="Users.Page" hidden="hidden" />
+            <input asp-for="Users.PageSize" hidden="hidden" />*@
             <div class="input-group">
                 <input asp-for="SearchText" type="text" class="form-control bg-light border-0 small" placeholder="Search users..." aria-label="Search" aria-describedby="basic-addon2">
                 <div class="input-group-append">
@@ -46,7 +48,7 @@
             </thead>
             <tbody>
 
-                @foreach (var item in Model.Users)
+                @foreach (var item in Model.Users.Items)
                 {
                     <tr>
                         <td>@item.FirstName</td>
@@ -69,6 +71,17 @@
                 }
             </tbody>
         </table>
+
+        <div class="d-flex justify-content-end col-md-8 offset-md-2 mb-2 p-0">
+
+
+                <vc:pagination page="Model.Users.Page"
+                               page-count="Model.Users.PageCount"
+                               page-url-func='p => Url.Action(nameof(UsersController.Index), new { page = p, searchText = Model.SearchText })'>
+                </vc:pagination>
+            
+
+        </div>
     </div>
 </div>
 

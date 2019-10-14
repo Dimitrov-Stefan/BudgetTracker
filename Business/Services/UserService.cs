@@ -8,6 +8,7 @@ using Core.Contracts.Repositories;
 using Core.Contracts.Services;
 using Core.Extensions;
 using Microsoft.AspNetCore.Identity;
+using Models;
 using Models.Entities.Identity;
 using Models.ServiceResults.Users;
 using Principal = System.Security.Claims.ClaimsPrincipal;
@@ -72,6 +73,14 @@ namespace Business.Services
         public Task<IEnumerable<User>> GetAllAsync()
             => _userRepository.GetAllAsync();
 
+        public async Task<PagedList<User>> GetPagedAsync(PagedListRequest request)
+        {
+            var users = await _userRepository.GetPagedAsync(request.Skip, request.PageSize);
+            var usersCount = await _userRepository.GetAllCountAsync();
+
+            return new PagedList<User>(users, request.Page, request.PageSize, usersCount);
+        }
+
         public async Task<User> GetByIdAsync(int id)
             => await _userRepository.GetByIdAsync(id);
 
@@ -115,7 +124,19 @@ namespace Business.Services
             return deleteResult;
         }
 
-        public async Task<IEnumerable<User>> SearchUsersAsync(string searchText)
-            => await _userRepository.SearchUsersAsync(searchText);
+        public async Task<PagedList<User>> SearchUsersAsync(PagedListRequest request, string searchText)
+        {
+            var users = await _userRepository.SearchUsersAsync(/*request.Page, request.PageSize,*/ searchText);
+            var pagedUsers = users
+                .Skip(request.Skip)
+                .Take(request.PageSize)
+                .OrderBy(u => u.FirstName)
+                .ThenBy(u => u.LastName)
+                .ToList();
+
+            var usersCount = users.Count();
+
+            return new PagedList<User>(pagedUsers, request.Page, request.PageSize, usersCount);
+        }
     }
 }
