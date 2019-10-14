@@ -30,6 +30,7 @@
     <!-- jquery datetime picker -->
 
     <link href="~/lib/jquery-datetimepicker/jquery.datetimepicker.min.css" rel="stylesheet">
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
 </head>
 <body id="page-top">
     <div id="wrapper">
@@ -52,15 +53,15 @@
 
                     <!-- Topbar Search -->
                     @*<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
                         </div>
-                    </form>*@
+                    </div>
+                </form>*@
 
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -91,10 +92,10 @@
                 </nav>
                 <!-- End of Topbar -->
                 @*<main role="main" class="pb-3">
-                        <div class="row">
-                            @RenderBody()
-                        </div>
-                    </main>*@
+                <div class="row">
+                    @RenderBody()
+                </div>
+            </main>*@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -104,6 +105,11 @@
                 </div>
             </div>
             <!-- End of Content Wrapper -->
+
+            <a class="scroll-to-top rounded" href="#page-top" style="display: inline;">
+                <i class="fas fa-angle-up"></i>
+            </a>
+
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -118,42 +124,42 @@
             </footer>
             <!-- End of Footer -->
             @*<header>
-                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                        <div class="container">
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web</a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                                <partial name="_LoginPartial" />
-                                <ul class="navbar-nav flex-grow-1">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
-                </header>*@
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial" />
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>*@
 
             @RenderSection("PageHeader", required: false)
 
             @*<div class="container">
-                    <partial name="_CookieConsentPartial" />
-                    <main role="main" class="pb-3">
-                        @RenderBody()
-                    </main>
-                </div>
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
 
-                <footer class="border-top footer text-muted">
-                    <div class="container">
-                        &copy; 2019 - Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </div>
-                </footer>*@
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2019 - Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
         </div>
     </div>
 
@@ -203,6 +209,12 @@
     <script src="~/lib/jquery-datetimepicker/jquery.datetimepicker.full.min.js"></script>
 
     <script type="text/javascript" src="~/lib/chartjs-plugins/chartjs-plugin-labels.js">
+    </script>
+
+    <script type="text/javascript" src="~/vendor/datatables/dataTables.bootstrap4.min.js">
+    </script>
+
+    <script type="text/javascript" src="~/vendor/datatables/jquery.dataTables.min.js">
     </script>
 
     @RenderSection("Scripts", required: false)
