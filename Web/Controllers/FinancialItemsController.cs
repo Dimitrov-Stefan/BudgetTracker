@@ -44,6 +44,7 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> LoadTable([FromBody]DTParameters dtParameters)
         {
+            var userId = User.GetCurrentUserId();
             var searchBy = dtParameters.Search?.Value;
 
             var orderCriteria = string.Empty;
@@ -62,26 +63,28 @@ namespace Web.Controllers
                 orderAscendingDirection = true;
             }
 
-            var result = await _financialItemsService.GetExpensesByUserIdAsync(User.GetCurrentUserId());
+            var result = await _financialItemsService.GetPagedByUserIdAsync(userId, new PagedListRequest() { Page = dtParameters.Start, PageSize = dtParameters.Length });
+
+            var finalResult = result.Items;
 
             if (!string.IsNullOrEmpty(searchBy))
             {
-                result = result.Where(r => r.Name != null && r.Name.ToUpper().Contains(searchBy.ToUpper()))
+                finalResult = finalResult.Where(r => r.Name != null && r.Name.ToUpper().Contains(searchBy.ToUpper()))
                     .ToList();
             }
 
-            result = orderAscendingDirection ? result.AsQueryable().OrderByDynamic(orderCriteria, LinqExtensions.Order.Asc).ToList() : result.AsQueryable().OrderByDynamic(orderCriteria, LinqExtensions.Order.Desc).ToList();
+            finalResult = orderAscendingDirection ? finalResult.AsQueryable().OrderByDynamic(orderCriteria, LinqExtensions.Order.Asc).ToList() : finalResult.AsQueryable().OrderByDynamic(orderCriteria, LinqExtensions.Order.Desc).ToList();
 
             // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
-            var filteredResultsCount = result.Count();
-            var totalResultsCount = result.Count();
+            var filteredResultsCount = finalResult.Count();
+            var totalResultsCount = await _financialItemsService.GetCountByUserIdAsync(userId);
 
             return Json(new
             {
                 draw = dtParameters.Draw,
                 recordsTotal = totalResultsCount,
                 recordsFiltered = filteredResultsCount,
-                data = result
+                data = finalResult
                     .Skip(dtParameters.Start)
                     .Take(dtParameters.Length)
                     .ToList()

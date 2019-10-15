@@ -52,6 +52,9 @@ namespace Business.Services
         public async Task UpdateAsync(FinancialItem item)
             => await _financialItemsRepository.UpdateAsync(item);
 
+        public async Task<int> GetCountByUserIdAsync(int userId)
+            => await _financialItemsRepository.GetAllCountByUserIdAsync(userId);
+
         public async Task DeleteAsync(int id)
         {
             var financialItem = await GetByIdAsync(id);

@@ -31,5 +31,7 @@ namespace Core.Contracts.Services
         Task DeleteAsync(int id);
 
         Task DeleteAsync(int id, int userId);
+
+        Task<int> GetCountByUserIdAsync(int userId);
     }
 }
