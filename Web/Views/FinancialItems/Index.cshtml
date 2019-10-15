@@ -68,8 +68,66 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#dataTable').DataTable({
-                paging: false
+
+            $("#dataTable").DataTable({
+                // Design Assets
+                stateSave: true,
+                autoWidth: true,
+                // ServerSide Setups
+                processing: true,
+                serverSide: true,
+                // Paging Setups
+                paging: true,
+                // Searching Setups
+                searching: { regex: true },
+                // Ajax Filter
+                ajax: {
+                    url: "/FinancialItems/LoadTable",
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
+                // Columns Setups
+                columns: [
+                    { data: "name" },
+                    {
+                        data: "type",
+                        render: function (data, type, row) {
+                            return data === 0 ? "Expense" : "Income";
+                        }
+                    },
+                    {
+                        data: "isActive",
+                        render: function (data, type, row) {
+                            return data === true ? "Yes" : "No";
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, row) {
+                            return '<a class="btn btn-outline-primary btn-sm" href=/FinancialItems/Edit/' + data + '>Edit</a>'; //Hack: Partially hardcoded link
+                        }
+                    }
+                ],
+                // Column Definitions
+                columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+
+                            return data;
+                        }
+                    },
+                    { targets: "date-type", type: "date-eu" }
+                ]
             });
         });
     </script>
