@@ -63,7 +63,7 @@ namespace Web.Controllers
                 orderAscendingDirection = true;
             }
 
-            var result = await _financialItemsService.GetPagedByUserIdAsync(userId, new PagedListRequest() { Page = dtParameters.Start, PageSize = dtParameters.Length });
+            var result = await _financialItemsService.GetPagedByUserIdAsync(userId, new PagedListRequest() { Page = 0, PageSize = int.MaxValue }); // TODO: Have to make this IQueryable
 
             var finalResult = result.Items;
 
