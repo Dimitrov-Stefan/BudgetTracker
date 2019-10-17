@@ -8,6 +8,7 @@ using Web.Extensions;
 using System.Security.Claims;
 using Web.Models.Common;
 using Models.Enums;
+using Core.Extensions;
 
 namespace Web.ViewComponents
 {

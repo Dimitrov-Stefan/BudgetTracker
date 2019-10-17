@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Web.Models.DatatableModels
+namespace Models.DatatableModels
 {
     /// <summary>
     /// The parameters sent by jQuery DataTables in AJAX queries.

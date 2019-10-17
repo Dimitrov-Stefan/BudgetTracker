@@ -5,6 +5,7 @@ using Core.Contracts.Services;
 using Models;
 using Models.Entities;
 using Models.Enums;
+using Models.DatatableModels;
 
 namespace Business.Services
 {
@@ -30,6 +31,9 @@ namespace Business.Services
 
             return new PagedList<FinancialItem>(financialItems, request.Page, request.PageSize, financialItemsCount);
         }
+
+        public async Task<IEnumerable<FinancialItem>> GetFilteredItemsByUserIdAsync(int userId, DTParameters dtParameters)
+            => await _financialItemsRepository.GetFilteredItemsByUserIdAsync(userId, dtParameters);
 
         public async Task<IEnumerable<FinancialItem>> GetExpensesByUserIdAsync(int userId)
             => await _financialItemsRepository.GetExpensesByUserIdAsync(userId);

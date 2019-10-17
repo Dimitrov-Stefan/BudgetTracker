@@ -1,4 +1,4 @@
-﻿namespace Web.Models.DatatableModels
+﻿namespace Models.DatatableModels
 {
     /// <summary>
     /// Sort orders of jQuery DataTables.

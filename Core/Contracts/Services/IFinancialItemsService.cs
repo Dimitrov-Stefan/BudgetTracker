@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models;
+using Models.DatatableModels;
 using Models.Entities;
 using Models.Enums;
 
@@ -11,6 +12,8 @@ namespace Core.Contracts.Services
         Task<IEnumerable<FinancialItem>> GetAllByUserIdAsync(int userId);
 
         Task<PagedList<FinancialItem>> GetPagedByUserIdAsync(int userId, PagedListRequest request);
+
+        Task<IEnumerable<FinancialItem>> GetFilteredItemsByUserIdAsync(int userId, DTParameters dtParameters);
 
         Task<IEnumerable<FinancialItem>> GetExpensesByUserIdAsync(int userId);
 

@@ -1,4 +1,4 @@
-﻿namespace Web.Models.DatatableModels
+﻿namespace Models.DatatableModels
 {
     /// <summary>
     /// An order, as sent by jQuery DataTables when doing AJAX queries.

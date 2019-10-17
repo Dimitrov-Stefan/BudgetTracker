@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Models.DatatableModels;
 using Models.Entities;
 using Models.Enums;
 
@@ -19,8 +21,12 @@ namespace Core.Contracts.Repositories
 
         Task<IEnumerable<FinancialItem>> GetAllActiveByUserIdAsync(int userId);
 
+        IQueryable<FinancialItem> GetAllByUserId(int userId);
+
         Task<FinancialItem> GetByIdAndUserIdAsync(int id, int userId);
 
         Task<int> GetAllCountByUserIdAsync(int userId);
+
+        Task<IEnumerable<FinancialItem>> GetFilteredItemsByUserIdAsync(int userId, DTParameters dtParameters);
     }
 }

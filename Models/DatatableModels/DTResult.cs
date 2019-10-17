@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Web.Models.DatatableModels
+namespace Models.DatatableModels
 {
     /// <summary>
     /// A full result, as understood by jQuery DataTables.
