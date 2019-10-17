@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Core.Contracts.Repositories;
 using Core.Contracts.Services;
 using Models;
+using Models.DatatableModels;
 using Models.Entities;
 
 namespace Business.Services
@@ -26,15 +27,18 @@ namespace Business.Services
         public async Task<PagedList<FinancialOperation>> GetAllAsync(int userId, PagedListRequest request)
         {
             var financialOperations = await _financialOperationsRepository.GetAllAsync(userId, request.Skip, request.PageSize);
-            var financialOperationsCount = await _financialOperationsRepository.GetAllCountAsync(userId);
+            var financialOperationsCount = await _financialOperationsRepository.GetCountByUserIdAsync(userId);
 
-            foreach(var operation in financialOperations)
+            foreach (var operation in financialOperations)
             {
                 operation.Timestamp = operation.Timestamp.ToLocalTime();
             }
 
             return new PagedList<FinancialOperation>(financialOperations, request.Page, request.PageSize, financialOperationsCount);
         }
+
+        public async Task<IEnumerable<FinancialOperation>> GetFilteredOperationsByUserIdAsync(int userId, DTParameters dtParameters)
+            => await _financialOperationsRepository.GetFilteredOperationsByUserIdAsync(userId, dtParameters);
 
         public async Task<FinancialOperation> GetByIdAsync(int id)
         {
@@ -85,5 +89,8 @@ namespace Business.Services
                 await _financialOperationsRepository.DeleteAsync(financialOperation);
             }
         }
+
+        public async Task<int> GetCountByUserIdAsync(int userId)
+            => await _financialOperationsRepository.GetCountByUserIdAsync(userId);
     }
 }

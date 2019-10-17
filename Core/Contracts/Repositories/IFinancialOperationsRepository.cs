@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Models.DatatableModels;
 using Models.Entities;
 
 namespace Core.Contracts.Repositories
@@ -16,6 +17,9 @@ namespace Core.Contracts.Repositories
         Task<IEnumerable<FinancialOperation>> GetAllByUserIdAsync(int userId);
 
         Task<IEnumerable<FinancialOperation>> GetByMultuipleFinancialItemIdsAndDateRangeAsync(List<int> financialItemIds, DateTimeOffset? from, DateTimeOffset? to);
-        Task<int> GetAllCountAsync(int userId);
+
+        Task<int> GetCountByUserIdAsync(int userId);
+
+        Task<IEnumerable<FinancialOperation>> GetFilteredOperationsByUserIdAsync(int userId, DTParameters dtParameters);
     }
 }

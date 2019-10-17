@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models;
+using Models.DatatableModels;
 using Models.Entities;
 
 namespace Core.Contracts.Services
@@ -20,5 +21,9 @@ namespace Core.Contracts.Services
         Task<IEnumerable<FinancialOperation>> GetAllByUserIdAsync(int userId);
 
         Task DeleteAsync(int financialOperation);
+
+        Task<IEnumerable<FinancialOperation>> GetFilteredOperationsByUserIdAsync(int userId, DTParameters dtParameters);
+
+        Task<int> GetCountByUserIdAsync(int userId);
     }
 }

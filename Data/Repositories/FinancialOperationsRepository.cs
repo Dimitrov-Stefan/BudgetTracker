@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Contracts.Repositories;
+using Core.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Models.DatatableModels;
 using Models.Entities;
 
 namespace Data.Repositories
@@ -34,6 +36,9 @@ namespace Data.Repositories
         public async Task<IEnumerable<FinancialOperation>> GetAllByUserIdAsync(int userId)
             => await Set.Include(fo => fo.FinancialItem).Where(fo => fo.FinancialItem.UserId == userId).ToListAsync();
 
+        public IQueryable<FinancialOperation> GetAllByUserId(int userId)
+            => Set.Include(fo => fo.FinancialItem).Where(fo => fo.FinancialItem.UserId == userId);
+
         public async Task<IEnumerable<FinancialOperation>> GetByMultuipleFinancialItemIdsAndDateRangeAsync(List<int> financialItemIds, DateTimeOffset? from, DateTimeOffset? to)
         {
             IEnumerable<FinancialOperation> financialOperations = new List<FinancialOperation>();
@@ -63,9 +68,41 @@ namespace Data.Repositories
             return financialOperations;
         }
 
-        public Task<int> GetAllCountAsync(int userId)
+        public Task<int> GetCountByUserIdAsync(int userId)
             => Set.Include(fo => fo.FinancialItem)
             .Where(fo => fo.FinancialItem.UserId == userId)
             .CountAsync();
+
+        public async Task<IEnumerable<FinancialOperation>> GetFilteredOperationsByUserIdAsync(int userId, DTParameters dtParameters)
+        {
+            var searchBy = dtParameters.Search?.Value;
+
+            var orderCriteria = string.Empty;
+            var orderAscendingDirection = true;
+
+            if (dtParameters.Order != null)
+            {
+                // in this example we just default sort on the 1st column
+                orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+            }
+            else
+            {
+                // if we have an empty search then just order the results by Id ascending
+                orderCriteria = "Id";
+                orderAscendingDirection = true;
+            }
+
+            var result = GetAllByUserId(userId);
+
+            if (!string.IsNullOrEmpty(searchBy))
+            {
+                result = result.Where(r => r.FinancialItem.Name != null && r.FinancialItem.Name.ToUpper().Contains(searchBy.ToUpper()));
+            }
+
+            var finalResult = orderAscendingDirection ? await result.OrderByDynamic(orderCriteria, LinqExtensions.Order.Asc).ToListAsync() : await result.OrderByDynamic(orderCriteria, LinqExtensions.Order.Desc).ToListAsync();
+
+            return finalResult;
+        }
     }
 }

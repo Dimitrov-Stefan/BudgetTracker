@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,8 +12,6 @@ using Models;
 using Models.DatatableModels;
 using Models.Entities;
 using Models.Enums;
-using Web.Extensions;
-using Web.Models.Common;
 using Web.Models.FinancialItems;
 
 namespace Web.Controllers

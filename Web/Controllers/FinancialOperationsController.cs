@@ -5,11 +5,13 @@ using Core.Constants;
 using Core.Contracts.Services;
 using Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
+using Models.DatatableModels;
 using Models.Entities;
-using Web.Extensions;
+using Newtonsoft.Json;
 using Web.Models.FinancialOperations;
 
 namespace Web.Controllers
@@ -150,5 +152,47 @@ namespace Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        #region Ajax Methods
+
+        [HttpPost]
+        public async Task<IActionResult> LoadTable([FromBody]DTParameters dtParameters)
+        {
+            var userId = User.GetCurrentUserId();
+
+
+            var result = await _financialOperationsService.GetFilteredOperationsByUserIdAsync(userId, dtParameters);
+
+            // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
+            var filteredResultsCount = result.Count();
+            var totalResultsCount = await _financialOperationsService.GetCountByUserIdAsync(userId);
+
+
+            var jsoooon = JsonConvert.SerializeObject(new
+            {
+                draw = dtParameters.Draw,
+                recordsTotal = totalResultsCount,
+                recordsFiltered = filteredResultsCount,
+                data = result
+                    .Skip(dtParameters.Start)
+                    .Take(dtParameters.Length)
+                    .ToList()
+            });
+
+            await HttpContext.Response.WriteAsync(jsoooon);
+
+
+            return Json(new
+            {
+                draw = dtParameters.Draw,
+                recordsTotal = totalResultsCount,
+                recordsFiltered = filteredResultsCount,
+                data = result
+                    .Skip(dtParameters.Start)
+                    .Take(dtParameters.Length)
+                    .ToList()
+            });
+        }
+        #endregion
     }
 }
