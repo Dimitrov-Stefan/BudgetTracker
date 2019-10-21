@@ -97,7 +97,8 @@ namespace Data.Repositories
 
             if (!string.IsNullOrEmpty(searchBy))
             {
-                result = result.Where(r => r.FinancialItem.Name != null && r.FinancialItem.Name.ToUpper().Contains(searchBy.ToUpper()));
+                result = result.Where(r => r.Description != null && r.Description.ToUpper().Contains(searchBy.ToUpper()) ||
+                r.FinancialItem.Name != null && r.FinancialItem.Name.ToUpper().Contains(searchBy.ToUpper()));
             }
 
             var finalResult = orderAscendingDirection ? await result.OrderByDynamic(orderCriteria, LinqExtensions.Order.Asc).ToListAsync() : await result.OrderByDynamic(orderCriteria, LinqExtensions.Order.Desc).ToListAsync();

@@ -167,20 +167,24 @@ namespace Web.Controllers
             var filteredResultsCount = result.Count();
             var totalResultsCount = await _financialOperationsService.GetCountByUserIdAsync(userId);
 
+            //try
+            //{
+            //    var jsoooon = JsonConvert.SerializeObject(new
+            //    {
+            //        draw = dtParameters.Draw,
+            //        recordsTotal = totalResultsCount,
+            //        recordsFiltered = filteredResultsCount,
+            //        data = result
+            //            .Skip(dtParameters.Start)
+            //            .Take(dtParameters.Length)
+            //            .ToList()
+            //    });
+            //}
 
-            var jsoooon = JsonConvert.SerializeObject(new
-            {
-                draw = dtParameters.Draw,
-                recordsTotal = totalResultsCount,
-                recordsFiltered = filteredResultsCount,
-                data = result
-                    .Skip(dtParameters.Start)
-                    .Take(dtParameters.Length)
-                    .ToList()
-            });
-
-            await HttpContext.Response.WriteAsync(jsoooon);
-
+            //catch (Exception ex)
+            //{
+            //    var exc = ex;
+            //}
 
             return Json(new
             {
@@ -191,7 +195,7 @@ namespace Web.Controllers
                     .Skip(dtParameters.Start)
                     .Take(dtParameters.Length)
                     .ToList()
-            });
+            }, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
         }
         #endregion
     }

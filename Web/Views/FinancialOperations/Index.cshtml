@@ -20,22 +20,22 @@
 
         <div class="table-responsive col-md-8 offset-md-2">
             <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <table class="table table-hover table-bordered dataTable" id="dataTable">
+                <table class="table table-hover table-bordered dataTable" id="dataTable" width="100%">
                     <thead class="table-header">
                         <tr>
-                            <th>
+                            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" aria-sort="descending">
                                 Date
                             </th>
-                            <th>
+                            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" aria-sort="descending">
                                 FinancialItem
                             </th>
-                            <th>
+                            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" aria-sort="descending">
                                 Amount
                             </th>
-                            <th>
+                            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" aria-sort="descending">
                                 Description
                             </th>
-                            <th>
+                            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" aria-sort="descending">
                             </th>
                         </tr>
                     </thead>
@@ -87,19 +87,19 @@
                 // Columns Setups
                 columns: [
                     {
-                        data: "timestamp"
+                        data: "Timestamp"
                     },
                     {
-                        data: "financialItem",
+                        data: "FinancialItem",
                         render: function (data, type, row) {
                             return data.Name;
                         }
                     },
                     {
-                        data: "amount"
+                        data: "Amount"
                     },
                     {
-                        data: "description"
+                        data: "Description"
                     },
                     {
                         data: "id",
