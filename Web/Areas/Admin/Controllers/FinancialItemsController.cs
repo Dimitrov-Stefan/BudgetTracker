@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Constants;
 using Core.Contracts.Services;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
+using Models.DatatableModels;
 using Models.Entities;
 using Models.Enums;
 using Web.Areas.Admin.Models.FinancialItems;
@@ -27,21 +29,11 @@ namespace Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromRoute]int id, PagedListRequest request)
+        public IActionResult Index([FromRoute]int id)
         {
-            var financialItems = await _financialItemsService.GetPagedByUserIdAsync(id, request);
-            var user = await _userService.GetByIdAsync(id);
-
-            if (user == null)
-            {
-                return NotFound(user);
-            }
-
             var model = new FinancialItemListViewModel()
             {
-                UserId = id,
-                UserName = user.UserName,
-                FinancialItems = financialItems
+                UserId = id
             };
 
             return View(model);
@@ -157,5 +149,37 @@ namespace Web.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(FinancialItemsController.Index), new { id = financialItem.UserId });
         }
+
+        #region Ajax Methods
+
+        [HttpPost]
+        public async Task<IActionResult> LoadItemsTable([FromBody]DTParameters dtParameters)
+        {
+            var userIdString = dtParameters.AdditionalValues.FirstOrDefault();
+
+            if (string.IsNullOrWhiteSpace(userIdString) || !int.TryParse(userIdString, out int userId))
+            {
+                return NotFound(userIdString);
+            }
+
+            var result = await _financialItemsService.GetFilteredItemsByUserIdAsync(userId, dtParameters);
+
+            // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
+            var filteredResultsCount = result.Count();
+            var totalResultsCount = await _financialItemsService.GetCountByUserIdAsync(userId);
+
+            return Json(new
+            {
+                draw = dtParameters.Draw,
+                recordsTotal = totalResultsCount,
+                recordsFiltered = filteredResultsCount,
+                data = result
+                    .Skip(dtParameters.Start)
+                    .Take(dtParameters.Length)
+                    .ToList()
+            });
+        }
+
+        #endregion
     }
 }

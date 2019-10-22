@@ -5,7 +5,7 @@
 }
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-12 overflow-auto">
         <h1 class="text-center">
             @ViewData["Title"]
         </h1>
@@ -18,42 +18,101 @@
             </a>
         </div>
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Type
-                    </th>
-                    <th>
-                        Active
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.FinancialItems.Items)
-                {
-                    <tr>
-                        <td>@item.Name</td>
-
-                        <td>@item.Type</td>
-
-                        <td>@(item.IsActive ? "Yes" : "No")</td>
-
-                        <td>
-                            <a class="btn btn-primary btn-sm" asp-action="@nameof(FinancialItemsController.Edit)" asp-route-id="@item.Id">Edit</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        <vc:pagination page="Model.FinancialItems.Page"
-                       page-count="Model.FinancialItems.PageCount"
-                       page-url-func='p => Url.Action(nameof(FinancialItemsController.Index), new { page = p })'>
-        </vc:pagination>
+        <div class="table-responsive col-md-8 offset-md-2">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <table class="table table-hover table-bordered dataTable" id="dataTable" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                Active
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#dataTable").DataTable({
+                // Design Assets
+                stateSave: true,
+                autoWidth: true,
+                // ServerSide Setups
+                processing: true,
+                serverSide: true,
+                // Paging Setups
+                paging: true,
+                // Searching Setups
+
+                searching: { regex: true },
+                // Ajax Filter
+                ajax: {
+                    url: "/Admin/FinancialItems/LoadItemsTable",
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        debugger;
+                        var addValues = [];
+                        addValues.push("@Model.UserId.ToString()");
+                        d.AdditionalValues = addValues;
+
+                        return JSON.stringify(d);
+                    }
+                },
+                // Columns Setups
+                columns: [
+                    { data: "Name" },
+                    {
+                        data: "Type",
+                        render: function (data, type, row) {
+                            return data === 0 ? "Expense" : "Income";
+                        }
+                    },
+                    {
+                        data: "IsActive",
+                        render: function (data, type, row) {
+                            return data === true ? "Yes" : "No";
+                        }
+                    },
+                    {
+                        data: "Id",
+                        render: function (data, type, row) {
+                            return '<a class="btn btn-outline-primary btn-sm" href=/FinancialItems/Edit/' + data + '>Edit</a>'; //Hack: Partially hardcoded link
+                        }
+                    }
+                ],
+                // Column Definitions
+                columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+
+                            return data;
+                        }
+                    },
+                    { targets: "date-type", type: "date-eu" }
+                ]
+            });
+        });
+    </script>
+}
 
