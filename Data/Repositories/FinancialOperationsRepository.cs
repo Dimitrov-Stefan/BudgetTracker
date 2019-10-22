@@ -36,9 +36,6 @@ namespace Data.Repositories
         public async Task<IEnumerable<FinancialOperation>> GetAllByUserIdAsync(int userId)
             => await Set.Include(fo => fo.FinancialItem).Where(fo => fo.FinancialItem.UserId == userId).ToListAsync();
 
-        public IQueryable<FinancialOperation> GetAllByUserId(int userId)
-            => Set.Include(fo => fo.FinancialItem).Where(fo => fo.FinancialItem.UserId == userId);
-
         public async Task<IEnumerable<FinancialOperation>> GetByMultuipleFinancialItemIdsAndDateRangeAsync(List<int> financialItemIds, DateTimeOffset? from, DateTimeOffset? to)
         {
             IEnumerable<FinancialOperation> financialOperations = new List<FinancialOperation>();
@@ -105,5 +102,8 @@ namespace Data.Repositories
 
             return finalResult;
         }
+
+        private IQueryable<FinancialOperation> GetAllByUserId(int userId)
+            => Set.Include(fo => fo.FinancialItem).Where(fo => fo.FinancialItem.UserId == userId);
     }
 }

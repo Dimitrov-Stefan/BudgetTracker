@@ -21,8 +21,6 @@ namespace Core.Contracts.Repositories
 
         Task<IEnumerable<FinancialItem>> GetAllActiveByUserIdAsync(int userId);
 
-        IQueryable<FinancialItem> GetAllByUserId(int userId);
-
         Task<FinancialItem> GetByIdAndUserIdAsync(int id, int userId);
 
         Task<int> GetAllCountByUserIdAsync(int userId);

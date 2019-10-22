@@ -70,9 +70,6 @@ namespace Business.Services
             };
         }
 
-        public Task<IEnumerable<User>> GetAllAsync()
-            => _userRepository.GetAllAsync();
-
         public async Task<PagedList<User>> GetPagedAsync(PagedListRequest request)
         {
             var users = await _userRepository.GetPagedAsync(request.Skip, request.PageSize);

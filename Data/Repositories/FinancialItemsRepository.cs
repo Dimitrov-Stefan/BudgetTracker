@@ -39,9 +39,6 @@ namespace Data.Repositories
         public async Task<IEnumerable<FinancialItem>> GetAllActiveByUserIdAsync(int userId)
             => await Set.Where(fi => fi.UserId == userId && fi.IsActive).ToListAsync();
 
-        public IQueryable<FinancialItem> GetAllByUserId(int userId)
-            => Set.Where(fi => fi.UserId == userId);
-
         public async Task<FinancialItem> GetByIdAndUserIdAsync(int id, int userId)
         => await Set.SingleOrDefaultAsync(fi => fi.Id == id && fi.UserId == userId);
 
@@ -80,5 +77,8 @@ namespace Data.Repositories
 
             return finalResult;
         }
+
+        private IQueryable<FinancialItem> GetAllByUserId(int userId)
+            => Set.Where(fi => fi.UserId == userId);
     }
 }

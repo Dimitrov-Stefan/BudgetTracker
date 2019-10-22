@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Contracts.Repositories;
+using Core.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Models.DatatableModels;
 using Models.Entities.Identity;
 
 namespace Data.Repositories
@@ -20,9 +22,6 @@ namespace Data.Repositories
             .Include(u => u.UserRoles)
             .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<User>> GetAllAsync()
-            => await Set.ToListAsync();
-
         public async Task<IEnumerable<User>> GetPagedAsync(int skip, int take)
             => await Set.Skip(skip)
             .Take(take)
@@ -36,5 +35,42 @@ namespace Data.Repositories
 
         public async Task<int> GetAllCountAsync()
             => await Set.CountAsync();
+
+        public async Task<IEnumerable<User>> GetFilteredOperationsByUserIdAsync(int userId, DTParameters dtParameters)
+        {
+            var searchBy = dtParameters.Search?.Value;
+
+            var orderCriteria = string.Empty;
+            var orderAscendingDirection = true;
+
+            if (dtParameters.Order != null)
+            {
+                // in this example we just default sort on the 1st column
+                orderCriteria = dtParameters.Columns[dtParameters.Order[0].Column].Data;
+                orderAscendingDirection = dtParameters.Order[0].Dir.ToString().ToLower() == "asc";
+            }
+            else
+            {
+                // if we have an empty search then just order the results by Id ascending
+                orderCriteria = "Id";
+                orderAscendingDirection = true;
+            }
+
+            var result = GetAll();
+
+            if (!string.IsNullOrEmpty(searchBy))
+            {
+                result = result.Where(r => r.Email != null && r.Email.ToUpper().Contains(searchBy.ToUpper()) ||
+                r.FirstName != null && r.FirstName.ToUpper().Contains(searchBy.ToUpper()) ||
+                r.LastName != null && r.LastName.ToUpper().Contains(searchBy.ToUpper()));
+            }
+
+            var finalResult = orderAscendingDirection ? await result.OrderByDynamic(orderCriteria, LinqExtensions.Order.Asc).ToListAsync() : await result.OrderByDynamic(orderCriteria, LinqExtensions.Order.Desc).ToListAsync();
+
+            return finalResult;
+        }
+
+        private IQueryable<User> GetAll()
+        => Set.AsQueryable();
     }
 }
