@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Core.Constants;
 using Core.Contracts.Services;
@@ -8,8 +6,8 @@ using Core.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Models;
-using Models.Entities.Identity;
+using Models.DatatableModels;
+using Newtonsoft.Json;
 using Web.Areas.Admin.Models.Users;
 
 namespace Web.Areas.Admin.Controllers
@@ -28,49 +26,10 @@ namespace Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(PagedListRequest request, string searchText)
+        public IActionResult Index()
         {
-            PagedList<User> users;
-
-            if (!string.IsNullOrWhiteSpace(searchText))
-            {
-                users = await _userService.SearchUsersAsync(request, searchText);
-            }
-            else
-            {
-                users = await _userService.GetPagedAsync(request);
-            }
-
-            var model = new UserListViewModel()
-            {
-                Users = users,
-                SearchText = searchText
-            };
-
-            return View(model);
+            return View();
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> SearchUsers(PagedListRequest request, string searchText)
-        //{
-        //    PagedList<User> users;
-
-        //    if (!string.IsNullOrWhiteSpace(searchText))
-        //    {
-        //        users = await _userService.SearchUsersAsync(request, searchText);
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction(nameof(Index), request);
-        //    }
-
-        //    var model = new UserListViewModel()
-        //    {
-        //        Users = users
-        //    };
-
-        //    return View("Index", model);
-        //}
 
         [HttpGet]
         public IActionResult Create()
@@ -163,7 +122,7 @@ namespace Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int userId)
+        public IActionResult Details(int userId)
         {
             var model = new UserDetailsViewModel();
             model.UserId = userId;
@@ -180,5 +139,30 @@ namespace Web.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(UsersController.Index));
         }
+
+        #region Ajax Methods
+
+        [HttpPost]
+        public async Task<IActionResult> LoadTable([FromBody]DTParameters dtParameters)
+        {
+            var result = await _userService.GetFilteredUsersAsync(dtParameters);
+
+            // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
+            var filteredResultsCount = result.Count();
+            var totalResultsCount = await _userService.GetCountAsync();
+
+            return Json(new
+            {
+                draw = dtParameters.Draw,
+                recordsTotal = totalResultsCount,
+                recordsFiltered = filteredResultsCount,
+                data = result
+                    .Skip(dtParameters.Start)
+                    .Take(dtParameters.Length)
+                    .ToList()
+            }, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+        }
+
+        #endregion
     }
 }

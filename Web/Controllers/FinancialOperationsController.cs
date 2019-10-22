@@ -167,25 +167,6 @@ namespace Web.Controllers
             var filteredResultsCount = result.Count();
             var totalResultsCount = await _financialOperationsService.GetCountByUserIdAsync(userId);
 
-            //try
-            //{
-            //    var jsoooon = JsonConvert.SerializeObject(new
-            //    {
-            //        draw = dtParameters.Draw,
-            //        recordsTotal = totalResultsCount,
-            //        recordsFiltered = filteredResultsCount,
-            //        data = result
-            //            .Skip(dtParameters.Start)
-            //            .Take(dtParameters.Length)
-            //            .ToList()
-            //    });
-            //}
-
-            //catch (Exception ex)
-            //{
-            //    var exc = ex;
-            //}
-
             return Json(new
             {
                 draw = dtParameters.Draw,

@@ -9,6 +9,7 @@ using Core.Contracts.Services;
 using Core.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Models;
+using Models.DatatableModels;
 using Models.Entities.Identity;
 using Models.ServiceResults.Users;
 using Principal = System.Security.Claims.ClaimsPrincipal;
@@ -73,7 +74,7 @@ namespace Business.Services
         public async Task<PagedList<User>> GetPagedAsync(PagedListRequest request)
         {
             var users = await _userRepository.GetPagedAsync(request.Skip, request.PageSize);
-            var usersCount = await _userRepository.GetAllCountAsync();
+            var usersCount = await _userRepository.GetCountAsync();
 
             return new PagedList<User>(users, request.Page, request.PageSize, usersCount);
         }
@@ -135,5 +136,11 @@ namespace Business.Services
 
             return new PagedList<User>(pagedUsers, request.Page, request.PageSize, usersCount);
         }
+
+        public async Task<IEnumerable<User>> GetFilteredUsersAsync(DTParameters dtParameters)
+            => await _userRepository.GetFilteredUsersAsync(dtParameters);
+
+        public async Task<int> GetCountAsync()
+            => await _userRepository.GetCountAsync();
     }
 }

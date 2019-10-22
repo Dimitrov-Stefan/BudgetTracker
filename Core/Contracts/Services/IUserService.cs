@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Models;
+using Models.DatatableModels;
 using Models.Entities.Identity;
 using Models.ServiceResults.Users;
 
@@ -18,5 +20,9 @@ namespace Core.Contracts.Services
         Task<DeleteUserResult> DeleteAsync(int userId, int currentUserId);
 
         Task<PagedList<User>> SearchUsersAsync(PagedListRequest request, string searchText);
+
+        Task<IEnumerable<User>> GetFilteredUsersAsync(DTParameters dtParameters);
+
+        Task<int> GetCountAsync();
     }
 }

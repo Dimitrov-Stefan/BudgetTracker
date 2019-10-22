@@ -1,4 +1,5 @@
-﻿using Models.Entities.Identity;
+﻿using Models.DatatableModels;
+using Models.Entities.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ namespace Core.Contracts.Repositories
 
         Task<IEnumerable<User>> SearchUsersAsync(string searchText);
 
-        Task<int> GetAllCountAsync();
+        Task<int> GetCountAsync();
+
+        Task<IEnumerable<User>> GetFilteredUsersAsync(DTParameters dtParameters);
     }
 }

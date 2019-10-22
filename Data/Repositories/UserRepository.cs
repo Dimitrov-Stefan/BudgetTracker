@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Core.Contracts.Repositories;
 using Core.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Models;
 using Models.DatatableModels;
 using Models.Entities.Identity;
 
@@ -33,10 +32,10 @@ namespace Data.Repositories
              => await Set.Where(u => u.FirstName.Contains(searchText) || u.LastName.Contains(searchText) || u.Email.Contains(searchText))
             .ToListAsync();
 
-        public async Task<int> GetAllCountAsync()
+        public async Task<int> GetCountAsync()
             => await Set.CountAsync();
 
-        public async Task<IEnumerable<User>> GetFilteredOperationsByUserIdAsync(int userId, DTParameters dtParameters)
+        public async Task<IEnumerable<User>> GetFilteredUsersAsync(DTParameters dtParameters)
         {
             var searchBy = dtParameters.Search?.Value;
 

@@ -1,28 +1,14 @@
-﻿@model Web.Areas.Admin.Models.Users.UserListViewModel
+﻿@model IEnumerable<User>
 
 @{
     ViewData["Title"] = "Manage users";
 }
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-12 overflow-auto">
         <h1 class="text-center">
             @ViewData["Title"]
         </h1>
-
-        <form method="get" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
-              asp-action="@nameof(UsersController.Index)" asp-controller="@Url.ControllerName(typeof(UsersController))">
-            @*<input asp-for="Users.Page" hidden="hidden" />
-            <input asp-for="Users.PageSize" hidden="hidden" />*@
-            <div class="input-group">
-                <input asp-for="SearchText" type="text" class="form-control bg-light border-0 small" placeholder="Search users..." aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="fas fa-search fa-sm"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
 
         <div class="d-flex justify-content-end">
             <a class="btn btn-primary btn-sm"
@@ -32,56 +18,103 @@
             </a>
         </div>
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>
-                        First Name
-                    </th>
-                    <th>
-                        Last Name
-                    </th>
-                    <th>
-                        Email
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-
-                @foreach (var item in Model.Users.Items)
-                {
-                    <tr>
-                        <td>@item.FirstName</td>
-
-                        <td>@item.LastName</td>
-
-                        <td>@item.Email</td>
-
-                        <td>
-                            <a class="btn btn-primary btn-sm" asp-area="Admin" asp-action="Edit" asp-controller="@Url.ControllerName(typeof(UsersController))" asp-route-id="@item.Id">Edit</a>
-                        </td>
-
-                        <td>
-                            <a class="btn btn-primary btn-sm" asp-area="Admin" asp-action="Index" asp-controller="@Url.ControllerName(typeof(FinancialItemsController))" asp-route-id="@item.Id">Items</a>
-                        </td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" asp-area="Admin" asp-action="Index" asp-controller="@Url.ControllerName(typeof(FinancialOperationsController))" asp-route-id="@item.Id">Operations</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        <div class="d-flex justify-content-end col-md-8 offset-md-2 mb-2 p-0">
-
-
-                <vc:pagination page="Model.Users.Page"
-                               page-count="Model.Users.PageCount"
-                               page-url-func='p => Url.Action(nameof(UsersController.Index), new { page = p, searchText = Model.SearchText })'>
-                </vc:pagination>
-            
-
+        <div class="table-responsive col-md-8 offset-md-2">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <table class="table table-hover table-bordered dataTable" id="dataTable" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                First Name
+                            </th>
+                            <th>
+                                Last Name
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#dataTable").DataTable({
+                // Design Assets
+                stateSave: true,
+                autoWidth: true,
+                // ServerSide Setups
+                processing: true,
+                serverSide: true,
+                // Paging Setups
+                paging: true,
+                // Searching Setups
+                searching: { regex: true },
+                // Ajax Filter
+                ajax: {
+                    url: "/Admin/Users/LoadTable",
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
+                // Columns Setups
+                columns: [
+                    {
+                        data: "FirstName"
+                    },
+                    {
+                        data: "LastName"
+                    },
+                    {
+                        data: "Email"
+                    },
+                    {
+                        data: "Id",
+                        render: function (data, type, row) {
+                            return '<a class="btn btn-outline-primary btn-sm" href=/Admin/Users/Edit/' + data + '>Edit</a>'; //Hack: Partially hardcoded link
+                        }
+                    },
+                    {
+                        data: "Id",
+                        render: function (data, type, row) {
+                            return '<a class="btn btn-outline-primary btn-sm" href=/Admin/FinancialItems/Index/' + data + '>Items</a>'; //Hack: Partially hardcoded link
+                        }
+                    },
+                    {
+                        data: "Id",
+                        render: function (data, type, row) {
+                            return '<a class="btn btn-outline-primary btn-sm" href=/Admin/FinancialOperations/Index/' + data + '>Operations</a>'; //Hack: Partially hardcoded link
+                        }
+                    }
+                ],
+                // Column Definitions
+                columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+
+                            return data;
+                        }
+                    },
+                    { targets: "date-type", type: "date-eu" }
+                ]
+            });
+        });
+    </script>
+}
