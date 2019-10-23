@@ -65,7 +65,6 @@
                     contentType: "application/json",
                     dataType: "json",
                     data: function (d) {
-                        debugger;
                         var addValues = [];
                         addValues.push("@Model.UserId.ToString()");
                         d.AdditionalValues = addValues;
@@ -75,23 +74,23 @@
                 },
                 // Columns Setups
                 columns: [
-                    { data: "Name" },
+                    { data: "name" },
                     {
-                        data: "Type",
+                        data: "type",
                         render: function (data, type, row) {
                             return data === 0 ? "Expense" : "Income";
                         }
                     },
                     {
-                        data: "IsActive",
+                        data: "isActive",
                         render: function (data, type, row) {
                             return data === true ? "Yes" : "No";
                         }
                     },
                     {
-                        data: "Id",
+                        data: "id",
                         render: function (data, type, row) {
-                            return '<a class="btn btn-outline-primary btn-sm" href=/FinancialItems/Edit/' + data + '>Edit</a>'; //Hack: Partially hardcoded link
+                            return '<div class="text-center"><a class="btn btn-outline-primary btn-sm" href=/Admin/FinancialItems/Edit/' + data + '>Edit</a></div>'; //Hack: Partially hardcoded link
                         }
                     }
                 ],
