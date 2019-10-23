@@ -5,7 +5,7 @@
 }
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-12 overflow-auto">
         <h1 class="text-center">
             @ViewData["Title"]
         </h1>
@@ -18,39 +18,105 @@
             </a>
         </div>
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>
-                        Date
-                    </th>
-                    <th>
-                        FinancialItem
-                    </th>
-                    <th>
-                        Amount
-                    </th>
-                    <th>
-                        Description
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.FinancialOperations)
-                {
-                    <tr>
-                        <td>@item.Timestamp</td>
-                        <td>@item.FinancialItem.Name</td>
-                        <td>@item.Amount</td>
-                        <td>@item.Description</td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" asp-action="@nameof(FinancialOperationsController.Edit)" asp-route-id="@item.Id">Edit</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="table-responsive col-md-8 offset-md-2">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <table class="table table-hover table-bordered dataTable" id="dataTable" width="100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                FinancialItem
+                            </th>
+                            <th>
+                                Amount
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#dataTable").DataTable({
+                // Design Assets
+                stateSave: true,
+                autoWidth: true,
+                // ServerSide Setups
+                processing: true,
+                serverSide: true,
+                // Paging Setups
+                paging: true,
+                // Searching Setups
+
+                searching: { regex: true },
+                // Ajax Filter
+                ajax: {
+                    url: "/Admin/FinancialOperations/LoadOperationsTable",
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        var addValues = [];
+                        addValues.push("@Model.UserId.ToString()");
+                        d.AdditionalValues = addValues;
+
+                        return JSON.stringify(d);
+                    }
+                },
+                // Columns Setups
+                columns: [
+                    {
+                        data: "Timestamp"
+                    },
+                    {
+                        data: "FinancialItem",
+                        render: function (data, type, row) {
+                            return data.Name;
+                        }
+                    },
+                    {
+                        data: "Amount"
+                    },
+                    {
+                        data: "Description"
+                    },
+                    {
+                        data: "Id",
+                        render: function (data, type, row) {
+                            return '<div class="text-center"><a class="btn btn-outline-primary btn-sm" href=/Admin/FinancialOperations/Edit/' + data + '>Edit</a></div>'; //Hack: Partially hardcoded link
+                        }
+                    }
+                ],
+                // Column Definitions
+                columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+
+                            return data;
+                        }
+                    },
+                    { targets: "date-type", type: "date-eu" }
+                ]
+            });
+        });
+    </script>
+}
 

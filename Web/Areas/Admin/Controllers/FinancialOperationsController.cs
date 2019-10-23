@@ -6,9 +6,10 @@ using Core.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Models.DatatableModels;
 using Models.Entities;
+using Newtonsoft.Json;
 using Web.Areas.Admin.Models.FinancialOperations;
-using Web.Extensions;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -29,21 +30,11 @@ namespace Web.Areas.Admin.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> Index(int id)
+        public IActionResult Index(int id)
         {
-            var financialOperations = await _financialOperationsService.GetAllByUserIdAsync(id);
-            var user = await _userService.GetByIdAsync(id);
-
-            if (user == null)
-            {
-                return NotFound(user);
-            }
-
             var model = new FinancialOperationListViewModel()
             {
-                UserId = id,
-                UserName = user.UserName,
-                FinancialOperations = financialOperations
+                UserId = id
             };
 
             return View(model);
@@ -193,5 +184,37 @@ namespace Web.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index), new { id = userId });
         }
+
+        #region Ajax Methods
+
+        [HttpPost]
+        public async Task<IActionResult> LoadOperationsTable([FromBody]DTParameters dtParameters)
+        {
+            var userIdString = dtParameters.AdditionalValues.FirstOrDefault();
+
+            if (string.IsNullOrWhiteSpace(userIdString) || !int.TryParse(userIdString, out int userId))
+            {
+                return NotFound(userIdString);
+            }
+
+            var result = await  _financialOperationsService.GetFilteredOperationsByUserIdAsync(userId, dtParameters);
+
+            // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
+            var filteredResultsCount = result.Count();
+            var totalResultsCount = await _financialOperationsService.GetCountByUserIdAsync(userId);
+
+            return Json(new
+            {
+                draw = dtParameters.Draw,
+                recordsTotal = totalResultsCount,
+                recordsFiltered = filteredResultsCount,
+                data = result
+                    .Skip(dtParameters.Start)
+                    .Take(dtParameters.Length)
+                    .ToList()
+            }, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+        }
+
+        #endregion
     }
 }
