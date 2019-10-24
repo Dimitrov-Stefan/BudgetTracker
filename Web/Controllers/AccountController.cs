@@ -52,6 +52,15 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByNameAsync(model.Email);
+
+                if(user == null || !user.IsActive)
+                {
+                    ModelState.AddModelError(string.Empty, "User does not exist or is deactivated!");
+
+                    return View(model);
+                }
+
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
                 if (result.Succeeded)
