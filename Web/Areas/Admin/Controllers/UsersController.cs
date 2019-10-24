@@ -83,7 +83,8 @@ namespace Web.Areas.Admin.Controllers
                 Id = user.Id,
                 Email = user.Email,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                IsActive = user.IsActive
             };
 
             return View(model);
@@ -102,6 +103,7 @@ namespace Web.Areas.Admin.Controllers
             user.Email = model.Email;
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
+            user.IsActive = model.IsActive;
 
 
             var result = await _userService.EditAsync(user);

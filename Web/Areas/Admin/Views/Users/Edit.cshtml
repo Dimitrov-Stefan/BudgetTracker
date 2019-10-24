@@ -9,7 +9,7 @@
             <h1>@ViewData["Title"]</h1>
         </div>
 
-        <form method="post">
+        <form method="post" class="user">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <label asp-for="FirstName">Your Name</label>
@@ -29,6 +29,13 @@
             <div class="form-group">
                 <input asp-for="Email" placeholder="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="custom-control custom-checkbox small">
+                    <input asp-for="IsActive" type="checkbox" class="custom-control-input" id="chkIsActive" />
+                    <label class="custom-control-label" for="chkIsActive">Active</label>
+                </div>
             </div>
 
             <div class="form-group text-center">

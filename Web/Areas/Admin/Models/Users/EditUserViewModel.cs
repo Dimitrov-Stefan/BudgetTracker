@@ -26,5 +26,7 @@ namespace Web.Areas.Admin.Models.Users
 
         [Required(ErrorMessageResourceType = typeof(Literals), ErrorMessageResourceName = nameof(Literals.RequiredFieldError))]
         public string Password { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }
