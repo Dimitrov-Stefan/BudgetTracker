@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Models.Entities.Identity;
+﻿using Models.Entities.Identity;
 using Models.Enums;
+using System.Collections.Generic;
 
 namespace Models.Entities
 {

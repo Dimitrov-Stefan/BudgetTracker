@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Constants;
-using Core.Contracts.Repositories;
+﻿using Core.Contracts.Repositories;
 using Core.Contracts.Services;
-using Core.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Models;
 using Models.DatatableModels;
 using Models.Entities.Identity;
 using Models.ServiceResults.Users;
-using Principal = System.Security.Claims.ClaimsPrincipal;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Business.Services
 {

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Models.Entities;
+﻿using Models.Entities;
+using System.Collections.Generic;
 
 namespace Web.Areas.Admin.Models.FinancialOperations
 {

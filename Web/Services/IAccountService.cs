@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Steffes.Web.Models.Account;
+﻿using Steffes.Web.Models.Account;
+using System.Threading.Tasks;
 
 namespace Web.Services
 {

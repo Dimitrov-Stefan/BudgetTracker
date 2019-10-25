@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Contracts.Repositories;
+﻿using Core.Contracts.Repositories;
 using Core.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Models.DatatableModels;
 using Models.Entities;
 using Models.Enums;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Data.Repositories
 {

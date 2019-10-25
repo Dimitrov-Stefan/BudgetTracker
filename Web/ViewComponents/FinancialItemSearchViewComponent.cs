@@ -1,14 +1,10 @@
 ﻿using Core.Contracts.Services;
+using Core.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+using Models.Enums;
 using System.Linq;
 using System.Threading.Tasks;
-using Web.Extensions;
-using System.Security.Claims;
 using Web.Models.Common;
-using Models.Enums;
-using Core.Extensions;
 
 namespace Web.ViewComponents
 {

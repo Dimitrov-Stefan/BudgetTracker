@@ -1,7 +1,4 @@
-﻿using Models.Enums;
-using System.Collections.Generic;
-
-namespace Web.Models.Common
+﻿namespace Web.Models.Common
 {
     public class FinancialItemSearchViewModel
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Data.Initialization
+﻿namespace Data.Initialization
 {
     public class InitialUser
     {

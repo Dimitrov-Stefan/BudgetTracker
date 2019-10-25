@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using Core.Contracts.Repositories;
+﻿using Core.Contracts.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace Data.Repositories
 {

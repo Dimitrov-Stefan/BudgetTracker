@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Constants;
+﻿using Core.Constants;
 using Core.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +6,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Models.DatatableModels;
 using Models.Entities;
 using Newtonsoft.Json;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Web.Areas.Admin.Models.FinancialOperations;
 
 namespace Web.Areas.Admin.Controllers
@@ -197,7 +197,7 @@ namespace Web.Areas.Admin.Controllers
                 return NotFound(userIdString);
             }
 
-            var result = await  _financialOperationsService.GetFilteredOperationsByUserIdAsync(userId, dtParameters);
+            var result = await _financialOperationsService.GetFilteredOperationsByUserIdAsync(userId, dtParameters);
 
             // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
             var filteredResultsCount = result.Count();

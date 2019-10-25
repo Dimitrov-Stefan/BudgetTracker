@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Core.Contracts.Services;
 using Microsoft.AspNetCore.Identity;
 using Models.Entities.Identity;
+using System.Collections.Generic;
 using System.Linq;
-using Core.Contracts.Services;
 
 namespace Business.Services
 {
@@ -17,6 +17,6 @@ namespace Business.Services
 
         public IEnumerable<Role> GetAll()
             => _roleManager.Roles.ToList();
-        
+
     }
 }

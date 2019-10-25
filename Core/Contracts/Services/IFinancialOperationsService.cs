@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Models;
+﻿using Models;
 using Models.DatatableModels;
 using Models.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Core.Contracts.Services
 {

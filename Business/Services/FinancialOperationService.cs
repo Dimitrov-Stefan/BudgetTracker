@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Core.Contracts.Repositories;
+﻿using Core.Contracts.Repositories;
 using Core.Contracts.Services;
 using Models;
 using Models.DatatableModels;
 using Models.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Business.Services
 {

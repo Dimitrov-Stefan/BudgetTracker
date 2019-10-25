@@ -7,7 +7,7 @@ namespace Web.Models.Reports
     public class IncomeReportViewModel
     {
         public DateTimeOffset? From { get; set; }
-    
+
         public DateTimeOffset? To { get; set; }
 
         public IList<FinancialItemSelectViewModel> SelectedItems { get; set; }

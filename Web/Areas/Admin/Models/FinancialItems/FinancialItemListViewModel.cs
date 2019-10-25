@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Models;
+﻿using Models;
 using Models.Entities;
 
 namespace Web.Areas.Admin.Models.FinancialItems

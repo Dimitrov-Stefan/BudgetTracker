@@ -1,6 +1,5 @@
 ﻿using Models;
 using Models.Entities.Identity;
-using System.Collections.Generic;
 
 namespace Web.Areas.Admin.Models.Users
 {

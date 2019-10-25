@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using Core.Constants;
+﻿using Core.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models.Entities.Identity;
 using NToastNotify;
+using System.Threading.Tasks;
 using Web.Extensions;
 using Web.Models.Account;
 using Web.Services;
@@ -54,7 +54,7 @@ namespace Web.Controllers
             {
                 var user = await _userManager.FindByNameAsync(model.Email);
 
-                if(user == null || !user.IsActive)
+                if (user == null || !user.IsActive)
                 {
                     ModelState.AddModelError(string.Empty, "User does not exist or is deactivated!");
 

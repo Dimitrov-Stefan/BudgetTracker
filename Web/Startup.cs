@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using Data;
+﻿using Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Models.Entities.Identity;
+using System;
 using Web.Extensions;
 
 namespace Web

@@ -1,6 +1,4 @@
 ﻿using Core.Resources;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.Areas.Admin.Models.Users

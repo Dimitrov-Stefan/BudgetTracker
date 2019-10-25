@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Core.Constants;
+﻿using Core.Constants;
 using Microsoft.AspNetCore.Identity;
 using Models.Entities.Identity;
 using Steffes.Web.Models.Account;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Web.Services
 {

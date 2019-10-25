@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Core.Constants;
+﻿using Core.Constants;
 using Data.Initialization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Models.Entities.Identity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Data
 {

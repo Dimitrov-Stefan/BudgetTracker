@@ -10,7 +10,7 @@ namespace Data
 {
     public class BudgetTrackerDbContext : IdentityDbContext<User, Role, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
-        public BudgetTrackerDbContext(DbContextOptions<BudgetTrackerDbContext> options) : base (options)
+        public BudgetTrackerDbContext(DbContextOptions<BudgetTrackerDbContext> options) : base(options)
         {
 
         }

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using Core.Constants;
+﻿using Core.Constants;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using Web.Areas.Admin.Controllers;
 using Web.Extensions;
 using Web.Models;

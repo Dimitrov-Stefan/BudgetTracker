@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Core.Resources;
+﻿using Core.Resources;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models.Account
 {
