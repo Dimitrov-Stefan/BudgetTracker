@@ -32,9 +32,9 @@
                             <th>
                                 Email
                             </th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th class="no-sort"></th>
+                            <th class="no-sort"></th>
+                            <th class="no-sort"></th>
                         </tr>
                     </thead>
                 </table>
@@ -113,7 +113,10 @@
                         }
                     },
                     { targets: "date-type", type: "date-eu" }
-                ]
+                ],
+                colReorder: {
+                    fixedColumnsRight: 2
+                }
             });
         });
     </script>

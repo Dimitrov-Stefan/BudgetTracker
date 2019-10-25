@@ -32,26 +32,10 @@
                             <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" aria-sort="descending">
                                 Active
                             </th>
-                            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" aria-sort="descending">
+                            <th class="no-sort" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" aria-sort="descending">
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach (var item in Model.FinancialItems.Items)
-                        {
-                            <tr>
-                                <td>@item.Name</td>
-
-                                <td>@item.Type</td>
-
-                                <td>@(item.IsActive ? "Yes" : "No")</td>
-
-                                <td class="text-center">
-                                    <a class="btn btn-outline-primary btn-sm" asp-action="@nameof(FinancialItemsController.Edit)" asp-route-id="@item.Id">Edit</a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -101,7 +85,7 @@
                     {
                         data: "id",
                         render: function (data, type, row) {
-                            return '<a class="btn btn-outline-primary btn-sm" href=/FinancialItems/Edit/' + data + '>Edit</a>'; //Hack: Partially hardcoded link
+                            return '<div class="text-center"><a class="btn btn-outline-primary btn-sm" href=/FinancialItems/Edit/' + data + '>Edit</a></div>'; //Hack: Partially hardcoded link
                         }
                     }
                 ],
