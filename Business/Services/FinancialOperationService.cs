@@ -44,16 +44,22 @@ namespace Business.Services
         {
             var financialOperation = await _financialOperationsRepository.GetByIdAsync(id);
 
-            financialOperation.Timestamp = financialOperation.Timestamp.ToLocalTime();
+            if (financialOperation != null)
+            {
+                financialOperation.Timestamp = financialOperation.Timestamp.ToLocalTime();
+            }
 
             return financialOperation;
         }
 
         public async Task UpdateAsync(FinancialOperation item)
         {
-            item.Timestamp = item.Timestamp.ToUniversalTime();
+            if (item != null)
+            {
+                item.Timestamp = item.Timestamp.ToUniversalTime();
 
-            await _financialOperationsRepository.UpdateAsync(item);
+                await _financialOperationsRepository.UpdateAsync(item);
+            }
         }
 
         public async Task<IEnumerable<FinancialOperation>> GetByFinancialItemIdAsync(int financialItemId)
