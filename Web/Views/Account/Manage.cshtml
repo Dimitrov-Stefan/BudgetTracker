@@ -45,9 +45,25 @@
                 <span class="text-danger" asp-validation-for="ConfirmNewPassword"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-user btn-block">
-                Save
-            </button>
+            @if (User.IsInRole(Roles.Admin))
+            {
+                <div class="input-group">
+                    <button type="submit" class="btn btn-primary form-control mr-1">Save</button>
+                    <a class="btn btn-outline-secondary form-control ml-1"
+                       asp-area="Admin"
+                       asp-controller="@Url.ControllerName(typeof(FinancialOperationsController))"
+                       asp-action="@nameof(FinancialOperationsController.Index)">Cancel</a>
+                </div>
+            }
+            else
+            {
+                <div class="input-group">
+                    <button type="submit" class="btn btn-primary form-control mr-1">Save</button>
+                    <a class="btn btn-outline-secondary form-control ml-1"
+                       asp-controller="@Url.ControllerName(typeof(FinancialOperationsController))"
+                       asp-action="@nameof(FinancialOperationsController.Index)">Cancel</a>
+                </div>
+            }
         </form>
     </div>
 </div>
