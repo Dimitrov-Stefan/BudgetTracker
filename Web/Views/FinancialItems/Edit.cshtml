@@ -10,6 +10,13 @@
             <h1>@ViewData["Title"]</h1>
         </div>
 
+        <div class="d-flex justify-content-start col-md-8 offset-md-2 mb-2">
+            <a class="btn btn-primary btn-sm" asp-controller="@Url.ControllerName(typeof(FinancialOperationsController))" asp-action="@nameof(FinancialOperationsController.Index)">
+                <span class="fas fa-arrow-alt-circle-left"></span>
+                Back
+            </a>
+        </div>
+
         <form method="post" asp-action="@nameof(FinancialItemsController.Edit)">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 

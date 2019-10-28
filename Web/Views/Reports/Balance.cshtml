@@ -4,10 +4,17 @@
     ViewData["Title"] = "Balance";
 }
 
-<div class="row">
-    <h1 class="col-12 text-center">
-        @ViewData["Title"]
-    </h1>
+    <div class="row">
+        <h1 class="col-12 text-center">
+            @ViewData["Title"]
+        </h1>
+
+        <div class="col-12 text-left mb-2 marginl-minus-12">
+            <a class="btn btn-primary btn-sm" asp-controller="@Url.ControllerName(typeof(ReportsController))" asp-action="@nameof(ReportsController.Index)">
+                <span class="fas fa-arrow-alt-circle-left"></span>
+                Back
+            </a>
+        </div>
 
         <form method="get" asp-action="@nameof(ReportsController.Balance)" asp-route-from="@Model.From" asp-route-to="@Model.To">
             <div class="row col-12">
@@ -26,46 +33,46 @@
             </div>
         </form>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>
-                    Financial Item
-                </th>
-                <th>
-                    Balance
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.BalanceReport.FinancialItemReportRows)
-            {
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td>@item.FinancialItem.Name</td>
-
-                    <td>@item.Sum</td>
+                    <th>
+                        Financial Item
+                    </th>
+                    <th>
+                        Balance
+                    </th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @foreach (var item in Model.BalanceReport.FinancialItemReportRows)
+                {
+                    <tr>
+                        <td>@item.FinancialItem.Name</td>
 
-            @if (Model.BalanceReport.Total > 0)
-            {
-                <tr class="text-success">
-                    <td><strong>Total:</strong></td>
+                        <td>@item.Sum</td>
+                    </tr>
+                }
 
-                    <td><strong>@Model.BalanceReport.Total</strong></td>
-                </tr>
-            }
-            @if (Model.BalanceReport.Total < 0)
-            {
-                <tr class="text-danger">
-                    <td><strong>Total:</strong></td>
+                @if (Model.BalanceReport.Total > 0)
+                {
+                    <tr class="text-success">
+                        <td><strong>Total:</strong></td>
 
-                    <td><strong>@Model.BalanceReport.Total</strong></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+                        <td><strong>@Model.BalanceReport.Total</strong></td>
+                    </tr>
+                }
+                @if (Model.BalanceReport.Total < 0)
+                {
+                    <tr class="text-danger">
+                        <td><strong>Total:</strong></td>
+
+                        <td><strong>@Model.BalanceReport.Total</strong></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
 @section Scripts{
     <script type="text/javascript">

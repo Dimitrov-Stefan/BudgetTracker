@@ -10,6 +10,13 @@
         @ViewData["Title"]
     </h1>
 
+    <div class="col-12 text-left mb-2 marginl-minus-12">
+        <a class="btn btn-primary btn-sm" asp-controller="@Url.ControllerName(typeof(ReportsController))" asp-action="@nameof(ReportsController.Index)">
+            <span class="fas fa-arrow-alt-circle-left"></span>
+            Back
+        </a>
+    </div>
+
     <form method="get" asp-action="@nameof(ReportsController.Income)">
 
         <div class="row">

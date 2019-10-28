@@ -79,3 +79,7 @@ body {
 .table-header {
     background-color: azure;
 }
+
+.marginl-minus-12{
+    margin-left: -12px;
+}
